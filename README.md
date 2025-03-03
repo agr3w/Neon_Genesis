@@ -1,4 +1,4 @@
-
+```
 my-totem-rental/
 ├─ public/
 │   ├─ index.html
@@ -50,7 +50,7 @@ my-totem-rental/
 │   └─ ...
 ├─ package.json
 └─ README.md
-
+```
 
 Header (Cabeçalho):
 
