@@ -1,5 +1,9 @@
 testando
 
+https://www.figma.com/design/SqRCVZw1EG9h2yPSNXMaJj/Neon-Genesis?node-id=0-1&p=f&t=OjOJJ79Yw17IT1vX-0
+
+https://app.milanote.com/1TGwtU1iQJDF9A/projeto-neon-genesis
+
 ```
 my-totem-rental/
 ├─ public/
