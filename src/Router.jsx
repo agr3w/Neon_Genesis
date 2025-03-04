@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/header/header";
 
 /* 
   Arquivo de rotas base.
@@ -10,12 +11,10 @@ const AppRouter = () => {
     <Router>
       <Routes>
         {/* Exemplo de rota inicial */}
-        <Route path="/" element={<h1>Bem-vindo ao Template!</h1>} />
+        <Route path="/Listar_totens" element={<Header />} />
       </Routes>
     </Router>
   );
 };
 
 export default AppRouter; //1 por pagina 
-
-
