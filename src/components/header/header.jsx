@@ -1,26 +1,16 @@
+import { AppBar, Toolbar } from "@mui/material";
 import "./herder.css";
 
-export default function Header() {
+const Header = () => {
     return (
-        <header className="Header">
-            <div>
-        <div className="div_logo">
-            <img src="" alt="" />
-        </div>
-        <nav>
-          <ul className="lista">
-            <li>
-              <a href="Listar_totens" className="primeiro">Início</a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">Sobre</a>
-            </li>
-            <li>
-              {/* <a href="#" className="hover:underline">Contato</a> */}
-            </li>
-          </ul>
-        </nav>
-        </div>
-        </header>
+       <AppBar position="fixed" className="header">
+          <Toolbar>
+
+          <img src="" alt="" />
+
+          </Toolbar>
+        </AppBar>
     );
-}
+};
+
+export default Header;
