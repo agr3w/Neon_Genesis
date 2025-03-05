@@ -1,26 +1,28 @@
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import "./herder.css";
+import logo from "../../assets/logo.png";
+import { NavLink } from "react-router";
 
-export default function Header() {
-    return (
-        <header className="Header">
-            <div>
-        <div className="div_logo">
-            <img src="" alt="" />
+const Header = () => {
+  return (
+    <AppBar position="fixed" className="header">
+      <Toolbar>
+        <img src={logo} alt="" className="logo" />
+
+        <Typography variant="h6" className="op1">
+          Neon Genesis
+        </Typography>
+
+        <div className="botoes">
+          <Button className="botao">Suporte</Button>
+          <Button className="botao2">compra</Button>
+          <Button className="botao">
+            <NavLink to="/teste">HOME</NavLink>
+          </Button>
         </div>
-        <nav>
-          <ul className="lista">
-            <li>
-              <a href="Listar_totens" className="primeiro">Início</a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">Sobre</a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">Contato</a>
-            </li>
-          </ul>
-        </nav>
-        </div>
-        </header>
-    );
-}
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Header;
