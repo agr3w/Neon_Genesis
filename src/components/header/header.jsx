@@ -16,7 +16,7 @@ export default function Header() {
               <a href="#" className="hover:underline">Sobre</a>
             </li>
             <li>
-              <a href="#" className="hover:underline">Contato</a>
+              {/* <a href="#" className="hover:underline">Contato</a> */}
             </li>
           </ul>
         </nav>
