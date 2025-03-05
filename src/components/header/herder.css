@@ -1,10 +1,18 @@
-.lista {
-    font-size: 55px;
-    color: black;
-    
+.header {
+    background-color: white !important;
 }
 
-.primeiro {
-    font-size: 32px;
-    color: rgb(159, 235, 18);
+.logo {
+    width: 100px;
+}
+
+.op1 {
+    color: black;
+}
+
+.botoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
 }

@@ -11,7 +11,7 @@ const AppRouter = () => {
     <Router>
       <Routes>
         {/* Exemplo de rota inicial */}
-        <Route path="/Listar_totens" element={<Header />} />
+        <Route path="/" element={<Header />} />
       </Routes>
     </Router>
   );
