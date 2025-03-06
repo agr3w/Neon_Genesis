@@ -2,6 +2,10 @@ Sites para referencia:
 
 https://www.locarti.com.br/
 
+Guia para GIT:
+
+https://chatgpt.com/canvas/shared/67c99ff8256c81919833edaf4d5c515e
+
 Produção do projeto:
 
 https://www.figma.com/design/SqRCVZw1EG9h2yPSNXMaJj/Neon-Genesis?node-id=0-1&p=f&t=OjOJJ79Yw17IT1vX-0
