@@ -1,4 +1,8 @@
-testando
+Sites para referencia:
+
+https://www.locarti.com.br/
+
+Produção do projeto:
 
 https://www.figma.com/design/SqRCVZw1EG9h2yPSNXMaJj/Neon-Genesis?node-id=0-1&p=f&t=OjOJJ79Yw17IT1vX-0
 
