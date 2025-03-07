@@ -16,9 +16,7 @@ const Header = () => {
         <div className="botoes">
           <Button className="botao">Suporte</Button>
           <Button className="botao2">compra</Button>
-          <Button className="botao">
-            <NavLink to="/teste">HOME</NavLink>
-          </Button>
+          <Button className="botao">teste</Button>
         </div>
       </Toolbar>
     </AppBar>
