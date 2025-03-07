@@ -16,6 +16,17 @@ https://www.figma.com/design/SqRCVZw1EG9h2yPSNXMaJj/Neon-Genesis?node-id=0-1&p=f
 
 https://app.milanote.com/1TGwtU1iQJDF9A/projeto-neon-genesis
 
+**Calendario de entregas:**
+
+-Estilização base-
+entregar até: 02/03/25
+
+-HOME-
+entregar até: 31/03/25
+
+-Tela de login e registro-
+Entrega até: 24/03/25
+
 ```
 my-totem-rental/
 ├─ public/
