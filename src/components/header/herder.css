@@ -1,18 +1,38 @@
-.header {
-    background-color: white !important;
-}
-
-.logo {
-    width: 100px;
-}
-
-.op1 {
-    color: black;
-}
-
-.botoes {
+.toolbar {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    
-}
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--texto-principal);
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .nav-logo-img {
+    height: 50px;
+  }
+  
+  .nav-center {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-itens-btn a {
+    color: var(--destaque-principal);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+  }
+
+  /* TODO: produzir a flexibilidade do site para 
+    dispositivos mobiles */

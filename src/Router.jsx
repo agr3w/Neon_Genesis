@@ -1,20 +1,20 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/header/header";
 
-/* 
+/**  
   Arquivo de rotas base.
   Aqui, você pode adicionar suas páginas conforme necessário.
 */
 
+import { Route, Router, Routes } from "react-router";
+import Header from "./components/header/header";
+
 const AppRouter = () => {
   return (
-    <Router>
+    <>
       <Routes>
-        {/* Exemplo de rota inicial */}
         <Route path="/" element={<Header />} />
       </Routes>
-    </Router>
+    </>
   );
 };
 
-export default AppRouter; //1 por pagina 
+export default AppRouter;
