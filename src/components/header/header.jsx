@@ -4,8 +4,8 @@ import "./herder.css";
 import logo from "../../assets/logo.png";
 
 /**
- * Componente retorna
- *  
+ * Componente retorna o "Navigator" da pagina, onde o cliente
+ * pode navagar entre as páginas.
  */
 
 const Header = () => {
