@@ -4,14 +4,14 @@
   Aqui, você pode adicionar suas páginas conforme necessário.
 */
 
-import { Route, Router, Routes } from "react-router";
-import Header from "./components/header/header";
+import { Route, Routes } from "react-router";
+import Home from "./pages/Home";
 
 const AppRouter = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Header />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </>
   );
