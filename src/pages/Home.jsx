@@ -1,3 +1,4 @@
+import Carousel from "../components/carousel/Carousel";
 import Header from "../components/header/header";
 
 /**
@@ -6,11 +7,13 @@ import Header from "../components/header/header";
  */
 
 const Home = () => {
-    return (
-        <Header>
-            {/* Componentes para serem renderizados da pagina Home */}
-        </Header>
-    )
+  return (
+    <>
+      {/* Componentes para serem renderizados da pagina Home */}
+      <Header />
+      <Carousel />
+    </>
+  );
 };
 
 export default Home;
