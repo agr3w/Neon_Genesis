@@ -2,6 +2,7 @@ import Carousel from "../components/carousel/Carousel";
 import Header from "../components/header/header";
 import MidleSection from "../components/midleSection/MidleSection"
 import TotensSection from "../content/totensSection/TotensSection";
+import WhyTotemSection from "../content/WhyTotemSection/WhyTotemSection";
 
 /**
  * Componente de renderização da página Home.
@@ -16,6 +17,9 @@ const Home = () => {
       <Carousel/>
       <MidleSection />
       <TotensSection />
+      {/* Componentes duplicados apenas para exemplo */}
+      <TotensSection /> 
+      <WhyTotemSection />
     </>
   );
 };
