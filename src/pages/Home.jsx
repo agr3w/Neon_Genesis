@@ -1,5 +1,6 @@
 import Carousel from "../components/carousel/Carousel";
 import Header from "../components/header/header";
+import MidleSection from "../components/midleSection/MidleSection"
 
 /**
  * Componente de renderização da página Home.
@@ -11,7 +12,8 @@ const Home = () => {
     <>
       {/* Componentes para serem renderizados da pagina Home */}
       <Header />
-      <Carousel />
+      <Carousel/>
+      <MidleSection />
     </>
   );
 };
