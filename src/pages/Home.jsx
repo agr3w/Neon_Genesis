@@ -1,6 +1,7 @@
 import Carousel from "../components/carousel/Carousel";
 import Header from "../components/header/header";
 import MidleSection from "../components/midleSection/MidleSection"
+import TotensSection from "../content/totensSection/TotensSection";
 
 /**
  * Componente de renderização da página Home.
@@ -14,6 +15,7 @@ const Home = () => {
       <Header />
       <Carousel/>
       <MidleSection />
+      <TotensSection />
     </>
   );
 };
