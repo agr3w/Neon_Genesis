@@ -1,0 +1,39 @@
+/* src/styles/MidleSection.css */
+.midle-section {
+  background-color: var(--primary-bg-color, #f8f8f8);
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.midle-section h2 {
+  font-size: 2rem;
+  color: var(--primary-text-color, #333);
+  margin-bottom: 20px;
+}
+
+.partners-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.partner-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  text-align: center;
+}
+
+.partner-card img {
+  width: 100px;
+  height: auto;
+}
+
+.partner-card p {
+  font-size: 1rem;
+  color: var(--secondary-text-color, #666);
+  margin-top: 10px;
+}
