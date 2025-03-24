@@ -11,7 +11,7 @@ const MidleSection = () => {
   ];
 
   return (
-    <section className="midle-section">
+    <section className="midle-section" data-aos="fade-up" data-aos-duration="1000">
       <h2>Nossos Parceiros</h2>
       <div className="partners-container">
         {partners.map((partner, index) => (

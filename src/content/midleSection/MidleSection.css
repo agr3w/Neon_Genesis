@@ -1,6 +1,7 @@
 /* src/styles/MidleSection.css */
 .midle-section {
-  background-color: var(--primary-bg-color, #f8f8f8);
+  background: linear-gradient(135deg, #f3f3f3, #ffffff);
+
   padding: 50px 20px;
   text-align: center;
 }
@@ -25,6 +26,14 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   width: 150px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.partner-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  filter: grayscale(0%); /* retorna à cor normal */
 }
 
 .partner-card img {
