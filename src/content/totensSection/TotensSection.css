@@ -1,0 +1,19 @@
+/* src/styles/TotensSection.css */
+.totens-section {
+    padding: 40px 20px;
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .totens-section h2 {
+    margin-bottom: 20px;
+    font-family: var(--font-family);
+    color: #333;
+  }
+  
+  .cards-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
