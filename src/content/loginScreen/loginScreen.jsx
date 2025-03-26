@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Login.css";
+import "./LoginScreen.css";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import logo from "../../assets/logo.png";
@@ -20,7 +20,7 @@ function Header() {
   );
 }
 
-function LoginRegister() {
+function LoginScreen() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,4 +73,4 @@ function LoginRegister() {
   );
 }
 
-export default LoginRegister;
+export default LoginScreen;

@@ -6,12 +6,14 @@
 
 import { Route, Routes } from "react-router";
 import Home from "./pages/Home";
+import LoginScreen from "./content/loginScreen/loginScreen";
 
 const AppRouter = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginScreen />} />
       </Routes>
     </>
   );
