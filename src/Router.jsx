@@ -5,15 +5,15 @@
 */
 
 import { Route, Routes } from "react-router";
-import Home from "./pages/Home";
-import LoginScreen from "./content/loginScreen/loginScreen";
+import Login from "./pages/login/LoginRender";
+import Home from "./pages/home/Home";
 
 const AppRouter = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );
