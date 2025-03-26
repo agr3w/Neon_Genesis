@@ -5,6 +5,20 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import "./Carousel.css";
 import { useRef } from "react";
+import test from "../../assets/teste.jpg"
+
+const images = [
+  {
+    src: test,
+    alt: "Totem 1"
+  },
+  {
+    src: test,
+    alt: "Totem 2"
+  },
+  // Adicione quantos cards precisar
+];
+
 
 const Carousel = () => {
   const swiperRef = useRef(null);
@@ -17,9 +31,15 @@ const Carousel = () => {
         loop
         onSwiper={(swiper) => (swiperRef.current = swiper)}
       >
-        <SwiperSlide className="carousel-slide slide-1">Slide 1</SwiperSlide>
-        <SwiperSlide className="carousel-slide slide-2">Slide 2</SwiperSlide>
-        <SwiperSlide className="carousel-slide slide-3">Slide 3</SwiperSlide>
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className="carousel-slide">
+            <img 
+              src={image.src} 
+              alt={image.alt} 
+              className="carousel-image"
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       {/* Botão de voltar */}
