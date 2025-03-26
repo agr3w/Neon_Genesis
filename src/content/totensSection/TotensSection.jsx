@@ -1,8 +1,7 @@
 // src/content/TotensSection.jsx
-import { React, useState } from "react";
+import React from "react";
 import GenericCard from "../../components/cards/GenericCard";
 import "./TotensSection.css";
-import { Box, Grid, TextField } from "@mui/material";
 
 const totensData = [
   {
@@ -17,6 +16,7 @@ const totensData = [
     title: "Totem 2",
     description:
       "Texto sobre o Totem 2. Este totem é voltado para atendimento rápido.",
+
     buttonText: "Ver Mais",
     onButtonClick: () => console.log("Clique no Totem 2"),
   },
@@ -24,30 +24,23 @@ const totensData = [
 ];
 
 const TotensSection = () => {
-  const [filter, setFilter] = useState("");
-  const filteredTotens = totensData.filter((totem) =>
-    totem.title.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
     <section className="totens-section">
       <h2>Nossos Totens</h2>
-      <Box sx={{ mb: 3 }}>
-        <TextField
-          label="Buscar totem"
-          variant="outlined"
-          onChange={(e) => setFilter(e.target.value)}
-          fullWidth
-        />
-      </Box>
-      <Grid container spacing={3} justifyContent={"center"}>
-        {filteredTotens.map((item, idx) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={idx}>
-            <GenericCard {...item} />
-          </Grid>
+      <div className="cards-wrapper">
+        {totensData.map((item, idx) => (
+          <GenericCard
+            key={idx}
+            image={item.image}
+            title={item.title}
+            description={item.description}
+            buttonText={item.buttonText}
+            onButtonClick={item.onButtonClick}
+          />
         ))}
-      </Grid>
+      </div>
     </section>
   );
 };
+
 export default TotensSection;
