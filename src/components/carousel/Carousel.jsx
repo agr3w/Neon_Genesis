@@ -5,7 +5,9 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import "./Carousel.css";
 import { useRef } from "react";
-import test from "../../assets/teste.jpg"
+import test from "../../assets/restaurantes_totem_slide.jpg"
+import test2 from "../../assets/novos_lancamentos.jpg"
+
 
 const images = [
   {
@@ -13,7 +15,7 @@ const images = [
     alt: "Totem 1"
   },
   {
-    src: test,
+    src: test2,
     alt: "Totem 2"
   },
   // Adicione quantos cards precisar
