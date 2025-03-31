@@ -3,6 +3,7 @@ import Header from "../../components/header/header";
 import MidleSection from "../../content/midleSection/MidleSection"
 import TotensSection from "../../content/totensSection/TotensSection";
 import WhyTotemSection from "../../content/WhyTotemSection/WhyTotemSection";
+import Footer from "../../components/footer/footer";
 
 /**
  * Componente de renderização da página Home.
@@ -18,6 +19,7 @@ const Home = () => {
       <MidleSection />
       <TotensSection />
       <WhyTotemSection />
+      <Footer />
     </>
   );
 };
