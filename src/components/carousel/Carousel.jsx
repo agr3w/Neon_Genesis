@@ -24,7 +24,6 @@ const images = [
 
 const Carousel = () => {
   const swiperRef = useRef(null);
-
   return (
     <div className="carousel-container">
       <Swiper
