@@ -3,12 +3,14 @@
  * 
  */
 
+import Header from "../../components/header/header";
 import LoginScreen from "../../content/loginScreen/loginScreen";
 
 const Login = () => {
   return (
     <>
       {/* Componentes para serem renderizados da pagina Home */}
+      <Header />
       <LoginScreen/>
     </>
   );

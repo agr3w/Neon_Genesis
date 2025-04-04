@@ -1,43 +1,47 @@
+/* src/styles/WhyTotemSection.css */
+
 .why-totem-section {
-    width: 100%;
-    padding: 50px 20px;
-    background-color: #f7f7f7; /* Ajuste conforme sua identidade visual */
-  }
-  
-  .why-totem-grid {
-    max-width: 1200px; /* Limite de largura para não ficar muito extenso em telas grandes */
-    margin: 0 auto;    /* Centraliza horizontalmente */
-  }
-  
-  .why-totem-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .why-totem-title {
-    margin-bottom: 20px;
-    font-family: var(--font-family);
-    color: #333;
-  }
-  
-  .why-totem-description {
-    font-family: var(--font-family);
-    color: #555;
-    line-height: 1.5;
-  }
-  
-  .why-totem-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .why-totem-image img {
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  background: #f2f2f2; /* Fundo da área da seção */
+}
+
+.why-totem-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  width: 100%;
+  padding: 40px; /* Espaçamento interno para que nada fique grudado */
+}
+
+.why-totem-grid {
+  align-items: center;
+}
+
+.why-totem-text {
+  padding: 20px;
+}
+
+.why-totem-title {
+  margin-bottom: 20px;
+  font-family: var(--font-family);
+  color: #333;
+}
+
+.why-totem-description {
+  font-family: var(--font-family);
+  color: #555;
+  line-height: 1.5;
+}
+
+.why-totem-image {
+  padding: 20px;
+  text-align: center;
+}
+
+.why-totem-image img {
+  max-width: 100%;
+  border-radius: 8px;
+}

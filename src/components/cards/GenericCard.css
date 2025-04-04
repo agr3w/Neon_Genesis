@@ -6,12 +6,19 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
   }
   
   .generic-card-media {
-    height: 160px; /* Ajuste conforme necessário */
-    object-fit: cover;
-  }
+    max-width: 50%;
+    object-fit: cover; /* Ajustando o comportamento da imagem para cobrir a área sem distorcer */
+        /* Garantir que a largura seja proporcional ao tamanho do card */
+    border-radius: 4px; /* Adicionando bordas arredondadas, se desejar */
+}
+
   
   .generic-card-content {
     background-color: #fff;
