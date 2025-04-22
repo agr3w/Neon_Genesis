@@ -3,7 +3,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import "./TotemDetail.css";
-import Header from "../header/header";
 
 const allTotems = [
     {
@@ -42,7 +41,6 @@ const TotemDetail = () => {
     if (!totemData) {
         return (
             <>
-                <Header />
                 <Box className="totem-detail-container">
                     <Typography variant="h5" align="center">
                         Totem não encontrado.
@@ -59,7 +57,6 @@ const TotemDetail = () => {
 
     return (
         <>
-            <Header />
             <Box className="totem-detail-container">
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>

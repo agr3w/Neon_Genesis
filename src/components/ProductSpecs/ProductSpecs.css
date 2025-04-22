@@ -1,0 +1,23 @@
+/* src/components/ProductSpecs/ProductSpecs.css */
+.product-specs-card {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 24px;
+    border-radius: 12px;
+  }
+  
+  .product-specs-title {
+    margin-bottom: 16px;
+    font-family: var(--font-family);
+  }
+  
+  .spec-label {
+    font-weight: bold;
+    width: 30%;
+    font-family: var(--font-family);
+  }
+  
+  .spec-value {
+    font-family: var(--font-family);
+  }
+  
