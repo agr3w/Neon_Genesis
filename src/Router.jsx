@@ -7,6 +7,7 @@
 import { Route, Routes } from "react-router";
 import Login from "./pages/login/LoginRender";
 import Home from "./pages/home/Home";
+import TotemDetail from "./components/totemDetail/TotemDetail"
 
 const AppRouter = () => {
   return (
@@ -14,6 +15,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/totem/:id" element={<TotemDetail />} />
       </Routes>
     </>
   );
