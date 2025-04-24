@@ -1,0 +1,32 @@
+/* src/styles/ProductOverview.css */
+
+.product-overview-container {
+    padding: 40px 20px;
+    background: #fff; /* ajuste se quiser outra cor de fundo */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .product-overview-title {
+    margin-bottom: 16px;
+    font-family: var(--font-family);
+    color: #333;
+  }
+  
+  .product-overview-text {
+    font-family: var(--font-family);
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .product-overview-image-container {
+    text-align: center;
+  }
+  
+  .product-overview-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
