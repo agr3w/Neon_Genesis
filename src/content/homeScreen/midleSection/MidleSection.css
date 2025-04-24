@@ -1,0 +1,88 @@
+/* src/styles/MidleSection.css */
+.midle-section {
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #f0f0f0, #ffffff);
+  text-align: center;
+  overflow: hidden;
+}
+
+.midle-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 30px;
+  font-family: var(--font-family);
+}
+
+.differentials-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.differential-card {
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.differential-card:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.differential-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s ease;
+}
+
+.differential-card-wrapper:hover {
+  transform: scale(1.1);
+}
+
+.differential-card {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+  border-radius: 50%;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.differential-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #444;
+  letter-spacing: 0.3px;
+  transition: color 0.3s;
+}
+
+.differential-card-wrapper:hover .differential-label {
+  color: #1976d2; /* azul padrão MUI */
+}
+
+
+/* Estilização do modal já configurado anteriormente */
+.modal-content {
+  text-align: center;
+}
+
+.modal-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}

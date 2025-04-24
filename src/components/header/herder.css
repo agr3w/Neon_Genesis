@@ -1,0 +1,47 @@
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--fundo-principal);
+  }
+
+  .link-home {
+    color: var(--texto-principal);
+    text-decoration: none;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .nav-logo-img {
+    height: 50px;
+  }
+  
+  .nav-center {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-itens-btn a {
+    color: var(--texto-principal);
+    text-decoration: none;
+    font-weight: 600;
+    text-shadow: 0 0 10px var(--destaque-principal), 0 0 20px var(--destaque-principal), 0 0 30px var(--destaque-principal);
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 48.5px;
+    padding: 25px;
+    color: var(--texto-principal);
+    /* margin-left: 122px; Solução temporaria para alinhamento de telas grandes */
+  }
+
+  /* TODO: produzir a flexibilidade do site para 
+    dispositivos mobiles */
