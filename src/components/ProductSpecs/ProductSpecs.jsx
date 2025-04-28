@@ -1,4 +1,3 @@
-// src/components/ProductSpecs/ProductSpecs.jsx
 import React from "react";
 import {
   Table,
@@ -9,9 +8,12 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import specsData from "../../data/specsData";
 import "./ProductSpecs.css";
 
-const ProductSpecs = ({ specs }) => {
+const ProductSpecs = ({ totemId }) => {
+  const specs = specsData[totemId] || []; // Busca as specs pelo ID ou retorna um array vazio
+
   return (
     <Paper className="product-specs-card" elevation={2}>
       <Typography variant="h5" className="product-specs-title">

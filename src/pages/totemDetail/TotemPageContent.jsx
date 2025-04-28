@@ -1,21 +1,27 @@
-// src/content/TotemPageContent.jsx
 import React from "react";
-import Header from "../../components/header/Header";
 import TotemDetail from "../../components/totemDetail/TotemDetail";
 import ProductOverview from "../../components/ProductOverview/ProductOverview";
 import ProductSpecs from "../../components/ProductSpecs/ProductSpecs";
-import specsData from "../../data/specsData";
+import { useParams } from "react-router-dom";
+import Header from "../../components/header/header";
+import totemData from "../../data/totemData";
 
-const TotemPageContent = () => (
+const TotemPageContent = () => {
+  const { id } = useParams(); // Obtém o ID do totem da URL
+  const totem = totemData.find((t) => t.id === Number(id)); // Busca os dados do totem pelo ID
+
+  if (!totem) {
+    return <p>Totem não encontrado.</p>;
+  }
+
+  return (
     <>
-        <Header />
-        <TotemDetail />
-        <ProductOverview
-            text="Este totem é usado para autoatendimento em pontos de venda, controle de acesso e consulta de informações."
-            image="https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png"
-        />
-        <ProductSpecs specs={specsData} />
+      <Header />
+      <TotemDetail />
+      <ProductOverview text={totem.description} image={totem.image} />
+      <ProductSpecs totemId={id} />
     </>
-);
+  );
+};
 
 export default TotemPageContent;
