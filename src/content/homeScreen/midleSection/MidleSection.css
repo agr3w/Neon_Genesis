@@ -23,14 +23,22 @@
 .differential-card {
   width: 80px;
   height: 80px;
-  background: #fff;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
   border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+}
+
+.differential-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #444;
+  letter-spacing: 0.3px;
+  transition: color 0.3s;
 }
 
 .differential-card:hover {
@@ -48,6 +56,10 @@
 
 .differential-card-wrapper:hover {
   transform: scale(1.1);
+}
+
+.differential-card-wrapper:hover .differential-label {
+  color: #1976d2; /* azul padrão MUI */
 }
 
 .differential-card {

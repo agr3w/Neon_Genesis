@@ -28,19 +28,24 @@ const MidleSection = () => {
         {differentialsData.map((diff, index) => (
           <div
             key={index}
-            className="differential-card"
+            className="differential-card-wrapper"
             data-aos="fade-up"
             data-aos-delay={200 * index}
             onClick={() => handleCardClick(diff)}
           >
-            <IconButton
-              color="primary"
-              size="large"
-              disableRipple
-              disableFocusRipple
-            >
-              {diff.icon}
-            </IconButton>
+            <div className="differential-card">
+              <IconButton
+                color="primary"
+                size="large"
+                disableRipple
+                disableFocusRipple
+              >
+                {diff.icon}
+              </IconButton>
+            </div>
+            <Typography variant="body2" className="differential-label">
+              {diff.title}
+            </Typography>
           </div>
         ))}
       </div>
