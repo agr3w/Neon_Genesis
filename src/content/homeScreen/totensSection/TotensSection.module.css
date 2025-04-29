@@ -1,0 +1,59 @@
+.totensSection {
+  padding: 40px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.totensSection h2 {
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.swiper {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.swiper-slide img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.totemCard {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.totemCard:hover {
+  transform: scale(1.05);
+}
+
+.totemImage {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.totemTitle {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.totemDescription {
+  font-size: 0.9rem;
+  color: #555;
+}

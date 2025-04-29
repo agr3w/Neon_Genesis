@@ -1,7 +1,10 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 import "./herder.css";
 import logo from "../../assets/logo.png";
+import { Link } from "react-router";
 
 /**
  * Componente retorna o "Navigator" da pagina, onde o cliente
@@ -13,13 +16,14 @@ const Header = () => {
     <AppBar position="fixed" className="nav" color="transparent">
       <Toolbar className="toolbar">
         {/* Logo e título alinhados à esquerda */}
-        <div className="nav-left">
-          <img src={logo} alt="NEON GENESIS" className="nav-logo-img" />
-          <Typography variant="h6" className="nav-titulo" fontWeight={600}>
-            Neon Genesis
-          </Typography>
-        </div>
-
+        <Link to= "/" className="link-home">
+          <div className="nav-left">
+            <img src={logo} alt="NEON GENESIS" className="nav-logo-img" />
+            <Typography variant="h6" className="nav-titulo" fontWeight={600}>
+              Neon Genesis
+            </Typography>
+          </div>
+        </Link>
         {/* Botões centralizados */}
         <div className="nav-center">
           <Typography className="nav-itens-btn">
@@ -36,6 +40,8 @@ const Header = () => {
         {/* Carrinho ou outros ícones à direita */}
         <div className="nav-right">
           <ShoppingCartIcon className="nav-itens-iconCart" />
+          <AccountCircleIcon className="nav-itens-iconCart" />
+          <AnnouncementIcon className="nav-itens-iconCart" />
         </div>
       </Toolbar>
     </AppBar>

@@ -2,6 +2,7 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
 import "./WhyTotemSection.css";
+import testImg from "../../../assets/teste.jpg";
 
 const WhyTotemSection = () => {
   return (
@@ -23,7 +24,7 @@ const WhyTotemSection = () => {
         {/* Área da imagem do totem */}
         <Grid item xs={12} md={6} className="why-totem-image">
           <img
-            src="https://via.placeholder.com/500x400?text=Totem+de+Autoatendimento"
+            src={testImg}
             alt="Totem de Autoatendimento"
           />
         </Grid>

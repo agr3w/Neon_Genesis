@@ -26,6 +26,8 @@
     font-family: var(--font-family);
     color: #555;
     line-height: 1.5;
+    padding-left: 24px;
+
   }
   
   .why-totem-image {
@@ -36,7 +38,7 @@
   }
   
   .why-totem-image img {
-    max-width: 100%;
+    max-width: 200px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }

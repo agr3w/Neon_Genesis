@@ -1,8 +1,8 @@
 import Carousel from "../../components/carousel/Carousel";
 import Header from "../../components/header/header";
-import MidleSection from "../../content/midleSection/MidleSection"
-import TotensSection from "../../content/totensSection/TotensSection";
-import WhyTotemSection from "../../content/WhyTotemSection/WhyTotemSection";
+import MidleSection from "../../content/homeScreen/midleSection/MidleSection"
+import TotensSection from "../../content/homeScreen/totensSection/TotensSection";
+import WhyTotemSection from "../../content/homeScreen/WhyTotemSection/WhyTotemSection";
 import Footer from "../../components/footer/footer";
 
 /**
@@ -15,7 +15,7 @@ const Home = () => {
     <>
       {/* Componentes para serem renderizados da pagina Home */}
       <Header />
-      <Carousel/>
+      <Carousel />
       <MidleSection />
       <TotensSection />
       <WhyTotemSection />

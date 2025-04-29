@@ -1,78 +1,74 @@
-/* Estilização geral do footer */
-footer {
-    background-color: #ffffff; /* Fundo branco */
-    color: #000000; /* Texto preto */
-    padding: 2rem 1rem; /* Espaçamento interno */
-    margin-top: 2rem; /* Margem superior */
-    text-align: center; /* Alinha o texto ao centro */
-    border-top: 1px solid #ddd; /* Linha sutil no topo para separar do conteúdo */
-  }
-  
-  /* Estilo do título do footer */
-  .footer-title {
-    font-size: 1.5rem; /* Tamanho da fonte maior */
-    font-weight: bold; /* Texto em negrito */
-    color: #6d28d9; /* Roxo vibrante */
-  }
-  
-  /* Estilização da navegação no footer */
-  footer nav ul {
-    list-style: none; /* Remove os marcadores da lista */
-    display: flex; /* Organiza os itens em linha */
-    justify-content: center; /* Centraliza os itens */
-    gap: 1.5rem; /* Espaço entre os itens */
-    font-size: 1.125rem; /* Tamanho do texto */
-    margin-top: 1rem; /* Espaçamento superior */
-  }
-  
-  /* Estilo dos links do menu */
-  footer nav ul li a {
-    text-decoration: none; /* Remove o sublinhado */
-    color: #000000; /* Texto preto */
-    transition: color 0.3s ease-in-out; /* Transição suave ao passar o mouse */
-  }
-  
-  /* Mudança de cor ao passar o mouse sobre os links */
-  footer nav ul li a:hover {
-    color: #6d28d9; /* Roxo vibrante */
-  }
-  
-  /* Estilo dos ícones de redes sociais */
-  .footer-social {
-    display: flex; /* Exibe os ícones em linha */
-    justify-content: center; /* Centraliza os ícones */
-    gap: 1.5rem; /* Espaçamento entre os ícones */
-    font-size: 1.5rem; /* Tamanho maior para os ícones */
-    margin-top: 1.5rem; /* Espaçamento superior */
-  }
-  
-  /* Cor padrão dos ícones de redes sociais */
-  .footer-social a {
-    color: #000000; /* Texto preto */
-    transition: color 0.3s ease-in-out; /* Transição suave */
-  }
-  
-  /* Mudança de cor ao passar o mouse nos ícones */
-  .footer-social a:hover {
-    color: #6d28d9; /* Roxo vibrante */
-  }
-  
-  /* Texto adicional do footer */
-  .footer-text {
-    font-size: 0.875rem; /* Tamanho do texto menor */
-    color: #555; /* Cinza escuro */
-    margin-top: 1.5rem; /* Espaçamento superior */
-  }
-  
-  /* Link dentro do texto adicional */
-  .footer-text a {
-    color: #6d28d9; /* Roxo vibrante */
-    text-decoration: none; /* Remove o sublinhado */
-    transition: color 0.3s ease-in-out; /* Transição suave */
-  }
-  
-  /* Mudança de cor ao passar o mouse no link */
-  .footer-text a:hover {
-    color: #9b5de5; /* Roxo mais claro */
-  }
-  
+/* Estilos para o rodapé */
+.footer {
+  background-color: var(--fundo-principal);
+  color: var(--texto-principal);
+  padding: 24px;
+  margin-top: 32px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.footer h6 {
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-shadow: 0 0 10px var(--destaque-principal), 0 0 20px var(--destaque-principal), 0 0 30px var(--destaque-principal);
+}
+
+.footer-nav a:hover, .footer-social a:hover {
+  text-shadow: 0 0 5px var(--destaque-principal), 0 0 10px var(--destaque-principal);
+}
+
+
+/* Links de navegação */
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.footer-nav a {
+  color: var(--texto-principal);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.footer-nav a:hover {
+  color: var(--destaque-principal);
+  text-decoration: underline;
+}
+
+/* Ícones de redes sociais */
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 24px;
+  color: var(--texto-principal);
+}
+
+.footer-social a {
+  color: inherit;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: var(--destaque-principal);
+}
+
+/* Texto do rodapé */
+.footer-text {
+  margin-top: 16px;
+  color: var(--texto-secundario);
+  font-size: 0.75rem;
+}
+
+.footer-link {
+  color: var(--destaque-principal);
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
