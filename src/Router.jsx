@@ -10,6 +10,7 @@ import TotemPageContent from "./pages/totemDetail/TotemPageContent";
 import Cadastro from "./components/Cadastro/Cadastro";
 import TotensListRender from "./pages/totensList/TotensListRender";
 import useScrollToTop from "./hook/useScrollToTop";
+import CartPage from "./pages/Cart/CartPage";
 
 const AppRouter = () => {
   useScrollToTop();
@@ -21,6 +22,7 @@ const AppRouter = () => {
         <Route path="/totem/:id" element={<TotemPageContent />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/totens" element={<TotensListRender />} />
+        <Route path="/carrinho" element={<CartPage />} />
       </Routes>
     </>
   );
