@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router";
 import Login from "./pages/login/LoginRender";
 import Home from "./pages/home/Home";
 import TotemPageContent from "./pages/totemDetail/TotemPageContent";
+import Cadastro from "./components/Cadastro/Cadastro"; // Importando o componente Cadastro
 
 const AppRouter = () => {
   return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/totem/:id" element={<TotemPageContent />} />
+        <Route path="/cadastro" element={<Cadastro />} />
       </Routes>
     </>
   );
