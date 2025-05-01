@@ -8,6 +8,7 @@ import useScrollToTop from "./hook/useScrollToTop";
 import CartPage from "./pages/Cart/CartPage";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
 import PaymentPage from "./pages/payment/PaymentPage";
+import ReviewPage from "./pages/review/ReviewPage";
 
 /**
  * @file AppRouter.jsx
@@ -33,6 +34,7 @@ const AppRouter = () => {
         <Route path="/carrinho" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/review" element={<ReviewPage />} />
       </Routes>
     </>
   );
