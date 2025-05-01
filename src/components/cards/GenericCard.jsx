@@ -1,5 +1,5 @@
-// src/components/GenericCard.jsx
-import { React, useEffect } from "react";
+ import { React, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AOS from "aos";
@@ -21,23 +21,20 @@ import "./GenericCard.css";
  * - title: Título do card
  * - description: Descrição do card
  * - buttonText: Texto do botão
- * - onButtonClick: Função chamada ao clicar no botão
+ * - link: URL para redirecionar ao clicar no botão
+ * - price: Preço do produto (opcional)
+ * @param {Object} props - Propriedades do componente
  */
-const GenericCard = ({
-  image,
-  title,
-  description,
-  buttonText,
-  onButtonClick,
-}) => {
+const GenericCard = ({ image, title, description, buttonText, link, price }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
+
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300 }}
-      data-aos="fade-up"
     >
       <Card className="generic-card">
         {image && (
@@ -60,6 +57,11 @@ const GenericCard = ({
               {description}
             </Typography>
           )}
+           {price && (
+            <Typography variant="h6" color="primary" className="card-price">
+              R$ {price}
+            </Typography>
+          )}
         </CardContent>
 
         <CardActions className="generic-card-actions">
@@ -67,7 +69,7 @@ const GenericCard = ({
             <Button
               size="small"
               variant="contained"
-              onClick={onButtonClick}
+              onClick={() => navigate(link)}
               className="card-button"
             >
               {buttonText}
