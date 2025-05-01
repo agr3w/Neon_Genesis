@@ -27,7 +27,7 @@ const Header = () => {
         {/* Botões centralizados */}
         <div className="nav-center">
           <Typography className="nav-itens-btn">
-            <a href="/teste">Totens Prontos</a>
+            <a href="/totens">Todos os totens</a>
           </Typography>
           <Typography className="nav-itens-btn">
             <a href="/teste">Orçamento</a>
