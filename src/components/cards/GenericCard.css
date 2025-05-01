@@ -34,4 +34,10 @@
     background-color: var(--color-primary, #1976d2); /* Exemplo de var global */
     color: #fff;
   }
+
+  .card-price {
+    margin-top: 8px;
+    font-weight: bold;
+    color: var(--destaque-principal, #d60000);
+  }
   

@@ -1,4 +1,3 @@
-
 /**  
   Arquivo de rotas base.
   Aqui, você pode adicionar suas páginas conforme necessário.
@@ -10,8 +9,10 @@ import Home from "./pages/home/Home";
 import TotemPageContent from "./pages/totemDetail/TotemPageContent";
 import Cadastro from "./components/Cadastro/Cadastro";
 import TotensListRender from "./pages/totensList/TotensListRender";
+import useScrollToTop from "./hook/useScrollToTop";
 
 const AppRouter = () => {
+  useScrollToTop();
   return (
     <>
       <Routes>
@@ -20,7 +21,7 @@ const AppRouter = () => {
         <Route path="/totem/:id" element={<TotemPageContent />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/totens" element={<TotensListRender />} />
-        </Routes>
+      </Routes>
     </>
   );
 };

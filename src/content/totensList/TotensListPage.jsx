@@ -1,26 +1,16 @@
 import React, { useState } from "react";
 import "./TotensListPage.css";
-import totensCardData from "../../data/totensCardData";
+import filtersData from "../../data/filtersData";
 import GenericCard from "../../components/cards/GenericCard";
 import { Box, Grid, Typography } from "@mui/material";
 import FiltersSidebar from "../../components/filters/FiltersSidebar/FiltersSidebar";
+import totensData from "../../data/totemData";
 
 const TotensListPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedBrand, setSelectedBrand] = useState("Todas");
+  const [selectedBrand, setSelectedBrand] =useState("Todas");
 
-  const categories = [
-    "Todos",
-    "Totens linha Industrial",
-    "Totens linha Tablet",
-    "Totens para autopagamento",
-    "Totens para impressão de senhas",
-    "Totens para mídia indoor",
-  ];
-
-  const brands = ["Todas", "Locarti", "Outra Marca"];
-
-  const filteredTotens = totensCardData.filter((totem) => {
+  const filteredTotens = totensData.filter((totem) => {
     const matchesCategory =
       selectedCategory === "Todos" || totem.category === selectedCategory;
     const matchesBrand =
@@ -32,8 +22,8 @@ const TotensListPage = () => {
     <Box sx={{ display: "flex", gap: 3, padding: 3 }}>
       {/* Barra lateral de filtros */}
       <FiltersSidebar
-        categories={categories}
-        brands={brands}
+        categories={filtersData.categories}
+        brands={filtersData.brands}
         selectedCategory={selectedCategory}
         selectedBrand={selectedBrand}
         onCategoryChange={setSelectedCategory}
@@ -47,13 +37,14 @@ const TotensListPage = () => {
         </Typography>
         <Grid container spacing={3}>
           {filteredTotens.map((totem) => (
-            <Grid item xs={12} sm={6} md={4} key={totem.id}>
+            <Grid item key={totem.id}>
               <GenericCard
                 image={totem.image}
                 title={totem.title}
-                description={totem.description}
+                // description={totem.description}
+                price={totem.price}
                 buttonText="Ver Detalhes"
-                onButtonClick={() => console.log(`Ver detalhes do totem ${totem.id}`)}
+                link={`/totem/${totem.id}`} // Define o link para o totem
               />
             </Grid>
           ))}

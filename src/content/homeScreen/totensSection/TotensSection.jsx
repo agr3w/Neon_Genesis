@@ -5,8 +5,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 import style from "./TotensSection.module.css";
-import totensCardData from "../../../data/totensCardData";
 import { useNavigate } from "react-router-dom";
+import totensData from "../../../data/totemData";
+import { Typography } from "@mui/material";
 
 const TotensSection = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const TotensSection = () => {
           1024: { slidesPerView: 3 }, // Em telas maiores, exibe 3 slides
         }}
       >
-        {totensCardData.map((item) => (
+        {totensData.map((item) => (
           <SwiperSlide key={item.id}>
             <div
               className={style.totemCard}
@@ -41,11 +42,15 @@ const TotensSection = () => {
             >
               <img
                 src={item.image}
-                alt={item.title}
+                alt={item.name}
                 className={style.totemImage}
               />
-              <h3 className={style.totemTitle}>{item.title}</h3>
-              <p className={style.totemDescription}>{item.description}</p>
+              <Typography variant="h5" fontSize={"1.4rem"}>
+                {item.name}
+              </Typography>
+              <Typography variant="h6" fontSize={"0.9rem"}>
+                {item.description}
+              </Typography>
             </div>
           </SwiperSlide>
         ))}
