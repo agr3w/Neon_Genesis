@@ -7,6 +7,7 @@ import TotensListRender from "./pages/totensList/TotensListRender";
 import useScrollToTop from "./hook/useScrollToTop";
 import CartPage from "./pages/Cart/CartPage";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
+import PaymentPage from "./pages/payment/PaymentPage";
 
 /**
  * @file AppRouter.jsx
@@ -31,6 +32,7 @@ const AppRouter = () => {
         <Route path="/totens" element={<TotensListRender />} />
         <Route path="/carrinho" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
       </Routes>
     </>
   );

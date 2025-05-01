@@ -7,9 +7,6 @@ import {
   CardContent,
   Divider,
   Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@mui/material";
 import "./CheckoutPage.css";
 
@@ -34,8 +31,6 @@ const CheckoutPage = () => {
   ]);
 
   const [freight] = useState(50.0);
-  // eslint-disable-next-line no-unused-vars
-  const [paymentMethod, setPaymentMethod] = useState("credit_card");
   const [address] = useState({
     name: "Weslley Kampa",
     street: "Rua Capitão Leonardo Graziano, 1245",
@@ -51,15 +46,6 @@ const CheckoutPage = () => {
   );
 
   const total = subtotal + freight;
-
-  // eslint-disable-next-line no-unused-vars
-  const handlePaymentChange = (event) => {
-    setPaymentMethod(event.target.value);
-  };
-
-  const handleFinalizePurchase = () => {
-    alert("Compra finalizada com sucesso!");
-  };
 
   return (
     <Box className="checkout-page-container">
@@ -114,8 +100,12 @@ const CheckoutPage = () => {
           <Box className="checkout-summary">
             <Typography variant="h6">Resumo do Pedido</Typography>
             <Divider sx={{ my: 2 }} />
-            <Typography variant="body1">Subtotal: R$ {subtotal.toFixed(2)}</Typography>
-            <Typography variant="body1">Frete: R$ {freight.toFixed(2)}</Typography>
+            <Typography variant="body1">
+              Subtotal: R$ {subtotal.toFixed(2)}
+            </Typography>
+            <Typography variant="body1">
+              Frete: R$ {freight.toFixed(2)}
+            </Typography>
             <Divider sx={{ my: 2 }} />
             <Typography variant="h6">Total: R$ {total.toFixed(2)}</Typography>
             <Divider sx={{ my: 2 }} />
@@ -123,7 +113,7 @@ const CheckoutPage = () => {
               variant="contained"
               color="success"
               fullWidth
-              onClick={handleFinalizePurchase}
+              href="/payment"
               sx={{ mt: 2 }}
             >
               Continuar para Pagamento
@@ -132,7 +122,7 @@ const CheckoutPage = () => {
               variant="outlined"
               color="primary"
               fullWidth
-              href="/cart"
+              href="/carrinho"
               sx={{ mt: 2 }}
             >
               Voltar ao Carrinho
