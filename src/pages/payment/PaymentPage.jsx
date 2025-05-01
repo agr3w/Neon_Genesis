@@ -16,6 +16,21 @@ import {
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import "./PaymentPage.css";
 
+/**
+ * @description Esta página permite ao usuário escolher o método de pagamento e inserir os dados necessários para finalizar a compra.
+ * @TODO Melhorar componentização e reutilização de código, especialmente nas const useState.
+ * @TODO Adicionar validação de formulário para os campos.
+ * @TODO Implementar lógica para calcular o valor do PIX e do cartão de crédito com base na porcentagem escolhida.
+ * @TODO Adicionar lógica para lidar com o envio do formulário e a geração do QR Code para pagamento via PIX.
+ * @TODO Implementar lógica para lidar com o envio do formulário e a geração do boleto bancário.
+ * @TODO Implementar lógica para lidar com o envio do formulário e a validação dos dados do cartão de crédito.
+ * @TODO Implementar lógica para lidar com o envio do formulário e a validação dos dados do Nubank.
+ * @TODO Implementar lógica para lidar com o envio do formulário e a validação dos dados do cartão de crédito (2 cartões).
+ * @TODO Melhorar a responsividade da página para dispositivos móveis.
+ * @TODO Adicionar feedback visual para o usuário ao enviar o formulário (ex: carregando, sucesso, erro).
+ * @TODO Adicionar testes unitários e de integração para garantir a funcionalidade correta da página.
+ */
+
 const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
   const [subtotal] = useState(1823.52);
