@@ -5,7 +5,7 @@ const totensData = [
     description: "Este totem é usado para autoatendimento em pontos de venda, controle de acesso e consulta de informações.",
     image: "https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png",
     price: 2999.99,
-    category: "Totens linha Industrial",
+    category: "locação",
     brand: "Locarti",
   },
   {

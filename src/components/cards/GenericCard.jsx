@@ -27,6 +27,7 @@ import "./GenericCard.css";
  */
 const GenericCard = ({ image, title, description, buttonText, link, price }) => {
   const navigate = useNavigate();
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
@@ -45,7 +46,6 @@ const GenericCard = ({ image, title, description, buttonText, link, price }) => 
             className="generic-card-media"
           />
         )}
-
         <CardContent className="generic-card-content">
           {title && (
             <Typography variant="h6" component="div" className="card-title">
@@ -57,13 +57,12 @@ const GenericCard = ({ image, title, description, buttonText, link, price }) => 
               {description}
             </Typography>
           )}
-           {price && (
+          {price && (
             <Typography variant="h6" color="primary" className="card-price">
-              R$ {price}
+              R$ {price.toFixed(2)}
             </Typography>
           )}
         </CardContent>
-
         <CardActions className="generic-card-actions">
           {buttonText && (
             <Button

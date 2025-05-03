@@ -8,7 +8,7 @@ import totensData from "../../data/totemData";
 
 const TotensListPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedBrand, setSelectedBrand] =useState("Todas");
+  const [selectedBrand, setSelectedBrand] = useState("Todas");
 
   const filteredTotens = totensData.filter((totem) => {
     const matchesCategory =

@@ -9,7 +9,8 @@ import CartPage from "./pages/Cart/CartPage";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
 import PaymentPage from "./pages/payment/PaymentPage";
 import ReviewPage from "./pages/review/ReviewPage";
-import QuotationPage from "./pages/Quotation/QuotationPage";
+import RentalTotensList from "./content/QuotationScreen/RentalTotensList/RentalTotensList";
+import RentalTotemDetail from "./content/QuotationScreen/rentalTotensDetail/RentalTotemDetail";
 
 /**
  * @file AppRouter.jsx
@@ -34,14 +35,15 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/totem/:id" element={<TotemPageContent />} />
+        <Route path="/totem/:id" element={<TotemPageContent type="venda" />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/totens" element={<TotensListRender />} />
         <Route path="/carrinho" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="/orcamento" element={<QuotationPage />} />
+        <Route path="/orcamento" element={<RentalTotensList />} />
+        <Route path="/locacao/:id" element={<TotemPageContent type="locacao" />} />
       </Routes>
     </>
   );
