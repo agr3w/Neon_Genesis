@@ -11,22 +11,30 @@ import {
   CardActions,
   Typography,
   Button,
+  Box,
 } from "@mui/material";
 import "./GenericCard.css";
 
 /**
  * Componente de Card genérico.
- * Recebe as seguintes props:
- * - image: URL da imagem a ser exibida (opcional)
- * - title: Título do card
- * - description: Descrição do card
- * - buttonText: Texto do botão
- * - link: URL para redirecionar ao clicar no botão
- * - price: Preço do produto (opcional)
- * - type: Tipo do card ("venda" ou "locacao")
- * @param {Object} props - Propriedades do componente
+ * @param {Object} props - Propriedades do componente.
+ * @param {string} props.image - URL da imagem a ser exibida (opcional).
+ * @param {string} props.title - Título do card.
+ * @param {string} props.description - Descrição do card.
+ * @param {string} props.buttonText - Texto do botão.
+ * @param {string} props.link - URL para redirecionar ao clicar no botão.
+ * @param {number} props.price - Preço do produto (opcional).
+ * @param {string} props.type - Tipo do card (ex.: "venda", "locacao").
  */
-const GenericCard = ({ image, title, description, buttonText, link, price, type }) => {
+const GenericCard = ({
+  image,
+  title,
+  description,
+  buttonText,
+  link,
+  price,
+  type,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +46,7 @@ const GenericCard = ({ image, title, description, buttonText, link, price, type 
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <Card className="generic-card">
+      <Card className={`generic-card ${type}`}>
         {image && (
           <CardMedia
             component="img"
@@ -48,19 +56,21 @@ const GenericCard = ({ image, title, description, buttonText, link, price, type 
           />
         )}
         <CardContent className="generic-card-content">
-          {title && (
-            <Typography variant="h6" component="div" className="card-title">
-              {title}
-            </Typography>
-          )}
+          <Box className="card-header">
+            {title && (
+              <Typography variant="h6" component="div" className="card-title">
+                {title}
+              </Typography>
+            )}
+            {type === "venda" && price && (
+              <Typography variant="h6" color="primary" className="card-price">
+                R$ {price.toFixed(2)}
+              </Typography>
+            )}
+          </Box>
           {description && (
             <Typography variant="body2" color="text.secondary">
               {description}
-            </Typography>
-          )}
-          {type === "venda" && price && (
-            <Typography variant="h6" color="primary" className="card-price">
-              R$ {price.toFixed(2)}
             </Typography>
           )}
         </CardContent>
