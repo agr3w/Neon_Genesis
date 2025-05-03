@@ -7,6 +7,8 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router";
 
 /**
+ * @file Header.jsx
+ * @description
  * Componente retorna o "Navigator" da pagina, onde o cliente
  * pode navagar entre as páginas.
  */
@@ -30,7 +32,7 @@ const Header = () => {
             <Link to="/totens">Todos os totens</Link>
           </Typography>
           <Typography className="nav-itens-btn">
-            <Link to="/#">Orçamento</Link>
+            <Link to="/orcamento">Orçamento</Link>
           </Typography>
           <Typography className="nav-itens-btn">
             <Link to="/#">Suporte</Link>
