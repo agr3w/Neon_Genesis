@@ -1,0 +1,32 @@
+.rental-totens-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .rental-totem-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .rental-totem-image {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 16px;
+    border-radius: 8px;
+  }
+  
+  .rental-totem-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .rental-totem-description {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    color: #555;
+  }
