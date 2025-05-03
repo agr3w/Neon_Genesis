@@ -9,6 +9,7 @@ import CartPage from "./pages/Cart/CartPage";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
 import PaymentPage from "./pages/payment/PaymentPage";
 import ReviewPage from "./pages/review/ReviewPage";
+import QuotationPage from "./pages/Quotation/QuotationPage";
 
 /**
  * @file AppRouter.jsx
@@ -20,6 +21,11 @@ import ReviewPage from "./pages/review/ReviewPage";
  * Você pode adicionar mais rotas conforme necessário, seguindo o mesmo padrão.
  * Certifique-se de que os componentes importados estejam corretos e disponíveis no caminho especificado.
  */
+
+// @todo Adicionar lógica para verificar se o usuário está autenticado antes de acessar certas rotas (ex: /checkout, /payment, /review).
+// @todo Implementar lógica de redirecionamento para a página de login se o usuário não estiver autenticado. 
+// @todo Adicionar lógica para lidar com erros 404 (página não encontrada) e redirecionar para uma página de erro personalizada.
+// @todo Implementar lógica para lidar com o estado de carregamento enquanto as rotas estão sendo resolvidas.
 
 const AppRouter = () => {
   useScrollToTop();
@@ -35,6 +41,7 @@ const AppRouter = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/review" element={<ReviewPage />} />
+        <Route path="/orcamento" element={<QuotationPage />} />
       </Routes>
     </>
   );
