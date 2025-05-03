@@ -1,5 +1,5 @@
 import React from "react";
-import GenericCard from "../GenericCard";
+import GenericCard from "../genericCard/GenericCard";
 /**
  * Componente para exibir cards de locação.
  * @param {Object} props - Propriedades do componente.
