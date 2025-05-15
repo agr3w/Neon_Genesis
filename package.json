@@ -15,6 +15,7 @@
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
     "aos": "^2.3.4",
+    "axios": "^1.9.0",
     "framer-motion": "^12.5.0",
     "neon-genesis-vite": "file:",
     "react": "^19.1.0",

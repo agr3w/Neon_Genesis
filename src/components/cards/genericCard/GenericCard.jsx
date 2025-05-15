@@ -15,6 +15,9 @@ import {
 } from "@mui/material";
 import "./GenericCard.css";
 
+  import axios from 'axios';
+
+
 /**
  * Componente de Card genérico.
  * @param {Object} props - Propriedades do componente.
@@ -40,6 +43,20 @@ const GenericCard = ({
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
+
+//metodo para adicionar um usuário
+async function addUser() {
+  try {
+    const res = await axios.post('http://localhost:3001/users', {
+      name: 'Maria',
+      email: 'maria@exemplo.com'
+    });
+    console.log('Usuário criado:', res.data);
+  } catch (err) {
+    console.error('Erro API:', err);
+  }
+}
+
 
   return (
     <motion.div
@@ -79,7 +96,7 @@ const GenericCard = ({
             <Button
               size="small"
               variant="contained"
-              onClick={() => navigate(link)}
+              onClick={() => addUser()} //Teste do método addUser
               className="card-button"
             >
               {buttonText}
