@@ -44,7 +44,7 @@ const GenericCard = ({
     AOS.init({ duration: 1000 });
   }, []);
 
-
+//metodo para adicionar um usuário
 async function addUser() {
   try {
     const res = await axios.post('http://localhost:3001/users', {
@@ -96,7 +96,7 @@ async function addUser() {
             <Button
               size="small"
               variant="contained"
-              onClick={() => addUser()}
+              onClick={() => addUser()} //Teste do método addUser
               className="card-button"
             >
               {buttonText}
