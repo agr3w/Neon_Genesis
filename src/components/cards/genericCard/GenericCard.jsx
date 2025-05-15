@@ -96,7 +96,7 @@ async function addUser() {
             <Button
               size="small"
               variant="contained"
-              onClick={() => addUser()} //Teste do método addUser
+              onClick={() => navigate(link)}
               className="card-button"
             >
               {buttonText}
