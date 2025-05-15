@@ -1,268 +1,105 @@
-import React, { useState } from 'react';
-import './Cadastro.css';
+import {
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  Container,
+  Grid,
+  Box,
+  MenuItem,
+} from '@mui/material';
+import { useForm } from '../../hook/useForm';
+import axios from 'axios';
 
-const Cadastro = () => {
-  const [formData, setFormData] = useState({
-    tipoDocumento: 'cpf', // Valor padrão
-    documento: '',
-    nome: '',
-    email: '',
-    senha: '',
-    confirmarSenha: '',
-    dataNascimento: '',
-    telefone: '',
-    endereco: '',
-    cidade: '',
-    estado: '',
-    cep: '', // Novo campo para o CEP
-    termos: false,
-  });
+const estados = [
+  'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',
+  'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO',
+];
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+// src/utils/formFields.js
+export const cadastroFields = [
+  { name: 'tipoDocumento', label: 'Tipo de Documento', type: 'select', options: ['cpf', 'cnpj'] },
+  { name: 'documento', label: 'Documento', type: 'text' },
+  { name: 'nome', label: 'Nome Completo', type: 'text' },
+  { name: 'email', label: 'E-mail', type: 'email' },
+  // ... demais campos ...
+  { name: 'senha', label: 'Senha', type: 'password' },
+  { name: 'confirmarSenha', label: 'Confirmar Senha', type: 'password' },
+  { name: 'termos', label: 'Aceito os termos de uso', type: 'checkbox' },
+];
 
-    // Validação para o campo CEP
-    if (name === 'cep' && !/^\d{0,8}$/.test(value)) {
-      return; // Permite apenas números com até 8 dígitos
-    }
 
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
+const initialState = Object.fromEntries(cadastroFields.map(f => [f.name, f.type === 'checkbox' ? false : '']));
 
-  const handleSubmit = (e) => {
+/** 
+ * @todo melhorar a validação de campos
+ * @todo melhorar a implementação do hook useForm e do backend
+ * @todo ajustar estilo do formulário
+ * 
+ * 
+*/
+export default function Cadastro() {
+  const { formData, handleChange } = useForm(initialState);
+
+  const handleSubmit = async e => {
     e.preventDefault();
     if (formData.senha !== formData.confirmarSenha) {
       alert('As senhas não coincidem!');
       return;
     }
     if (!formData.termos) {
-      alert('Você deve aceitar os termos de uso para continuar.');
+      alert('Você deve aceitar os termos.');
       return;
     }
-    alert('Cadastro realizado com sucesso!');
-    console.log('Dados do formulário:', formData);
+    try {
+      const res = await axios.post('http://localhost:3001/users', formData);
+      console.log('Cliente criado:', res.data);
+      // possível redirecionamento...
+    } catch (err) {
+      console.error('Erro ao cadastrar:', err);
+      alert('Falha no cadastro.');
+    }
   };
 
   return (
-    <div className="cadastro-container">
-      <h1>Cadastrar</h1>
-      <p className="cadastro-description">
-        Preencha os campos abaixo para criar sua conta
-      </p>
-      <form onSubmit={handleSubmit} className="cadastro-form">
-        <div className="form-section">
-          <h2>Informações Pessoais</h2>
-          <div className="form-group">
-            <label>Tipo de Documento</label>
-            <div className="document-type-buttons">
-              <button
-                type="button"
-                className={`document-button ${formData.tipoDocumento === 'cpf' ? 'active' : ''}`}
-                onClick={() => setFormData({ ...formData, tipoDocumento: 'cpf' })}
-              >
-                CPF
-              </button>
-              <button
-                type="button"
-                className={`document-button ${formData.tipoDocumento === 'cnpj' ? 'active' : ''}`}
-                onClick={() => setFormData({ ...formData, tipoDocumento: 'cnpj' })}
-              >
-                CNPJ
-              </button>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="documento">
-              {formData.tipoDocumento === 'cpf' ? 'CPF' : 'CNPJ'}
-            </label>
-            <input
-              type="text"
-              id="documento"
-              name="documento"
-              value={formData.documento}
-              onChange={handleChange}
-              placeholder={
-                formData.tipoDocumento === 'cpf'
-                  ? 'Digite seu CPF'
-                  : 'Digite seu CNPJ'
-              }
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="nome">Nome Completo</label>
-            <input
-              type="text"
-              id="nome"
-              name="nome"
-              value={formData.nome}
-              onChange={handleChange}
-              placeholder="Digite seu nome completo"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">E-mail</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Digite seu e-mail"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="dataNascimento">Data de Nascimento</label>
-            <input
-              type="date"
-              id="dataNascimento"
-              name="dataNascimento"
-              value={formData.dataNascimento}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="form-section">
-          <h2>Contato e Endereço</h2>
-          <div className="form-group">
-            <label htmlFor="cep">CEP</label>
-            <input
-              type="text"
-              id="cep"
-              name="cep"
-              value={formData.cep}
-              onChange={handleChange}
-              placeholder="Digite seu CEP"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="telefone">Telefone</label>
-            <input
-              type="tel"
-              id="telefone"
-              name="telefone"
-              value={formData.telefone}
-              onChange={handleChange}
-              placeholder="Digite seu telefone"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="endereco">Endereço</label>
-            <input
-              type="text"
-              id="endereco"
-              name="endereco"
-              value={formData.endereco}
-              onChange={handleChange}
-              placeholder="Digite seu endereço"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="cidade">Cidade</label>
-            <input
-              type="text"
-              id="cidade"
-              name="cidade"
-              value={formData.cidade}
-              onChange={handleChange}
-              placeholder="Digite sua cidade"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="estado">Estado</label>
-            <select
-              id="estado"
-              name="estado"
-              value={formData.estado}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecione seu estado</option>
-              <option value="AC">Acre</option>
-              <option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option>
-              <option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option>
-              <option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option>
-              <option value="ES">Espírito Santo</option>
-              <option value="GO">Goiás</option>
-              <option value="MA">Maranhão</option>
-              <option value="MT">Mato Grosso</option>
-              <option value="MS">Mato Grosso do Sul</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="PA">Pará</option>
-              <option value="PB">Paraíba</option>
-              <option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option>
-              <option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option>
-              <option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option>
-              <option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option>
-              <option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option>
-              <option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="form-section">
-          <h2>Segurança</h2>
-          <div className="form-group">
-            <label htmlFor="senha">Senha</label>
-            <input
-              type="password"
-              id="senha"
-              name="senha"
-              value={formData.senha}
-              onChange={handleChange}
-              placeholder="Digite sua senha"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmarSenha">Confirmar Senha</label>
-            <input
-              type="password"
-              id="confirmarSenha"
-              name="confirmarSenha"
-              value={formData.confirmarSenha}
-              onChange={handleChange}
-              placeholder="Confirme sua senha"
-              required
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label>
-            <input
-              type="checkbox"
-              name="termos"
-              checked={formData.termos}
-              onChange={handleChange}
-            />
-            Aceito os termos de uso
-          </label>
-        </div>
-        <button type="submit" className="submit-button">Cadastrar</button>
-      </form>
-    </div>
+    <Container maxWidth="sm">
+      <Box mt={4} mb={4}>
+        <Typography variant="h4">Cadastro de Cliente</Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            {cadastroFields.map(field => (
+              <Grid item xs={12} key={field.name}>
+                {field.type === 'select' ? (
+                  <TextField
+                    select fullWidth label={field.label}
+                    name={field.name} value={formData[field.name]}
+                    onChange={handleChange} required
+                  >
+                    {field.options.map(opt => (
+                      <MenuItem key={opt} value={opt}>{opt.toUpperCase()}</MenuItem>
+                    ))}
+                  </TextField>
+                ) : field.type === 'checkbox' ? (
+                  <FormControlLabel
+                    control={<Checkbox name={field.name} checked={formData[field.name]} onChange={handleChange} />}
+                    label={field.label}
+                  />
+                ) : (
+                  <TextField
+                    fullWidth type={field.type} label={field.label}
+                    name={field.name} value={formData[field.name]}
+                    onChange={handleChange} required
+                  />
+                )}
+              </Grid>
+            ))}
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" fullWidth>Cadastre-se</Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Container>
   );
-};
-
-export default Cadastro;
+}
