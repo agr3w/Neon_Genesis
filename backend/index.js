@@ -44,3 +44,16 @@ app.post('/users', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+//metodo para adicionar um usuário
+// async function addUser() {
+//   try {
+//     const res = await axios.post('http://localhost:3001/users', {
+//       name: 'Maria',
+//       email: 'maria@exemplo.com'
+//     });
+//     console.log('Usuário criado:', res.data);
+//   } catch (err) {
+//     console.error('Erro API:', err);
+//   }
+// }
