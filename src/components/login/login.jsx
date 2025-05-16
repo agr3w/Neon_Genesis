@@ -12,10 +12,14 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   // Função para lidar com o login
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Aqui você pode adicionar a lógica de autenticação
+  const handleLogin = async (email, senha) => {
+     try {
+    const res = await axios.post('http://localhost:3001/login', { email, senha });
+    setUser(res.data);
+    return true;
+  } catch (err) {
+    return false;
+  }
   };
 
   return (

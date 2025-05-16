@@ -44,20 +44,6 @@ const GenericCard = ({
     AOS.init({ duration: 1000 });
   }, []);
 
-//metodo para adicionar um usuário
-async function addUser() {
-  try {
-    const res = await axios.post('http://localhost:3001/users', {
-      name: 'Maria',
-      email: 'maria@exemplo.com'
-    });
-    console.log('Usuário criado:', res.data);
-  } catch (err) {
-    console.error('Erro API:', err);
-  }
-}
-
-
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}

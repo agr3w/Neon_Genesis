@@ -10,6 +10,7 @@ import PaymentPage from "./pages/payment/PaymentPage";
 import ReviewPage from "./pages/review/ReviewPage";
 import RentalTotensList from "./content/QuotationScreen/RentalTotensList/RentalTotensList";
 import TotemDetailRender from "./pages/totemDetail/TotemDetailRender";
+import UserAcount from "./content/userAcount/UserAcount";
 
 /**
  * @file AppRouter.jsx
@@ -42,6 +43,7 @@ const AppRouter = () => {
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/orcamento" element={<RentalTotensList />} />
         <Route path="/locacao/:id" element={<TotemDetailRender />} />
+        <Route path="/user" element={<UserAcount />} />
       </Routes>
     </>
   );
