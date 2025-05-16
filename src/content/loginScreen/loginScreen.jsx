@@ -1,74 +1,88 @@
 import { useState } from "react";
-import "./LoginScreen.css";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import logo from "../../assets/logo.png";
-
-function Header() {
-  return (
-    <AppBar position="fixed" className="nav" color="transparent">
-      <Toolbar className="toolbar">
-        <div className="nav-left">
-          <img src={logo} alt="NEON GENESIS" className="nav-logo-img" />
-          <Typography variant="h6" className="nav-titulo" fontWeight={600}>
-            Neon Genesis
-          </Typography>
-        </div>
-        <ShoppingCartIcon />
-      </Toolbar>
-    </AppBar>
-  );
-}
+import { useNavigate, Link } from "react-router-dom";
+import { Typography, Box, Paper, TextField, Button } from "@mui/material";
+import axios from "axios";
+import { useAuth } from "../../hook/useAuth";
 
 function LoginScreen() {
-  const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phoneResidential, setPhoneResidential] = useState("");
-  const [phoneCell, setPhoneCell] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log("Email:", email, "Password:", password);
-  };
-
-  const handleRegister = () => {
-    console.log("Cadastro:", { fullName, birthDate, cpf, email, password, confirmPassword, phoneResidential, phoneCell });
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await axios.post("http://localhost:3001/login", { email, senha: password }); login(res.data);
+      navigate("/user"); // redireciona para a conta do usuário
+    } catch (err) {
+      setError("Usuário ou senha inválidos.");
+    }
   };
 
   return (
     <>
-      <Header />
-      <div className={`login-container ${isRegistering ? "register-mode" : ""}`}>
-        <div className="login-card">
-          <h2 className="login-title">{isRegistering ? "Cadastro" : "Login"}</h2>
-          {isRegistering ? (
-            <>
-              <input type="text" placeholder="Nome Completo" value={fullName} onChange={(e) => setFullName(e.target.value)} className="login-input" />
-              <input type="date" placeholder="Data de Nascimento" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="login-input" />
-              <input type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} className="login-input" />
-              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="login-input" />
-              <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} className="login-input" />
-              <input type="password" placeholder="Confirme a Senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="login-input" />
-              <input type="text" placeholder="Telefone Residencial" value={phoneResidential} onChange={(e) => setPhoneResidential(e.target.value)} className="login-input" />
-              <input type="text" placeholder="Telefone Celular" value={phoneCell} onChange={(e) => setPhoneCell(e.target.value)} className="login-input" />
-              <button onClick={handleRegister} className="login-button">Cadastrar</button>
-            </>
-          ) : (
-            <>
-              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="login-input" />
-              <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} className="login-input" />
-              <button onClick={handleLogin} className="login-button">Entrar</button>
-            </>
-          )}
-          <p className="toggle-text" onClick={() => setIsRegistering(!isRegistering)}>
-            {isRegistering ? "Já tem uma conta? Faça login" : "Não tem uma conta? Cadastre-se"}
-          </p>
-        </div>
-      </div>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(135deg, #667eea, #764ba2)",
+        }}
+      >
+        <Paper elevation={6} sx={{ p: 4, borderRadius: 3, minWidth: 340 }}>
+          <Typography variant="h5" fontWeight={700} align="center" mb={2}>
+            Login
+          </Typography>
+          <form onSubmit={handleLogin}>
+            <TextField
+              label="Email"
+              type="email"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <TextField
+              label="Senha"
+              type="password"
+              fullWidth
+              margin="normal"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {error && (
+              <Typography color="error" variant="body2" align="center" sx={{ mt: 1 }}>
+                {error}
+              </Typography>
+            )}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 2, mb: 1 }}
+            >
+              Entrar
+            </Button>
+          </form>
+          <Button
+            component={Link}
+            to="/cadastro"
+            variant="outlined"
+            color="primary"
+            fullWidth
+            sx={{ mt: 1 }}
+          >
+            Não tem uma conta? Cadastre-se
+          </Button>
+        </Paper>
+      </Box>
     </>
   );
 }

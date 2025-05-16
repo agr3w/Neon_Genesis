@@ -45,6 +45,24 @@ app.post('/users', async (req, res) => {
   }
 });
 
+app.post('/login', async (req, res) => {
+  const { email, senha } = req.body; // Use email ou documento, conforme seu frontend
+  try {
+    const conn = await mysql.createConnection(dbConfig);
+    const [rows] = await conn.execute(
+      'SELECT * FROM users WHERE email = ? AND senha = ?',
+      [email, senha]
+    );
+    if (rows.length === 0) {
+      return res.status(401).json({ error: 'Usuário ou senha inválidos' });
+    }
+    // Nunca envie a senha de volta!
+    const { senha: _, ...user } = rows[0];
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 //metodo para adicionar um usuário
 // async function addUser() {
 //   try {
