@@ -48,7 +48,13 @@ const Header = () => {
           >
             <ShoppingCartIcon className="nav-itens-iconCart" />
           </Link>
-          <AccountCircleIcon className="nav-itens-iconCart" />
+          <Link
+            to="/user"
+            className="nav-itens-iconCart"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <AccountCircleIcon className="nav-itens-iconCart" />
+          </Link>
           <AnnouncementIcon className="nav-itens-iconCart" />
         </div>
       </Toolbar>

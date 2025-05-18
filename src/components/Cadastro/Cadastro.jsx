@@ -17,28 +17,19 @@ const estados = [
   'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO',
 ];
 
-// src/utils/formFields.js
-export const cadastroFields = [
+const cadastroFields = [
+  { name: 'primeiro_nome', label: 'Primeiro Nome', type: 'text' },
+  { name: 'ultimo_nome', label: 'Último Nome', type: 'text' },
   { name: 'tipoDocumento', label: 'Tipo de Documento', type: 'select', options: ['cpf', 'cnpj'] },
   { name: 'documento', label: 'Documento', type: 'text' },
-  { name: 'nome', label: 'Nome Completo', type: 'text' },
   { name: 'email', label: 'E-mail', type: 'email' },
-  // ... demais campos ...
   { name: 'senha', label: 'Senha', type: 'password' },
   { name: 'confirmarSenha', label: 'Confirmar Senha', type: 'password' },
   { name: 'termos', label: 'Aceito os termos de uso', type: 'checkbox' },
 ];
 
-
 const initialState = Object.fromEntries(cadastroFields.map(f => [f.name, f.type === 'checkbox' ? false : '']));
 
-/** 
- * @todo melhorar a validação de campos
- * @todo melhorar a implementação do hook useForm e do backend
- * @todo ajustar estilo do formulário
- * 
- * 
-*/
 export default function Cadastro() {
   const { formData, handleChange } = useForm(initialState);
 
@@ -53,7 +44,17 @@ export default function Cadastro() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:3001/users', formData);
+      // Envie apenas os campos necessários para o backend
+      const payload = {
+        primeiro_nome: formData.primeiro_nome,
+        ultimo_nome: formData.ultimo_nome,
+        tipoDocumento: formData.tipoDocumento,
+        documento: formData.documento,
+        email: formData.email,
+        senha: formData.senha,
+        termos: formData.termos,
+      };
+      const res = await axios.post('http://localhost:3001/users', payload);
       console.log('Cliente criado:', res.data);
       // possível redirecionamento...
     } catch (err) {
