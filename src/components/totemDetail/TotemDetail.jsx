@@ -5,10 +5,12 @@ import { Box, Grid, Typography, Button } from "@mui/material";
 import "./TotemDetail.css";
 import { useParams } from "react-router";
 import totensData from "../../data/totemData";
+import { useCart } from "../../context/CartContext";
 
 const TotemDetail = ({ type }) => {
-const { id } = useParams();
+  const { id } = useParams();
   const totem = totensData.find((t) => t.id === Number(id));
+  const { addToCart } = useCart();
 
   if (!totem) {
     return (
@@ -23,10 +25,8 @@ const { id } = useParams();
   const handleAction = () => {
     if (type === "locacao") {
       console.log(`Solicitação de locação para o totem ${totem.name}`);
-      // Redirecionar ou executar lógica de locação
     } else {
-      console.log(`Totem ${totem.name} adicionado ao carrinho!`);
-      // Redirecionar ou executar lógica de venda
+      addToCart(totem);
     }
   };
 
@@ -57,7 +57,7 @@ const { id } = useParams();
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleAction}
+                onClick={() => handleAction()}
               >
                 {type === "locacao"
                   ? "Solicitar Locação"

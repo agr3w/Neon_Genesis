@@ -6,13 +6,16 @@ import './styles/Variables.css'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { AuthProvider } from './hook/useAuth';
+import { CartProvider } from "./context/CartContext";
 
 AOS.init();
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthProvider>
-      <AppRouter />
+      <CartProvider>
+        <AppRouter />
+      </CartProvider>
     </AuthProvider>
   </BrowserRouter>
 )

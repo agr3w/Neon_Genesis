@@ -5,6 +5,8 @@ import AnnouncementIcon from "@mui/icons-material/Announcement";
 import "./herder.css";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router";
+import { useCart } from "../../context/CartContext";
+import Badge from "@mui/material/Badge";
 
 /**
  * @file Header.jsx
@@ -14,6 +16,9 @@ import { Link } from "react-router";
  */
 
 const Header = () => {
+  const { cartItems } = useCart();
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <AppBar position="fixed" className="nav" color="transparent">
       <Toolbar className="toolbar">
@@ -46,7 +51,9 @@ const Header = () => {
             className="nav-itens-iconCart"
             style={{ textDecoration: "none", color: "white" }}
           >
-            <ShoppingCartIcon className="nav-itens-iconCart" />
+            <Badge badgeContent={totalItems} color="error">
+              <ShoppingCartIcon className="nav-itens-iconCart" />
+            </Badge>
           </Link>
           <Link
             to="/user"
