@@ -15,6 +15,9 @@ import {
 } from "@mui/material";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import "./PaymentPage.css";
+import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../hook/useAuth";
+import { useNavigate } from "react-router-dom";
 
 /**
  * @description Esta página permite ao usuário escolher o método de pagamento e inserir os dados necessários para finalizar a compra.
@@ -32,21 +35,24 @@ import "./PaymentPage.css";
  */
 
 const PaymentPage = () => {
-  const [paymentMethod, setPaymentMethod] = useState("pix");
-  const [subtotal] = useState(1823.52);
+  const { cartItems } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const [freight] = useState(28.47);
-  const [discount] = useState(273.53); // Exemplo de desconto para pagamento à vista
+  const [discount] = useState(273.53);
   const total = subtotal + freight - discount;
 
-  const [pixPercentage, setPixPercentage] = useState(50); // Porcentagem inicial para PIX
+  const [paymentMethod, setPaymentMethod] = useState("pix");
+  const [pixPercentage, setPixPercentage] = useState(50);
   const [pixValue, setPixValue] = useState((total * pixPercentage) / 100);
   const [creditCardValue, setCreditCardValue] = useState(total - pixValue);
-  // eslint-disable-next-line no-unused-vars
   const [formError, setFormError] = useState("");
 
   const handlePaymentChange = (event) => {
     setPaymentMethod(event.target.value);
-    setFormError(""); // Limpa erros ao trocar método de pagamento
+    setFormError("");
   };
 
   const handlePixPercentageChange = (percentage) => {
@@ -64,9 +70,19 @@ const PaymentPage = () => {
       setFormError("Os valores de PIX e cartão devem somar o total do pedido.");
       return;
     }
-    alert(`Forma de pagamento selecionada: ${paymentMethod}`);
+    // Salva dados no localStorage para a ReviewPage
+    localStorage.setItem(
+      "paymentData",
+      JSON.stringify({
+        paymentMethod,
+        pixValue,
+        creditCardValue,
+        discount,
+        total,
+      })
+    );
+    navigate("/review");
   };
-
   return (
     <Box className="payment-page-container">
       <Typography variant="h4" gutterBottom>

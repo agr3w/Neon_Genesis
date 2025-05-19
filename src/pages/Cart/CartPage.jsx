@@ -1,3 +1,4 @@
+// filepath: c:\Users\weslley\Devs\Neon_Genesis\src\pages\Cart\CartPage.jsx
 import React, { useState } from "react";
 import {
   Box,
@@ -11,40 +12,13 @@ import {
   TextField,
 } from "@mui/material";
 import "./CartPage.css";
-
-/**
- * Pagina do Carrinho de Compras.
- * @todo Necessario componetizar os itens do carrinho para reutilizacao e melhor manutencao.
- * @todo Falta implementar a funcionalidade de calcular o frete e aplicar o cupom de desconto.
- * @agr3w
- */
+import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../hook/useAuth";
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Totem Ultra Pro",
-      description:
-        "Este totem é usado para autoatendimento em pontos de venda, controle de acesso e consulta de informações.",
-      image:
-        "https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png",
-      price: 2999.99,
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Totem Express",
-      description: "Compacto e rápido, ideal para pontos de alto fluxo.",
-      image:
-        "https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png",
-      price: 1999.99,
-      quantity: 1,
-    },
-  ]);
-
+  const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { user } = useAuth();
   const [coupon, setCoupon] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [freight, setFreight] = useState(0);
 
   const handleApplyCoupon = () => {
     if (coupon === "DESCONTO10") {
@@ -55,15 +29,11 @@ const CartPage = () => {
   };
 
   const handleQuantityChange = (id, newQuantity) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    updateQuantity(id, Math.max(1, newQuantity));
   };
 
   const handleRemoveItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    removeFromCart(id);
   };
 
   const subtotal = cartItems.reduce(
@@ -71,7 +41,8 @@ const CartPage = () => {
     0
   );
 
-  const total = subtotal + freight;
+  const total = subtotal;
+
 
   return (
     <Box className="cart-page-container">
@@ -155,9 +126,6 @@ const CartPage = () => {
               <Divider sx={{ my: 2 }} />
               <Typography variant="body1">
                 Subtotal: R$ {subtotal.toFixed(2)}
-              </Typography>
-              <Typography variant="body1">
-                Frete: R$ {freight.toFixed(2)}
               </Typography>
               <Divider sx={{ my: 2 }} />
               <Typography variant="h6">Total: R$ {total.toFixed(2)}</Typography>

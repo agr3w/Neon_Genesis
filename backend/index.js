@@ -5,6 +5,8 @@ const cors = require("cors");
 const app = express();
 app.use(cors(), bodyParser.json());
 
+
+
 const dbConfig = {
   host: "localhost",
   user: "root",
@@ -26,7 +28,15 @@ app.listen(3001, () => console.log("API rodando na porta 3001"));
  * @todo ajustar validações
  */
 app.post("/users", async (req, res) => {
-  const { primeiro_nome, ultimo_nome, email, tipoDocumento, documento, senha, termos } = req.body;
+  const {
+    primeiro_nome,
+    ultimo_nome,
+    email,
+    tipoDocumento,
+    documento,
+    senha,
+    termos,
+  } = req.body;
   try {
     const conn = await mysql.createConnection(dbConfig);
     const sql = `
@@ -34,10 +44,20 @@ app.post("/users", async (req, res) => {
         (primeiro_nome, ultimo_nome, email, tipoDocumento, documento, senha, termos)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
-    const params = [primeiro_nome, ultimo_nome, email, tipoDocumento, documento, senha, termos];
+    const params = [
+      primeiro_nome,
+      ultimo_nome,
+      email,
+      tipoDocumento,
+      documento,
+      senha,
+      termos,
+    ];
     const [result] = await conn.execute(sql, params);
 
-    res.status(201).json({ id: result.insertId, primeiro_nome, ultimo_nome, email });
+    res
+      .status(201)
+      .json({ id: result.insertId, primeiro_nome, ultimo_nome, email });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -59,7 +79,8 @@ app.post("/login", async (req, res) => {
 // --------------------DADOS DA CONTA---------------------
 app.put("/users/:id", async (req, res) => {
   const { id } = req.params;
-  const { primeiro_nome, ultimo_nome, tipoDocumento, documento, email } = req.body;
+  const { primeiro_nome, ultimo_nome, tipoDocumento, documento, email } =
+    req.body;
   const conn = await mysql.createConnection(dbConfig);
   await conn.execute(
     "UPDATE users SET primeiro_nome=?, ultimo_nome=?, tipoDocumento=?, documento=?, email=? WHERE id=?",
@@ -73,11 +94,16 @@ app.put("/users/:id/senha", async (req, res) => {
   const { senhaAtual, novaSenha } = req.body;
   const conn = await mysql.createConnection(dbConfig);
   // Verifica senha atual
-  const [rows] = await conn.execute("SELECT senha FROM users WHERE id = ?", [id]);
+  const [rows] = await conn.execute("SELECT senha FROM users WHERE id = ?", [
+    id,
+  ]);
   if (!rows.length || rows[0].senha !== senhaAtual) {
     return res.status(400).json({ error: "Senha atual incorreta." });
   }
-  await conn.execute("UPDATE users SET senha = ? WHERE id = ?", [novaSenha, id]);
+  await conn.execute("UPDATE users SET senha = ? WHERE id = ?", [
+    novaSenha,
+    id,
+  ]);
   res.json({ ok: true });
 });
 
@@ -102,12 +128,22 @@ app.post("/enderecos", async (req, res) => {
     estado,
     cep,
     telefone,
-    padrao
+    padrao,
   } = req.body;
   const conn = await mysql.createConnection(dbConfig);
   const [result] = await conn.execute(
     "INSERT INTO enderecos (user_id, tipo, nome_destinatario, endereco, cidade, estado, cep, telefone, padrao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [user_id, tipo, nome_destinatario, endereco, cidade, estado, cep, telefone, padrao]
+    [
+      user_id,
+      tipo,
+      nome_destinatario,
+      endereco,
+      cidade,
+      estado,
+      cep,
+      telefone,
+      padrao,
+    ]
   );
   res.status(201).json({ id: result.insertId });
 });
@@ -131,10 +167,7 @@ app.put("/enderecos/:id/padrao", async (req, res) => {
     [user_id, tipo]
   );
   // Seta padrão no selecionado
-  await conn.execute(
-    "UPDATE enderecos SET padrao = 1 WHERE id = ?",
-    [id]
-  );
+  await conn.execute("UPDATE enderecos SET padrao = 1 WHERE id = ?", [id]);
   res.json({ ok: true });
 });
 
@@ -149,12 +182,23 @@ app.put("/enderecos/:id", async (req, res) => {
     cep,
     telefone,
     padrao,
-    user_id
+    user_id,
   } = req.body;
   const conn = await mysql.createConnection(dbConfig);
   await conn.execute(
     "UPDATE enderecos SET tipo=?, nome_destinatario=?, endereco=?, cidade=?, estado=?, cep=?, telefone=?, padrao=? WHERE id=? AND user_id=?",
-    [tipo, nome_destinatario, endereco, cidade, estado, cep, telefone, padrao, id, user_id]
+    [
+      tipo,
+      nome_destinatario,
+      endereco,
+      cidade,
+      estado,
+      cep,
+      telefone,
+      padrao,
+      id,
+      user_id,
+    ]
   );
   res.json({ ok: true });
 });
@@ -167,6 +211,24 @@ app.get("/pedidos/:userId", async (req, res) => {
     userId,
   ]);
   res.json(rows);
+});
+
+app.post("/pedidos", async (req, res) => {
+  const {
+    user_id,
+    numero_pedido,
+    pagamento,
+    data,
+    valor_total,
+    status,
+    detalhes,
+  } = req.body;
+  const conn = await mysql.createConnection(dbConfig);
+  const [result] = await conn.execute(
+    "INSERT INTO pedidos (user_id, numero_pedido, pagamento, data, valor_total, status, detalhes) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [user_id, numero_pedido, pagamento, data, valor_total, status, detalhes]
+  );
+  res.status(201).json({ id: result.insertId });
 });
 
 // --------------------CHAMADOS---------------------
