@@ -1,69 +1,172 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AnnouncementIcon from "@mui/icons-material/Announcement";
-import "./herder.css";
-import logo from "../../assets/logo.png";
-import { Link } from "react-router";
+import React from "react";
+import { 
+  AppBar,
+  Toolbar,
+  Typography,
+  Badge,
+  IconButton,
+  Box,
+  Button,
+  styled
+} from "@mui/material";
+import {
+  ShoppingCart,
+  AccountCircle,
+  Announcement
+} from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import Badge from "@mui/material/Badge";
+import logo from '../../assets/logo.png';
 
-/**
- * @file Header.jsx
- * @description
- * Componente retorna o "Navigator" da pagina, onde o cliente
- * pode navagar entre as páginas.
- */
+// Componente estilizado para os links de navegação
+const NervLink = styled(Button)(({ theme }) => ({
+  fontFamily: "'Orbitron', sans-serif",
+  color: theme.palette.nge.neonGreen,
+  textTransform: 'uppercase',
+  position: 'relative',
+  '&:hover': {
+    color: theme.palette.nge.hoverBlue,
+    backgroundColor: 'transparent',
+    '&::before': {
+      content: '"▸"',
+      position: 'absolute',
+      left: '-20px',
+      color: theme.palette.nge.red
+    }
+  }
+}));
+
+// Componente estilizado para os ícones
+const NervIcon = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.nge.neonGreen,
+  '&:hover': {
+    color: theme.palette.nge.hoverBlue,
+    filter: 'drop-shadow(0 0 5px var(--nge-hover-blue))'
+  }
+}));
 
 const Header = () => {
   const { cartItems } = useCart();
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <AppBar position="fixed" className="nav" color="transparent">
-      <Toolbar className="toolbar">
-        {/* Logo e título alinhados à esquerda */}
-        <Link to="/" className="link-home">
-          <div className="nav-left">
-            <img src={logo} alt="NEON GENESIS" className="nav-logo-img" />
-            <Typography variant="h6" className="nav-titulo" fontWeight={600}>
-              Neon Genesis
-            </Typography>
-          </div>
-        </Link>
-        {/* Botões centralizados */}
-        <div className="nav-center">
-          <Typography className="nav-itens-btn">
-            <Link to="/totens">Todos os totens</Link>
+    <AppBar 
+      position="fixed"
+      sx={{
+        background: (theme) => theme.palette.nge.dark,
+        borderBottom: '2px solid',
+        borderColor: (theme) => theme.palette.nge.purple,
+        boxShadow: '0 0 15px var(--nge-neon-green)'
+      }}
+    >
+      <Toolbar sx={{ 
+        py: 2,
+        justifyContent: 'space-between'
+      }}>
+        {/* Logo e título - Esquerda */}
+        <Box 
+          component={Link}
+          to="/"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            textDecoration: 'none',
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: -8,
+              left: 0,
+              width: '100%',
+              height: '2px',
+              background: (theme) => theme.palette.nge.neonGreen,
+              transform: 'scaleX(0)',
+              transition: 'transform 0.3s'
+            },
+            '&:hover::after': {
+              transform: 'scaleX(1)'
+            }
+          }}
+        >
+          <Box
+            component="img"
+            src={logo}
+            alt="NERV LOGO"
+            sx={{
+              height: 40,
+              mr: 2,
+              filter: 'drop-shadow(0 0 8px var(--nge-neon-green))'
+            }}
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              background: 'linear-gradient(45deg, var(--nge-neon-green), var(--nge-hover-blue))',
+              WebkitBackgroundClip: 'text',
+              color: 'transparent',
+              textShadow: '0 0 10px rgba(0, 255, 157, 0.5)'
+            }}
+          >
+            NERV COMMERCE
           </Typography>
-          <Typography className="nav-itens-btn">
-            <Link to="/orcamento">Orçamento</Link>
-          </Typography>
-          <Typography className="nav-itens-btn">
-            <Link to="/#">Suporte</Link>
-          </Typography>
-        </div>
+        </Box>
 
-        {/* Carrinho ou outros ícones à direita */}
-        <div className="nav-right">
-          <Link
-            to="/carrinho"
-            className="nav-itens-iconCart"
-            style={{ textDecoration: "none", color: "white" }}
+        {/* Links centrais - Navegação */}
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
+          {['totens', 'orcamento', 'suporte'].map((page) => (
+            <NervLink
+              key={page}
+              component={Link}
+              to={`/${page}`}
+            >
+              {page.replace('-', ' ')}
+            </NervLink>
+          ))}
+        </Box>
+
+        {/* Ícones - Direita */}
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Badge 
+            badgeContent={totalItems}
+            color="error"
+            sx={{
+              '& .MuiBadge-badge': {
+                backgroundColor: (theme) => theme.palette.nge.red,
+                fontFamily: "'Orbitron', sans-serif"
+              }
+            }}
           >
-            <Badge badgeContent={totalItems} color="error">
-              <ShoppingCartIcon className="nav-itens-iconCart" />
-            </Badge>
-          </Link>
-          <Link
+            <NervIcon
+              component={Link}
+              to="/carrinho"
+              size="large"
+            >
+              <ShoppingCart />
+            </NervIcon>
+          </Badge>
+
+          <NervIcon
+            component={Link}
             to="/user"
-            className="nav-itens-iconCart"
-            style={{ textDecoration: "none", color: "white" }}
+            size="large"
           >
-            <AccountCircleIcon className="nav-itens-iconCart" />
-          </Link>
-          <AnnouncementIcon className="nav-itens-iconCart" />
-        </div>
+            <AccountCircle />
+          </NervIcon>
+
+          <NervIcon
+            size="large"
+            sx={{
+              color: (theme) => theme.palette.nge.red,
+              '&:hover': {
+                transform: 'rotate(360deg)',
+                transition: 'transform 0.5s'
+              }
+            }}
+          >
+            <Announcement />
+          </NervIcon>
+        </Box>
       </Toolbar>
     </AppBar>
   );

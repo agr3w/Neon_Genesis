@@ -1,6 +1,5 @@
-import { React, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -12,23 +11,38 @@ import {
   Typography,
   Button,
   Box,
+  styled
 } from "@mui/material";
-import "./GenericCard.css";
+import { useTheme } from "@mui/material/styles";
 
-  import axios from 'axios';
+const NervCard = styled(Card)(({ theme, type }) => ({
+  background: `linear-gradient(145deg, #1a1a2e, #0a0a12)`,
+  border: `2px solid ${type === 'locacao' ? theme.palette.nge.purple : theme.palette.nge.red}`,
+  borderRadius: '4px',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'all 0.3s',
+  boxShadow: `0 5px 15px ${type === 'locacao' ? 'rgba(125, 38, 205, 0.3)' : 'rgba(255, 0, 51, 0.3)'}`,
+  '&:hover': {
+    borderColor: theme.palette.nge.neonGreen,
+    boxShadow: `0 10px 25px rgba(0, 255, 157, 0.5)`
+  }
+}));
 
+const NervCardButton = styled(Button)(({ theme }) => ({
+  fontFamily: "'Orbitron', sans-serif",
+  background: 'linear-gradient(45deg, #7d26cd 0%, #ff0033 100%)',
+  color: 'white',
+  textTransform: 'uppercase',
+  letterSpacing: '0.1em',
+  borderRadius: '0',
+  padding: '8px 16px',
+  '&:hover': {
+    background: 'linear-gradient(45deg, #ff0033 0%, #7d26cd 100%)'
+  }
+}));
 
-/**
- * Componente de Card genérico.
- * @param {Object} props - Propriedades do componente.
- * @param {string} props.image - URL da imagem a ser exibida (opcional).
- * @param {string} props.title - Título do card.
- * @param {string} props.description - Descrição do card.
- * @param {string} props.buttonText - Texto do botão.
- * @param {string} props.link - URL para redirecionar ao clicar no botão.
- * @param {number} props.price - Preço do produto (opcional).
- * @param {string} props.type - Tipo do card (ex.: "venda", "locacao").
- */
 const GenericCard = ({
   image,
   title,
@@ -39,6 +53,7 @@ const GenericCard = ({
   type,
 }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -46,50 +61,87 @@ const GenericCard = ({
 
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.03 }}
       transition={{ type: "spring", stiffness: 300 }}
+      data-aos="fade-up"
     >
-      <Card className={`generic-card ${type}`}>
+      <NervCard type={type} sx={{
+        border: `2px solid ${type === 'locacao' ? theme.palette.nge.purple : theme.palette.nge.red}`,
+        boxShadow: `0 5px 15px ${type === 'locacao' ? 'rgba(125, 38, 205, 0.3)' : 'rgba(255, 0, 51, 0.3)'}`,
+        '&:hover': {
+          borderColor: theme.palette.nge.neonGreen,
+          boxShadow: `0 10px 25px rgba(0, 255, 157, 0.5)`
+        }
+      }}>
         {image && (
           <CardMedia
             component="img"
             image={image}
             alt={title}
-            className="generic-card-media"
+            sx={{
+              height: 200,
+              objectFit: 'contain',
+              p: 2,
+              filter: 'drop-shadow(0 0 10px rgba(0, 255, 157, 0.3))'
+            }}
           />
         )}
-        <CardContent className="generic-card-content">
-          <Box className="card-header">
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Box sx={{ 
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 2
+          }}>
             {title && (
-              <Typography variant="h6" component="div" className="card-title">
+              <Typography 
+                variant="h6" 
+                sx={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  color: theme.palette.nge.neonGreen,
+                  fontWeight: 700
+                }}
+              >
                 {title}
               </Typography>
             )}
             {type === "venda" && price && (
-              <Typography variant="h6" color="primary" className="card-price">
+              <Typography 
+                variant="h6"
+                sx={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  color: theme.palette.nge.red
+                }}
+              >
                 R$ {price.toFixed(2)}
               </Typography>
             )}
           </Box>
           {description && (
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+              variant="body2"
+              sx={{
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontFamily: "'Rajdhani', sans-serif",
+                fontSize: '0.9rem'
+              }}
+            >
               {description}
             </Typography>
           )}
         </CardContent>
-        <CardActions className="generic-card-actions">
+        <CardActions sx={{ p: 2 }}>
           {buttonText && (
-            <Button
+            <NervCardButton
               size="small"
-              variant="contained"
+              fullWidth
               onClick={() => navigate(link)}
-              className="card-button"
             >
               {buttonText}
-            </Button>
+            </NervCardButton>
           )}
         </CardActions>
-      </Card>
+      </NervCard>
     </motion.div>
   );
 };

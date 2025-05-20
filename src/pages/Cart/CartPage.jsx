@@ -1,4 +1,3 @@
-// filepath: c:\Users\weslley\Devs\Neon_Genesis\src\pages\Cart\CartPage.jsx
 import React, { useState } from "react";
 import {
   Box,
@@ -10,21 +9,49 @@ import {
   Button,
   Divider,
   TextField,
+  styled
 } from "@mui/material";
-import "./CartPage.css";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../hook/useAuth";
+import { useTheme } from "@mui/material/styles";
+
+const NervCartContainer = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(4),
+  background: `linear-gradient(180deg, ${theme.palette.nge.dark} 0%, #1a1a2e 100%)`,
+  minHeight: '100vh'
+}));
+
+const NervCartItem = styled(Card)(({ theme }) => ({
+  background: 'rgba(26, 26, 46, 0.7)',
+  border: `2px solid ${theme.palette.nge.purple}`,
+  borderRadius: '4px',
+  marginBottom: theme.spacing(3),
+  transition: 'all 0.3s',
+  '&:hover': {
+    borderColor: theme.palette.nge.neonGreen,
+    boxShadow: `0 0 15px ${theme.palette.nge.neonGreen}`
+  }
+}));
+
+const NervCartButton = styled(Button)(({ theme }) => ({
+  fontFamily: "'Orbitron', sans-serif",
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase',
+  borderRadius: '0',
+  minWidth: '40px'
+}));
 
 const CartPage = () => {
+  const theme = useTheme();
   const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();
   const { user } = useAuth();
   const [coupon, setCoupon] = useState("");
 
   const handleApplyCoupon = () => {
-    if (coupon === "DESCONTO10") {
-      alert("Cupom aplicado com sucesso!");
+    if (coupon === "EVANGELION") {
+      alert("CUPOM ATIVADO - 15% DE DESCONTO");
     } else {
-      alert("Cupom inválido!");
+      alert("CUPOM INVÁLIDO - TENTE 'EVANGELION'");
     }
   };
 
@@ -43,20 +70,51 @@ const CartPage = () => {
 
   const total = subtotal;
 
-
   return (
-    <Box className="cart-page-container">
-      <Typography variant="h4" gutterBottom>
-        Meu Carrinho
+    <NervCartContainer>
+      <Typography variant="h3" sx={{
+        fontFamily: "'Orbitron', sans-serif",
+        color: theme.palette.nge.neonGreen,
+        mb: 4,
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        position: 'relative',
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: '-10px',
+          left: 0,
+          width: '100px',
+          height: '3px',
+          background: theme.palette.nge.red
+        }
+      }}>
+        /// SISTEMA DE CARGA
       </Typography>
 
       {cartItems.length === 0 ? (
-        <Box className="empty-cart">
-          <Typography variant="h6" color="textSecondary">
-            Seu carrinho está vazio.
+        <Box sx={{ 
+          textAlign: 'center',
+          mt: 10
+        }}>
+          <Typography variant="h5" sx={{
+            fontFamily: "'Orbitron', sans-serif",
+            color: theme.palette.nge.red,
+            mb: 3
+          }}>
+            SISTEMA VAZIO
           </Typography>
-          <Button variant="contained" color="primary" href="/totens">
-            Ver Totens
+          <Button
+            variant="contained"
+            href="/totens"
+            sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              background: `linear-gradient(45deg, ${theme.palette.nge.purple} 0%, ${theme.palette.nge.red} 100%)`,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}
+          >
+            SELECIONAR UNIDADES
           </Button>
         </Box>
       ) : (
@@ -64,7 +122,7 @@ const CartPage = () => {
           {/* Lista de Produtos */}
           <Grid item xs={12} md={8}>
             {cartItems.map((item) => (
-              <Card key={item.id} className="cart-item-card">
+              <NervCartItem key={item.id}>
                 <Grid container spacing={2}>
                   <Grid item xs={4}>
                     <CardMedia
@@ -72,95 +130,192 @@ const CartPage = () => {
                       height="140"
                       image={item.image}
                       alt={item.name}
+                      sx={{
+                        objectFit: 'contain',
+                        p: 2,
+                        filter: 'drop-shadow(0 0 5px rgba(0, 255, 157, 0.3))'
+                      }}
                     />
                   </Grid>
                   <Grid item xs={8}>
                     <CardContent>
-                      <Typography variant="h6">{item.name}</Typography>
-                      <Typography variant="body2" color="textSecondary">
+                      <Typography variant="h6" sx={{
+                        fontFamily: "'Orbitron', sans-serif",
+                        color: 'white',
+                        mb: 1
+                      }}>
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body2" sx={{
+                        fontFamily: "'Rajdhani', sans-serif",
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        mb: 2
+                      }}>
                         {item.description}
                       </Typography>
-                      <Typography variant="body1" color="primary">
+                      <Typography variant="body1" sx={{
+                        fontFamily: "'Orbitron', sans-serif",
+                        color: theme.palette.nge.red,
+                        mb: 2
+                      }}>
                         R$ {item.price.toFixed(2)}
                       </Typography>
-                      <Box className="quantity-controls">
-                        <Button
-                          size="small"
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        mb: 2
+                      }}>
+                        <NervCartButton
                           onClick={() =>
                             handleQuantityChange(
                               item.id,
                               Math.max(1, item.quantity - 1)
                             )
                           }
+                          sx={{
+                            border: `1px solid ${theme.palette.nge.purple}`,
+                            color: 'white'
+                          }}
                         >
                           -
-                        </Button>
-                        <Typography>{item.quantity}</Typography>
-                        <Button
-                          size="small"
+                        </NervCartButton>
+                        <Typography sx={{ 
+                          mx: 2,
+                          fontFamily: "'Orbitron', sans-serif",
+                          color: 'white'
+                        }}>
+                          {item.quantity}
+                        </Typography>
+                        <NervCartButton
                           onClick={() =>
                             handleQuantityChange(item.id, item.quantity + 1)
                           }
+                          sx={{
+                            border: `1px solid ${theme.palette.nge.purple}`,
+                            color: 'white'
+                          }}
                         >
                           +
-                        </Button>
+                        </NervCartButton>
                       </Box>
-                      <Button
-                        size="small"
-                        color="secondary"
+                      <NervCartButton
                         onClick={() => handleRemoveItem(item.id)}
+                        sx={{
+                          background: theme.palette.nge.red,
+                          color: 'white',
+                          '&:hover': {
+                            background: theme.palette.nge.dark,
+                            border: `1px solid ${theme.palette.nge.red}`
+                          }
+                        }}
                       >
-                        Remover
-                      </Button>
+                        REMOVER
+                      </NervCartButton>
                     </CardContent>
                   </Grid>
                 </Grid>
-              </Card>
+              </NervCartItem>
             ))}
           </Grid>
 
           {/* Resumo do Pedido */}
           <Grid item xs={12} md={4}>
-            <Box className="cart-summary">
-              <Typography variant="h6">Resumo do Pedido</Typography>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="body1">
-                Subtotal: R$ {subtotal.toFixed(2)}
+            <Box sx={{
+              background: 'rgba(10, 10, 18, 0.8)',
+              border: `2px solid ${theme.palette.nge.purple}`,
+              borderRadius: '4px',
+              p: 3
+            }}>
+              <Typography variant="h6" sx={{
+                fontFamily: "'Orbitron', sans-serif",
+                color: theme.palette.nge.neonGreen,
+                mb: 2
+              }}>
+                RESUMO DA ORDEM
               </Typography>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6">Total: R$ {total.toFixed(2)}</Typography>
-              <Divider sx={{ my: 2 }} />
+              <Divider sx={{ 
+                borderColor: theme.palette.nge.purple,
+                mb: 2 
+              }} />
+              <Typography variant="body1" sx={{
+                fontFamily: "'Rajdhani', sans-serif",
+                color: 'white',
+                mb: 1
+              }}>
+                SUBTOTAL: R$ {subtotal.toFixed(2)}
+              </Typography>
+              <Divider sx={{ 
+                borderColor: theme.palette.nge.purple,
+                my: 2 
+              }} />
+              <Typography variant="h6" sx={{
+                fontFamily: "'Orbitron', sans-serif",
+                color: theme.palette.nge.red,
+                mb: 3
+              }}>
+                TOTAL: R$ {total.toFixed(2)}
+              </Typography>
+              
               <TextField
-                label="Cupom de Desconto"
+                label="CÓDIGO DE DESCONTO"
                 variant="outlined"
                 size="small"
                 fullWidth
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.palette.nge.purple
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.palette.nge.neonGreen
+                    }
+                  },
+                  '& label': {
+                    color: theme.palette.nge.neonGreen,
+                    fontFamily: "'Rajdhani', sans-serif"
+                  }
+                }}
               />
               <Button
                 variant="contained"
-                color="primary"
                 fullWidth
                 onClick={handleApplyCoupon}
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  fontFamily: "'Orbitron', sans-serif",
+                  background: theme.palette.nge.purple,
+                  letterSpacing: '0.1em',
+                  '&:hover': {
+                    background: theme.palette.nge.red
+                  }
+                }}
               >
-                Aplicar Cupom
+                ATIVAR CÓDIGO
               </Button>
               <Button
                 variant="contained"
-                color="success"
                 fullWidth
                 href="/checkout"
-                sx={{ mt: 2 }}
+                sx={{
+                  mt: 2,
+                  fontFamily: "'Orbitron', sans-serif",
+                  background: `linear-gradient(45deg, ${theme.palette.nge.red} 0%, ${theme.palette.nge.purple} 100%)`,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  '&:hover': {
+                    background: `linear-gradient(45deg, ${theme.palette.nge.purple} 0%, ${theme.palette.nge.red} 100%)`
+                  }
+                }}
               >
-                Finalizar Pedido
+                INICIAR PROCESSO
               </Button>
             </Box>
           </Grid>
         </Grid>
       )}
-    </Box>
+    </NervCartContainer>
   );
 };
 

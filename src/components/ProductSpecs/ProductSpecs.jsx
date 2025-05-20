@@ -1,37 +1,74 @@
 import React from "react";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
-  Paper,
   Typography,
+  styled
 } from "@mui/material";
 import specsData from "../../data/specsData";
-import "./ProductSpecs.css";
+import { useTheme } from "@mui/material/styles";
+
+const NervSpecsTable = styled(TableContainer)(({ theme }) => ({
+  background: 'rgba(10, 10, 18, 0.8)',
+  border: `2px solid ${theme.palette.nge.purple}`,
+  boxShadow: `0 0 20px rgba(125, 38, 205, 0.3)`,
+  '& .MuiTableCell-root': {
+    borderBottom: `1px solid ${theme.palette.nge.purple}`
+  }
+}));
 
 const ProductSpecs = ({ totemId }) => {
-  const specs = specsData[totemId] || []; // Busca as specs pelo ID ou retorna um array vazio
+  const theme = useTheme();
+  const specs = specsData[totemId] || [];
 
   return (
-    <Paper className="product-specs-card" elevation={2}>
-      <Typography variant="h5" className="product-specs-title">
+    <Box sx={{ p: 4, background: 'linear-gradient(180deg, #1a1a2e 0%, #0a0a12 100%)' }}>
+      <Typography variant="h3" sx={{
+        fontFamily: "'Orbitron', sans-serif",
+        color: theme.palette.nge.neonGreen,
+        mb: 4,
+        textTransform: 'uppercase',
+        '&::before': {
+          content: '"/// "',
+          color: theme.palette.nge.red
+        }
+      }}>
         Especificações Técnicas
       </Typography>
-      <TableContainer>
+
+      <NervSpecsTable>
         <Table>
           <TableBody>
             {specs.map((spec, idx) => (
-              <TableRow key={idx}>
-                <TableCell className="spec-label">{spec.label}</TableCell>
-                <TableCell className="spec-value">{spec.value}</TableCell>
+              <TableRow key={idx} sx={{
+                '&:hover': {
+                  background: 'rgba(0, 255, 157, 0.05)'
+                }
+              }}>
+                <TableCell sx={{ 
+                  fontFamily: "'Orbitron', sans-serif",
+                  color: theme.palette.nge.neonGreen,
+                  width: '40%'
+                }}>
+                  {spec.label}
+                </TableCell>
+                <TableCell sx={{ 
+                  fontFamily: "'Rajdhani', sans-serif",
+                  color: 'white',
+                  fontWeight: 500
+                }}>
+                  {spec.value}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-    </Paper>
+      </NervSpecsTable>
+    </Box>
   );
 };
 

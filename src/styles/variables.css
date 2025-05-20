@@ -1,10 +1,29 @@
+/* variables.css */
 :root {
-    --fundo-principal: #0d0d0d;
-    --destaque-principal: #d60000;
-    --cor-secundaria: #4B0082;
-    --texto-principal: #ffffff;
-    --texto-secundario: #A9A9A9;
-    --verde-neon: #00ff00;
-    --fundo-secundario: #585858;
-    --alerta-notificacao: #FF8C00; 
+  /* Cores principais NGE */
+  --nge-red: #ff0033;
+  --nge-purple: #7d26cd;
+  --nge-neon-green: #00ff9d;
+  --nge-dark: #0a0a12;
+  --nge-hover-blue: #00a1ff;
+  --nge-orange: #ff6600;
+  
+  /* Padrões geométricos inspirados no Terminal Dogma */
+  --nge-diagonal-stripes: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    var(--nge-purple) 10px,
+    var(--nge-purple) 20px
+  );
+  
+  /* Animações */
+  --nge-glowing-border: 0 0 10px var(--nge-neon-green);
+  --nge-pulse: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.8; }
 }

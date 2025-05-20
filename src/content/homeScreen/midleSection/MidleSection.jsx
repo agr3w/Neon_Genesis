@@ -1,10 +1,26 @@
 import React, { useState } from "react";
-import { Typography, IconButton } from "@mui/material";
+import { Typography, IconButton, Box, Paper, styled } from "@mui/material";
 import Modal from "../../../components/modal/Modal";
-import "./MidleSection.css";
 import differentialsData from "../../../data/differentialsData";
+import { useTheme } from '@mui/material/styles';
+
+const NervCard = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  margin: theme.spacing(1),
+  background: 'rgba(26, 26, 46, 0.7)',
+  border: `1px solid ${theme.palette.nge.purple}`,
+  cursor: 'pointer',
+  transition: 'all 0.3s',
+  textAlign: 'center',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: `0 0 15px ${theme.palette.nge.neonGreen}`,
+    borderColor: theme.palette.nge.neonGreen
+  }
+}));
 
 const MidleSection = () => {
+  const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const [selectedDiff, setSelectedDiff] = useState(null);
 
@@ -13,59 +29,102 @@ const MidleSection = () => {
     setOpenModal(true);
   };
 
-  const closeModal = () => {
-    setOpenModal(false);
-    setSelectedDiff(null);
-  };
-
   return (
-    <section className="midle-section">
-      <Typography variant="h4" component="h2" align="center" gutterBottom>
-        Nossos Diferenciais
+    <Box sx={{
+      py: 8,
+      background: 'linear-gradient(180deg, #0a0a12 0%, #1a1a2e 100%)',
+      position: 'relative',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(0, 255, 157, 0.05) 0%, transparent 70%)'
+      }
+    }}>
+      <Typography variant="h4" sx={{
+        textAlign: 'center',
+        mb: 6,
+        fontFamily: "'Orbitron', sans-serif",
+        color: theme.palette.nge.neonGreen,
+        textTransform: 'uppercase',
+        letterSpacing: '0.2em'
+      }}>
+        /// NOSSOS DIFERENCIAIS
       </Typography>
 
-      <div className="differentials-container">
+      <Box sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        maxWidth: '1200px',
+        mx: 'auto'
+      }}>
         {differentialsData.map((diff, index) => (
-          <div
+          <NervCard
             key={index}
-            className="differential-card-wrapper"
-            data-aos="fade-up"
-            data-aos-delay={200 * index}
+            elevation={3}
             onClick={() => handleCardClick(diff)}
+            sx={{
+              width: { xs: '100%', sm: '45%', md: '22%' },
+              animation: `fadeIn 0.5s ease ${index * 0.1}s both`
+            }}
           >
-            <div className="differential-card">
-              <IconButton
-                color="primary"
-                size="large"
-                disableRipple
-                disableFocusRipple
-              >
-                {diff.icon}
-              </IconButton>
-            </div>
-            <Typography variant="body2" className="differential-label">
+            <IconButton sx={{
+              color: theme.palette.nge.neonGreen,
+              fontSize: '2.5rem',
+              mb: 2
+            }}>
+              {diff.icon}
+            </IconButton>
+            <Typography variant="h6" sx={{
+              color: 'white',
+              fontFamily: "'Rajdhani', sans-serif",
+              fontWeight: 700
+            }}>
               {diff.title}
             </Typography>
-          </div>
+          </NervCard>
         ))}
-      </div>
+      </Box>
 
-      <Modal open={openModal} onClose={closeModal}>
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
         {selectedDiff && (
-          <div className="modal-content">
-            <img
+          <Box sx={{
+            background: theme.palette.nge.dark,
+            p: 4,
+            border: `2px solid ${theme.palette.nge.purple}`,
+            maxWidth: '800px',
+            mx: 'auto'
+          }}>
+            <Box component="img"
               src={selectedDiff.image}
-              alt={selectedDiff.title}
-              className="modal-image"
+              sx={{
+                width: '100%',
+                mb: 3,
+                borderBottom: `3px solid ${theme.palette.nge.red}`
+              }}
             />
-            <Typography variant="h5" component="h3">
+            <Typography variant="h4" sx={{
+              color: theme.palette.nge.neonGreen,
+              fontFamily: "'Orbitron', sans-serif",
+              mb: 2
+            }}>
               {selectedDiff.title}
             </Typography>
-            <Typography variant="body1">{selectedDiff.details}</Typography>
-          </div>
+            <Typography sx={{
+              color: 'white',
+              fontFamily: "'Rajdhani', sans-serif",
+              lineHeight: 1.6
+            }}>
+              {selectedDiff.details}
+            </Typography>
+          </Box>
         )}
       </Modal>
-    </section>
+    </Box>
   );
 };
 

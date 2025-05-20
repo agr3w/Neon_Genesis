@@ -11,6 +11,7 @@ import ReviewPage from "./pages/review/ReviewPage";
 import RentalTotensList from "./content/QuotationScreen/RentalTotensList/RentalTotensList";
 import TotemDetailRender from "./pages/totemDetail/TotemDetailRender";
 import UserAcount from "./content/userAcount/UserAcount";
+import { GlobalStyles } from '@mui/material';
 
 /**
  * @file AppRouter.jsx
@@ -31,6 +32,21 @@ const AppRouter = () => {
   useScrollToTop();
   return (
     <>
+      <GlobalStyles styles={{
+        '@font-face': {
+          fontFamily: 'Orbitron',
+          src: 'url(https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap)'
+        },
+        body: {
+          background: 'linear-gradient(45deg, #0a0a12 0%, #1a1a2e 100%)',
+          minHeight: '100vh'
+        },
+        a: {
+          textDecoration: 'none'
+        },
+        
+        
+      }} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
