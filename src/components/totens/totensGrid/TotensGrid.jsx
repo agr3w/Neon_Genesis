@@ -1,22 +1,34 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid2, styled } from "@mui/material";
 import GenericCard from "../../cards/GenericCard/GenericCard";
-/**
- * Componente para renderizar a grade de totens.
- * @param {Object[]} totens - Lista de totens a serem exibidos.
- */
+import { useTheme } from "@mui/material/styles";
+
+const NervGridContainer = styled(Grid2)(({ theme }) => ({
+  padding: theme.spacing(4),
+  position: 'relative',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    pointerEvents: 'none'
+  }
+}));
+
 const TotensGrid = ({ totens }) => {
   return (
-    <Grid container spacing={3}>
+    <NervGridContainer container spacing={4}>
       {totens.map((totem) => (
-        <Grid item key={totem.id}>
+        <Grid2 item key={totem.id} xs={12} sm={6} md={4} lg={3}>
           <GenericCard
             image={totem.image}
             title={totem.name}
             description={totem.description}
             price={totem.price}
             buttonText={
-              totem.type === "locacao" ? "Fazer Locação" : "Ver Detalhes"
+              totem.type === "locacao" ? "SOLICITAR UNIDADE" : "DETALHES DA UNIDADE"
             }
             link={
               totem.type === "locacao"
@@ -25,9 +37,9 @@ const TotensGrid = ({ totens }) => {
             }
             type={totem.type}
           />
-        </Grid>
+        </Grid2>
       ))}
-    </Grid>
+    </NervGridContainer>
   );
 };
 
