@@ -12,12 +12,13 @@ import {
   Radio,
   TextField,
   InputAdornment,
+  styled
 } from "@mui/material";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import "./PaymentPage.css";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../hook/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
 /**
  * @description Esta página permite ao usuário escolher o método de pagamento e inserir os dados necessários para finalizar a compra.
@@ -34,7 +35,53 @@ import { useNavigate } from "react-router-dom";
  * @TODO Adicionar testes unitários e de integração para garantir a funcionalidade correta da página.
  */
 
+const NervPaymentContainer = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(4),
+  background: `linear-gradient(180deg, ${theme.palette.nge.dark} 0%, #1a1a2e 100%)`,
+  minHeight: '100vh',
+  position: 'relative',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundImage: `repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 255, 157, 0.05) 1px,
+      rgba(0, 255, 157, 0.05) 2px
+    )`,
+    pointerEvents: 'none'
+  }
+}));
+
+const NervPaymentCard = styled(Card)(({ theme }) => ({
+  background: 'rgba(10, 10, 18, 0.8)',
+  border: `2px solid ${theme.palette.nge.purple}`,
+  borderRadius: '4px',
+  boxShadow: `0 0 15px rgba(125, 38, 205, 0.3)`
+}));
+
+const NervPaymentRadio = styled(Radio)(({ theme }) => ({
+  color: theme.palette.nge.purple,
+  '&.Mui-checked': {
+    color: theme.palette.nge.neonGreen
+  }
+}));
+
+const NervPaymentButton = styled(Button)(({ theme }) => ({
+  fontFamily: "'Orbitron', sans-serif",
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase',
+  borderRadius: '0',
+  transition: 'all 0.3s'
+}));
+
 const PaymentPage = () => {
+  const theme = useTheme();
   const { cartItems } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -67,10 +114,9 @@ const PaymentPage = () => {
       paymentMethod === "credit_card_pix" &&
       pixValue + creditCardValue !== total
     ) {
-      setFormError("Os valores de PIX e cartão devem somar o total do pedido.");
+      setFormError("VALORES DE PIX E CARTÃO DEVEM SOMAR O TOTAL");
       return;
     }
-    // Salva dados no localStorage para a ReviewPage
     localStorage.setItem(
       "paymentData",
       JSON.stringify({
@@ -83,19 +129,45 @@ const PaymentPage = () => {
     );
     navigate("/review");
   };
+
   return (
-    <Box className="payment-page-container">
-      <Typography variant="h4" gutterBottom>
-        Finalize Seu Pedido
+    <NervPaymentContainer>
+      <Typography variant="h3" sx={{
+        fontFamily: "'Orbitron', sans-serif",
+        color: theme.palette.nge.neonGreen,
+        mb: 4,
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        position: 'relative',
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: '-10px',
+          left: 0,
+          width: '100px',
+          height: '3px',
+          background: theme.palette.nge.red
+        }
+      }}>
+        /// AUTORIZAÇÃO DE PAGAMENTO
       </Typography>
 
       <Grid container spacing={3}>
         {/* Método de Pagamento */}
         <Grid item xs={12} md={8}>
-          <Card className="payment-card">
+          <NervPaymentCard>
             <CardContent>
-              <Typography variant="h6">Método de Pagamento</Typography>
-              <Divider sx={{ my: 2 }} />
+              <Typography variant="h6" sx={{
+                fontFamily: "'Orbitron', sans-serif",
+                color: theme.palette.nge.neonGreen,
+                mb: 2
+              }}>
+                MÉTODO DE PAGAMENTO
+              </Typography>
+              <Divider sx={{ 
+                borderColor: theme.palette.nge.purple,
+                mb: 2 
+              }} />
               <RadioGroup
                 value={paymentMethod}
                 onChange={handlePaymentChange}
@@ -104,72 +176,105 @@ const PaymentPage = () => {
                 {/* PIX */}
                 <FormControlLabel
                   value="pix"
-                  control={<Radio />}
-                  label="Pague via PIX"
+                  control={<NervPaymentRadio />}
+                  label={
+                    <Typography sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'white'
+                    }}>
+                      PAGUE VIA PIX (5% DE DESCONTO)
+                    </Typography>
+                  }
                 />
                 {paymentMethod === "pix" && (
                   <Typography
                     variant="body2"
-                    color="textSecondary"
-                    sx={{ mt: 1 }}
+                    sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      mt: 1
+                    }}
                   >
-                    O QR Code para pagamento será gerado após a conclusão do
-                    pedido.
+                    O QR CODE SERÁ GERADO APÓS CONFIRMAÇÃO
                   </Typography>
                 )}
 
                 {/* Boleto Bancário */}
                 <FormControlLabel
                   value="boleto"
-                  control={<Radio />}
-                  label="Boleto Bancário"
+                  control={<NervPaymentRadio />}
+                  label={
+                    <Typography sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'white'
+                    }}>
+                      BOLETO BANCÁRIO
+                    </Typography>
+                  }
                 />
                 {paymentMethod === "boleto" && (
                   <Typography
                     variant="body2"
-                    color="textSecondary"
-                    sx={{ mt: 1 }}
+                    sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      mt: 1
+                    }}
                   >
-                    Seu pedido será processado em até 2 dias úteis após o
-                    pagamento.
+                    PROCESSAMENTO EM ATÉ 2 DIAS ÚTEIS
                   </Typography>
                 )}
 
                 {/* Cartão de Crédito */}
                 <FormControlLabel
                   value="credit_card"
-                  control={<Radio />}
-                  label="Cartão de Crédito"
+                  control={<NervPaymentRadio />}
+                  label={
+                    <Typography sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'white'
+                    }}>
+                      CARTÃO DE CRÉDITO
+                    </Typography>
+                  }
                 />
                 {paymentMethod === "credit_card" && (
                   <Box sx={{ mt: 2 }}>
-                    <Typography variant="body2" color="textSecondary">
-                      Insira os dados do cartão:
+                    <Typography variant="body2" sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'rgba(255, 255, 255, 0.7)'
+                    }}>
+                      INSIRA OS DADOS DO CARTÃO:
                     </Typography>
                     <TextField
-                      label="Número do Cartão"
+                      label="NÚMERO DO CARTÃO"
                       variant="outlined"
                       fullWidth
                       sx={{ mt: 2 }}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <CreditCardIcon />
+                            <CreditCardIcon sx={{ color: theme.palette.nge.neonGreen }} />
                           </InputAdornment>
                         ),
+                        sx: {
+                          '& input': {
+                            fontFamily: "'Rajdhani', sans-serif"
+                          }
+                        }
                       }}
                     />
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <Grid item xs={6}>
                         <TextField
-                          label="Mês Validade"
+                          label="MÊS VALIDADE"
                           variant="outlined"
                           fullWidth
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <TextField
-                          label="Ano Validade"
+                          label="ANO VALIDADE"
                           variant="outlined"
                           fullWidth
                         />
@@ -179,7 +284,7 @@ const PaymentPage = () => {
                       </Grid>
                       <Grid item xs={6}>
                         <TextField
-                          label="Nome do Titular"
+                          label="NOME DO TITULAR"
                           variant="outlined"
                           fullWidth
                         />
@@ -188,96 +293,130 @@ const PaymentPage = () => {
                   </Box>
                 )}
 
-                {/* Nubank */}
-                <FormControlLabel
-                  value="nubank"
-                  control={<Radio />}
-                  label="Nubank - Até 15x s/ Juros ou 24x c/ Juros"
-                />
-                {paymentMethod === "nubank" && (
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    sx={{ mt: 1 }}
-                  >
-                    Escolha o parcelamento na próxima etapa.
-                  </Typography>
-                )}
-
                 {/* Cartão Crédito + PIX */}
                 <FormControlLabel
                   value="credit_card_pix"
-                  control={<Radio />}
-                  label="Cartão Crédito + PIX"
+                  control={<NervPaymentRadio />}
+                  label={
+                    <Typography sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'white'
+                    }}>
+                      CARTÃO CRÉDITO + PIX
+                    </Typography>
+                  }
                 />
                 {paymentMethod === "credit_card_pix" && (
                   <Box sx={{ mt: 2 }}>
-                    <Typography variant="body2" color="textSecondary">
-                      Divida o pagamento entre PIX e cartão de crédito.
+                    <Typography variant="body2" sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'rgba(255, 255, 255, 0.7)'
+                    }}>
+                      DIVIDA O PAGAMENTO:
                     </Typography>
                     <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
                       {[15, 25, 50, 75].map((percentage) => (
-                        <Button
+                        <NervPaymentButton
                           key={percentage}
                           variant={
                             pixPercentage === percentage
                               ? "contained"
                               : "outlined"
                           }
+                          sx={{
+                            minWidth: '60px',
+                            ...(pixPercentage === percentage ? {
+                              background: theme.palette.nge.purple,
+                              color: 'white',
+                              '&:hover': {
+                                background: theme.palette.nge.red
+                              }
+                            } : {
+                              borderColor: theme.palette.nge.neonGreen,
+                              color: theme.palette.nge.neonGreen,
+                              '&:hover': {
+                                borderColor: theme.palette.nge.red,
+                                color: theme.palette.nge.red
+                              }
+                            })
+                          }}
                           onClick={() => handlePixPercentageChange(percentage)}
                         >
                           {percentage}%
-                        </Button>
+                        </NervPaymentButton>
                       ))}
                     </Box>
                     <TextField
-                      label="Valor no PIX"
+                      label="VALOR NO PIX"
                       variant="outlined"
                       fullWidth
                       value={`R$ ${pixValue.toFixed(2)}`}
                       sx={{ mt: 2 }}
                       InputProps={{
                         readOnly: true,
+                        sx: {
+                          '& input': {
+                            fontFamily: "'Rajdhani', sans-serif",
+                            color: theme.palette.nge.neonGreen
+                          }
+                        }
                       }}
                     />
                     <TextField
-                      label="Valor no Cartão"
+                      label="VALOR NO CARTÃO"
                       variant="outlined"
                       fullWidth
                       value={`R$ ${creditCardValue.toFixed(2)}`}
                       sx={{ mt: 2 }}
                       InputProps={{
                         readOnly: true,
+                        sx: {
+                          '& input': {
+                            fontFamily: "'Rajdhani', sans-serif",
+                            color: theme.palette.nge.neonGreen
+                          }
+                        }
                       }}
                     />
-                    <Divider sx={{ my: 2 }} />
-                    <Typography variant="body2" color="textSecondary">
-                      Insira os dados do cartão:
+                    <Divider sx={{ 
+                      borderColor: theme.palette.nge.purple,
+                      my: 2 
+                    }} />
+                    <Typography variant="body2" sx={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      color: 'rgba(255, 255, 255, 0.7)'
+                    }}>
+                      DADOS DO CARTÃO:
                     </Typography>
                     <TextField
-                      label="Número do Cartão"
+                      label="NÚMERO DO CARTÃO"
                       variant="outlined"
                       fullWidth
                       sx={{ mt: 2 }}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <CreditCardIcon />
+                            <CreditCardIcon sx={{ color: theme.palette.nge.neonGreen }} />
                           </InputAdornment>
                         ),
+                        sx: {
+                          '& input': {
+                            fontFamily: "'Rajdhani', sans-serif"
+                          }
+                        }
                       }}
                     />
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <Grid item xs={6}>
                         <TextField
-                          label="Mês Validade"
+                          label="MÊS VALIDADE"
                           variant="outlined"
                           fullWidth
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <TextField
-                          label="Ano Validade"
+                          label="ANO VALIDADE"
                           variant="outlined"
                           fullWidth
                         />
@@ -287,7 +426,7 @@ const PaymentPage = () => {
                       </Grid>
                       <Grid item xs={6}>
                         <TextField
-                          label="Nome do Titular"
+                          label="NOME DO TITULAR"
                           variant="outlined"
                           fullWidth
                         />
@@ -298,76 +437,102 @@ const PaymentPage = () => {
                     </Grid>
                   </Box>
                 )}
-
-                {/* 2 Cartões de Crédito */}
-                <FormControlLabel
-                  value="two_cards"
-                  control={<Radio />}
-                  label="2 Cartões Crédito - MP"
-                />
-                {paymentMethod === "two_cards" && (
-                  <Box sx={{ mt: 2 }}>
-                    <Typography variant="body2" color="textSecondary">
-                      Insira os dados dos dois cartões:
-                    </Typography>
-                    <TextField
-                      label="Valor no 1º Cartão"
-                      variant="outlined"
-                      fullWidth
-                      sx={{ mt: 2 }}
-                    />
-                    <TextField
-                      label="Valor no 2º Cartão"
-                      variant="outlined"
-                      fullWidth
-                      sx={{ mt: 2 }}
-                    />
-                  </Box>
-                )}
               </RadioGroup>
             </CardContent>
-          </Card>
+          </NervPaymentCard>
         </Grid>
 
         {/* Resumo do Pedido */}
         <Grid item xs={12} md={4}>
-          <Box className="payment-summary">
-            <Typography variant="h6">Resumo do Pedido</Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="body1">
-              Subtotal: R$ {subtotal.toFixed(2)}
+          <Box sx={{
+            background: 'rgba(10, 10, 18, 0.8)',
+            border: `2px solid ${theme.palette.nge.purple}`,
+            borderRadius: '4px',
+            p: 3,
+            boxShadow: `0 0 15px rgba(125, 38, 205, 0.3)`
+          }}>
+            <Typography variant="h6" sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              color: theme.palette.nge.neonGreen,
+              mb: 2
+            }}>
+              RESUMO DA ORDEM
             </Typography>
-            <Typography variant="body1">
-              Frete: R$ {freight.toFixed(2)}
+            <Divider sx={{ 
+              borderColor: theme.palette.nge.purple,
+              mb: 2 
+            }} />
+            <Typography variant="body1" sx={{
+              fontFamily: "'Rajdhani', sans-serif",
+              color: 'white',
+              mb: 1
+            }}>
+              SUBTOTAL: R$ {subtotal.toFixed(2)}
             </Typography>
-            <Typography variant="body1" color="success">
-              Desconto (à vista): -R$ {discount.toFixed(2)}
+            <Typography variant="body1" sx={{
+              fontFamily: "'Rajdhani', sans-serif",
+              color: 'white',
+              mb: 1
+            }}>
+              FRETE: R$ {freight.toFixed(2)}
             </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="h6">Total: R$ {total.toFixed(2)}</Typography>
-            <Divider sx={{ my: 2 }} />
-            <Button
+            <Typography variant="body1" sx={{
+              fontFamily: "'Rajdhani', sans-serif",
+              color: theme.palette.nge.neonGreen,
+              mb: 1
+            }}>
+              DESCONTO: -R$ {discount.toFixed(2)}
+            </Typography>
+            <Divider sx={{ 
+              borderColor: theme.palette.nge.purple,
+              my: 2 
+            }} />
+            <Typography variant="h6" sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              color: theme.palette.nge.red,
+              mb: 3
+            }}>
+              TOTAL: R$ {total.toFixed(2)}
+            </Typography>
+            <Divider sx={{ 
+              borderColor: theme.palette.nge.purple,
+              mb: 2 
+            }} />
+            <NervPaymentButton
               variant="contained"
-              color="success"
               fullWidth
               onClick={handleContinueToReview}
-              sx={{ mt: 2 }}
+              sx={{
+                background: `linear-gradient(45deg, ${theme.palette.nge.red} 0%, ${theme.palette.nge.purple} 100%)`,
+                color: 'white',
+                '&:hover': {
+                  background: `linear-gradient(45deg, ${theme.palette.nge.purple} 0%, ${theme.palette.nge.red} 100%)`,
+                  boxShadow: `0 0 15px ${theme.palette.nge.red}`
+                }
+              }}
             >
-              Salvar & Continuar para Revisão
-            </Button>
-            <Button
+              CONFIRMAR PAGAMENTO
+            </NervPaymentButton>
+            <NervPaymentButton
               variant="outlined"
-              color="primary"
               fullWidth
               href="/checkout"
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+                '&:hover': {
+                  borderColor: theme.palette.nge.red,
+                  color: theme.palette.nge.red
+                }
+              }}
             >
-              Voltar para o Endereço
-            </Button>
+              VOLTAR AO TRANSPORTE
+            </NervPaymentButton>
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </NervPaymentContainer>
   );
 };
 
