@@ -17,6 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import logo from '../../assets/logo.png';
+import { useTheme } from "@mui/material/styles";
 
 // Componente estilizado para os links de navegação
 const NervLink = styled(Button)(({ theme }) => ({
@@ -46,6 +47,7 @@ const NervIcon = styled(IconButton)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const theme = useTheme();
   const { cartItems } = useCart();
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -108,7 +110,7 @@ const Header = () => {
               textShadow: '0 0 10px rgba(0, 255, 157, 0.5)'
             }}
           >
-            NERV COMMERCE
+            NEON GENESIS
           </Typography>
         </Box>
 

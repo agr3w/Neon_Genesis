@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, EffectCoverflow } from "swiper/modules";
 import "swiper/css";
@@ -8,28 +8,11 @@ import { useNavigate } from "react-router-dom";
 import totensData from "../../../data/totemData";
 import { Typography, Box, styled } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
-
-
-const NervTotemCard = styled('div')(({ theme }) => ({
-  background: 'linear-gradient(145deg, #1a1a2e, #0a0a12)',
-  borderRadius: '10px',
-  padding: theme.spacing(3),
-  textAlign: 'center',
-  cursor: 'pointer',
-  transition: 'all 0.4s',
-  border: `1px solid ${theme.palette.nge.purple}`,
-  boxShadow: `0 5px 15px rgba(125, 38, 205, 0.3)`,
-  '&:hover': {
-    transform: 'translateY(-10px)',
-    boxShadow: `0 15px 30px rgba(0, 255, 157, 0.5)`,
-    borderColor: theme.palette.nge.neonGreen,
-    '& h5': {
-      color: theme.palette.nge.neonGreen
-    }
-  }
-}));
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { NervCarouselButton, NervTotemCard } from "../../../styles/theme";
 
 const TotensSection = () => {
+  const swiperRef = useRef(null);
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -79,10 +62,10 @@ const TotensSection = () => {
       <Box sx={{ px: 2 }}>
         <Swiper
           modules={[Navigation, EffectCoverflow]}
-          navigation
           effect="coverflow"
           centeredSlides
           loop
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
           slidesPerView={3}
           coverflowEffect={{
             rotate: 10,
@@ -127,6 +110,20 @@ const TotensSection = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        <NervCarouselButton
+          sx={{ left: '30px' }}
+          onClick={() => swiperRef.current?.slidePrev()}
+        >
+          <ArrowBackIos />
+        </NervCarouselButton>
+
+        <NervCarouselButton
+          sx={{ right: '30px' }}
+          onClick={() => swiperRef.current?.slideNext()}
+        >
+          <ArrowForwardIos />
+        </NervCarouselButton>
       </Box>
     </Box>
   );

@@ -1,5 +1,5 @@
 // src/theme.js
-import { createTheme } from '@mui/material/styles';
+import { createTheme, styled } from '@mui/material/styles';
 
 const nervTheme = createTheme({
   palette: {
@@ -75,5 +75,51 @@ const nervTheme = createTheme({
     },
   }
 });
+
+//Containers de estilização
+
+
+// ---------Estilos para os componentes de card e carrousel ----------------
+export const NervTotemCard = styled('div')(({ theme }) => ({
+  background: 'linear-gradient(145deg, #1a1a2e, #0a0a12)',
+  margin: '20px',
+  borderRadius: '10px',
+  padding: theme.spacing(3),
+  textAlign: 'center',
+  cursor: 'pointer',
+  transition: 'all 0.4s',
+  border: `1px solid ${theme.palette.nge.purple}`,
+  boxShadow: `0 5px 15px rgba(125, 38, 205, 0.3)`,
+  '&:hover': {
+    transform: 'translateY(-10px)',
+    boxShadow: `0 15px 30px rgba(0, 255, 157, 0.5)`,
+    borderColor: theme.palette.nge.neonGreen,
+    '& h5': {
+      color: theme.palette.nge.neonGreen
+    }
+  }
+}));
+
+export const NervCarouselButton = styled('button')(({ theme }) => ({
+  position: 'absolute',
+  top: '55%',
+  zIndex: 10,
+  width: '50px',
+  height: '50px',
+  transform: 'translateY(-50%)',
+  background: 'rgba(10, 10, 18, 0.7)',
+  border: `2px solid ${theme.palette.nge.neonGreen}`,
+  borderRadius: '50%',
+  color: theme.palette.nge.neonGreen,
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  '&:hover': {
+    background: theme.palette.nge.red,
+    color: theme.palette.nge.dark,
+    boxShadow: `0 0 15px ${theme.palette.nge.neonGreen}`
+  }
+}));
 
 export default nervTheme;

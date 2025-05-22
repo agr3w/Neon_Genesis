@@ -5,30 +5,9 @@ import { useTheme } from '@mui/material/styles';
 import { Navigation, Autoplay } from "swiper/modules";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { useRef } from "react";
-import { Box, styled, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import carouselData from "../../data/carouselData";
-
-const NervCarouselButton = styled('button')(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  zIndex: 10,
-  width: '50px',
-  height: '50px',
-  transform: 'translateY(-50%)',
-  background: 'rgba(10, 10, 18, 0.7)',
-  border: `2px solid ${theme.palette.nge.neonGreen}`,
-  borderRadius: '50%',
-  color: theme.palette.nge.neonGreen,
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  '&:hover': {
-    background: theme.palette.nge.red,
-    color: theme.palette.nge.dark,
-    boxShadow: `0 0 15px ${theme.palette.nge.neonGreen}`
-  }
-}));
+import { NervCarouselButton } from "../../styles/theme";
 
 const Carousel = () => {
   const swiperRef = useRef(null);
