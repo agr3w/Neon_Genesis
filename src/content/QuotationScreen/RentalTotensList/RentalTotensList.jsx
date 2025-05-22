@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, styled } from "@mui/material";
+import { Box, Grid2, Typography, styled } from "@mui/material";
 import totensData from "../../../data/totemData";
 import RentalCard from "../../../components/cards/rentalCard/RentalCard";
 import Header from "../../../components/header/Header";
@@ -18,13 +18,6 @@ const NervRentalContainer = styled(Box)(({ theme }) => ({
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundImage: `repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0, 255, 157, 0.05) 10px,
-      rgba(0, 255, 157, 0.05) 20px
-    )`,
     pointerEvents: 'none'
   }
 }));
@@ -71,13 +64,13 @@ const RentalTotensList = () => {
           o seu negócio e solicite uma cotação.
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid2 container spacing={4}>
           {rentalTotens.map((totem) => (
-            <Grid item xs={12} sm={6} md={4} key={totem.id}>
+            <Grid2 item xs={12} sm={6} md={4} key={totem.id}>
               <RentalCard totem={totem} />
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
       </NervRentalContainer>
       <Footer />
     </>
