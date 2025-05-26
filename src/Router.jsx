@@ -12,6 +12,8 @@ import RentalTotensList from "./content/QuotationScreen/RentalTotensList/RentalT
 import TotemDetailRender from "./pages/totemDetail/TotemDetailRender";
 import UserAcount from "./content/userAcount/UserAcount";
 import { GlobalStyles } from '@mui/material';
+import Sobre from "./pages/Sobre/Sobre";
+import Servicos from "./pages/Servicos/Servicos";
 
 /**
  * @file AppRouter.jsx
@@ -60,6 +62,8 @@ const AppRouter = () => {
         <Route path="/orcamento" element={<RentalTotensList />} />
         <Route path="/locacao/:id" element={<TotemDetailRender />} />
         <Route path="/user" element={<UserAcount />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/servicos" element={<Servicos />} />
       </Routes>
     </>
   );
