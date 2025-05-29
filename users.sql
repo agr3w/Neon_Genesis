@@ -29,7 +29,10 @@ CREATE TABLE pedidos (
   numero_pedido VARCHAR(50),
   pagamento VARCHAR(100),
   data DATETIME,
-  valor_total DECIMAL(10,2),
+  valor_total DECIMAL(10,2),	
+  subtotal DECIMAL(10,2) DEFAULT 0,
+  freight DECIMAL(10,2) DEFAULT 0,
+  discount DECIMAL(10,2) DEFAULT 0,
   status VARCHAR(30),
   detalhes TEXT,
   FOREIGN KEY (user_id) REFERENCES users(id)

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -46,6 +47,15 @@ const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();
   const { user } = useAuth();
   const [coupon, setCoupon] = useState("");
+  const navigate = useNavigate(); // Adicione isso
+
+  const handleCheckout = () => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      navigate("/checkout");
+    }
+  };
 
   const handleApplyCoupon = () => {
     if (coupon === "EVANGELION") {
@@ -93,7 +103,7 @@ const CartPage = () => {
       </Typography>
 
       {cartItems.length === 0 ? (
-        <Box sx={{ 
+        <Box sx={{
           textAlign: 'center',
           mt: 10
         }}>
@@ -160,8 +170,8 @@ const CartPage = () => {
                       }}>
                         R$ {item.price.toFixed(2)}
                       </Typography>
-                      <Box sx={{ 
-                        display: 'flex', 
+                      <Box sx={{
+                        display: 'flex',
                         alignItems: 'center',
                         mb: 2
                       }}>
@@ -179,7 +189,7 @@ const CartPage = () => {
                         >
                           -
                         </NervCartButton>
-                        <Typography sx={{ 
+                        <Typography sx={{
                           mx: 2,
                           fontFamily: "'Orbitron', sans-serif",
                           color: 'white'
@@ -233,9 +243,9 @@ const CartPage = () => {
               }}>
                 RESUMO DA ORDEM
               </Typography>
-              <Divider sx={{ 
+              <Divider sx={{
                 borderColor: theme.palette.nge.purple,
-                mb: 2 
+                mb: 2
               }} />
               <Typography variant="body1" sx={{
                 fontFamily: "'Rajdhani', sans-serif",
@@ -244,9 +254,9 @@ const CartPage = () => {
               }}>
                 SUBTOTAL: R$ {subtotal.toFixed(2)}
               </Typography>
-              <Divider sx={{ 
+              <Divider sx={{
                 borderColor: theme.palette.nge.purple,
-                my: 2 
+                my: 2
               }} />
               <Typography variant="h6" sx={{
                 fontFamily: "'Orbitron', sans-serif",
@@ -255,7 +265,7 @@ const CartPage = () => {
               }}>
                 TOTAL: R$ {total.toFixed(2)}
               </Typography>
-              
+
               <TextField
                 label="CÓDIGO DE DESCONTO"
                 variant="outlined"
@@ -297,7 +307,7 @@ const CartPage = () => {
               <Button
                 variant="contained"
                 fullWidth
-                href="/checkout"
+                onClick={handleCheckout} // Altere aqui
                 sx={{
                   mt: 2,
                   fontFamily: "'Orbitron', sans-serif",

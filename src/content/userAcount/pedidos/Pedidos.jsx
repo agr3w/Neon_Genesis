@@ -303,19 +303,53 @@ function Pedidos({ userId }) {
         <DialogContent>
           {pedidoSelecionado && (
             <Box>
-              <Typography sx={{ mb: 1 }}>
-                <b>Data:</b> {new Date(pedidoSelecionado.data).toLocaleString()}
+              <Typography sx={{ mb: 1, fontFamily: "'Orbitron', sans-serif", color: theme.palette.nge.neonGreen }}>
+                <b>Data:</b> <span style={{ color: "#fff", fontFamily: "'Rajdhani', sans-serif" }}>{new Date(pedidoSelecionado.data).toLocaleString()}</span>
               </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <b>Status:</b> {getStatusLabel(pedidoSelecionado.status)}
+              <Typography sx={{ mb: 1, fontFamily: "'Orbitron', sans-serif", color: theme.palette.nge.neonGreen }}>
+                <b>Status:</b> <span style={{ color: "#fff", fontFamily: "'Rajdhani', sans-serif" }}>{getStatusLabel(pedidoSelecionado.status)}</span>
               </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <b>Valor Total:</b> R$ {Number(pedidoSelecionado.valor_total).toFixed(2)}
+              <Typography sx={{ mb: 1, fontFamily: "'Orbitron', sans-serif", color: theme.palette.nge.neonGreen }}>
+                <b>Valor Total:</b> <span style={{ color: theme.palette.nge.red, fontWeight: 700, fontFamily: "'Rajdhani', sans-serif" }}>R$ {Number(pedidoSelecionado.valor_total).toFixed(2)}</span>
               </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <b>Forma de Pagamento:</b> {getPaymentLabel(pedidoSelecionado.pagamento)}
+              <Typography sx={{ mb: 1, fontFamily: "'Orbitron', sans-serif", color: theme.palette.nge.neonGreen }}>
+                <b>Forma de Pagamento:</b> <span style={{ color: "#fff", fontFamily: "'Rajdhani', sans-serif" }}>{getPaymentLabel(pedidoSelecionado.pagamento)}</span>
               </Typography>
-              {/* Se tiver detalhes dos itens, mostre aqui */}
+              <Divider sx={{ my: 2, borderColor: theme.palette.nge.purple }} />
+              <Box sx={{ mb: 2, p: 2, borderRadius: 2, background: 'rgba(10,10,18,0.7)', border: `1px solid ${theme.palette.nge.purple}` }}>
+                <Typography sx={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  color: theme.palette.nge.neonGreen,
+                  fontSize: '1.05rem'
+                }}>
+                  Subtotal: <span style={{ color: "#fff", fontFamily: "'Rajdhani', sans-serif" }}>R$ {Number(pedidoSelecionado.subtotal || 0).toFixed(2)}</span>
+                </Typography>
+                <Typography sx={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  color: theme.palette.nge.neonGreen,
+                  fontSize: '1.05rem'
+                }}>
+                  Frete: <span style={{ color: "#fff", fontFamily: "'Rajdhani', sans-serif" }}>R$ {Number(pedidoSelecionado.freight || 0).toFixed(2)}</span>
+                </Typography>
+                {Number(pedidoSelecionado.discount) > 0 && (
+                  <Typography sx={{
+                    fontFamily: "'Orbitron', sans-serif",
+                    color: theme.palette.nge.neonGreen,
+                    fontSize: '1.05rem'
+                  }}>
+                    Desconto: <span style={{ color: theme.palette.nge.neonGreen, fontWeight: 700, fontFamily: "'Rajdhani', sans-serif" }}>-R$ {Number(pedidoSelecionado.discount || 0).toFixed(2)}</span>
+                  </Typography>
+                )}
+                <Divider sx={{ my: 1, borderColor: theme.palette.nge.purple }} />
+                <Typography sx={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  color: theme.palette.nge.red,
+                  fontSize: '1.15rem',
+                  fontWeight: 700
+                }}>
+                  Total: <span style={{ color: "#fff", fontFamily: "'Rajdhani', sans-serif" }}>R$ {Number(pedidoSelecionado.valor_total || 0).toFixed(2)}</span>
+                </Typography>
+              </Box>
               {pedidoSelecionado.detalhes && (
                 <>
                   <Divider sx={{ my: 2, borderColor: theme.palette.nge.purple }} />
@@ -325,8 +359,12 @@ function Pedidos({ userId }) {
                   <Box sx={{ pl: 1 }}>
                     {Array.isArray(JSON.parse(pedidoSelecionado.detalhes)) ? (
                       JSON.parse(pedidoSelecionado.detalhes).map((item, idx) => (
-                        <Typography key={idx} sx={{ mb: 0.5 }}>
-                          {item.name} x{item.quantity} — R$ {Number(item.price).toFixed(2)}
+                        <Typography key={idx} sx={{
+                          mb: 0.5,
+                          fontFamily: "'Rajdhani', sans-serif",
+                          color: "#fff"
+                        }}>
+                          <span style={{ color: theme.palette.nge.neonGreen }}>{item.name}</span> x{item.quantity} — <span style={{ color: theme.palette.nge.red }}>R$ {Number(item.price).toFixed(2)}</span>
                         </Typography>
                       ))
                     ) : (

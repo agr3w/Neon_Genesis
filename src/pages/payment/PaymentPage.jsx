@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -85,17 +85,39 @@ const PaymentPage = () => {
   const { cartItems } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [checkoutData, setCheckoutData] = useState(null);
+  const [discount, setDiscount] = useState(0);
 
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const [freight] = useState(28.47);
-  const [discount] = useState(273.53);
-  const total = subtotal + freight - discount;
+  // Usa os dados do checkoutData se existirem, senão calcula do carrinho
+  const subtotal = checkoutData?.subtotal ?? cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const freight = checkoutData?.selectedFreight ?? 0;
+  const total = checkoutData?.total ?? (subtotal + freight);
+
 
   const [paymentMethod, setPaymentMethod] = useState("pix");
   const [pixPercentage, setPixPercentage] = useState(50);
   const [pixValue, setPixValue] = useState((total * pixPercentage) / 100);
   const [creditCardValue, setCreditCardValue] = useState(total - pixValue);
   const [formError, setFormError] = useState("");
+
+  useEffect(() => {
+    const data = localStorage.getItem("checkoutData");
+    if (data) setCheckoutData(JSON.parse(data));
+  }, []);
+
+  // Atualiza valores ao mudar porcentagem ou total
+  useEffect(() => {
+    setPixValue((total * pixPercentage) / 100);
+    setCreditCardValue(total - (total * pixPercentage) / 100);
+  }, [pixPercentage, total]);
+
+  useEffect(() => {
+    if (paymentMethod === "pix") {
+      setDiscount(subtotal * 0.05); // 5% de desconto
+    } else {
+      setDiscount(0);
+    }
+  }, [paymentMethod, subtotal]);
 
   const handlePaymentChange = (event) => {
     setPaymentMethod(event.target.value);
@@ -117,6 +139,8 @@ const PaymentPage = () => {
       setFormError("VALORES DE PIX E CARTÃO DEVEM SOMAR O TOTAL");
       return;
     }
+    // Calcule o total já com desconto
+    const finalTotal = subtotal + freight - discount;
     localStorage.setItem(
       "paymentData",
       JSON.stringify({
@@ -124,7 +148,10 @@ const PaymentPage = () => {
         pixValue,
         creditCardValue,
         discount,
-        total,
+        subtotal,
+        freight,
+        total: finalTotal, // Salve o total final aqui!
+        address: checkoutData?.address,
       })
     );
     navigate("/review");
@@ -164,9 +191,9 @@ const PaymentPage = () => {
               }}>
                 MÉTODO DE PAGAMENTO
               </Typography>
-              <Divider sx={{ 
+              <Divider sx={{
                 borderColor: theme.palette.nge.purple,
-                mb: 2 
+                mb: 2
               }} />
               <RadioGroup
                 value={paymentMethod}
@@ -378,9 +405,9 @@ const PaymentPage = () => {
                         }
                       }}
                     />
-                    <Divider sx={{ 
+                    <Divider sx={{
                       borderColor: theme.palette.nge.purple,
-                      my: 2 
+                      my: 2
                     }} />
                     <Typography variant="body2" sx={{
                       fontFamily: "'Rajdhani', sans-serif",
@@ -458,9 +485,9 @@ const PaymentPage = () => {
             }}>
               RESUMO DA ORDEM
             </Typography>
-            <Divider sx={{ 
+            <Divider sx={{
               borderColor: theme.palette.nge.purple,
-              mb: 2 
+              mb: 2
             }} />
             <Typography variant="body1" sx={{
               fontFamily: "'Rajdhani', sans-serif",
@@ -476,27 +503,29 @@ const PaymentPage = () => {
             }}>
               FRETE: R$ {freight.toFixed(2)}
             </Typography>
-            <Typography variant="body1" sx={{
-              fontFamily: "'Rajdhani', sans-serif",
-              color: theme.palette.nge.neonGreen,
-              mb: 1
-            }}>
-              DESCONTO: -R$ {discount.toFixed(2)}
-            </Typography>
-            <Divider sx={{ 
+            {discount > 0 && (
+              <Typography variant="body1" sx={{
+                fontFamily: "'Rajdhani', sans-serif",
+                color: theme.palette.nge.neonGreen,
+                mb: 1
+              }}>
+                DESCONTO: -R$ {discount.toFixed(2)}
+              </Typography>
+            )}
+            <Divider sx={{
               borderColor: theme.palette.nge.purple,
-              my: 2 
+              my: 2
             }} />
             <Typography variant="h6" sx={{
               fontFamily: "'Orbitron', sans-serif",
               color: theme.palette.nge.red,
               mb: 3
             }}>
-              TOTAL: R$ {total.toFixed(2)}
+              TOTAL: R$ {(subtotal + freight - discount).toFixed(2)}
             </Typography>
-            <Divider sx={{ 
+            <Divider sx={{
               borderColor: theme.palette.nge.purple,
-              mb: 2 
+              mb: 2
             }} />
             <NervPaymentButton
               variant="contained"

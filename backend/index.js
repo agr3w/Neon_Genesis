@@ -220,13 +220,31 @@ app.post("/pedidos", async (req, res) => {
     pagamento,
     data,
     valor_total,
+    subtotal,
+    freight,
+    discount,
     status,
     detalhes,
+    endereco,
   } = req.body;
   const conn = await mysql.createConnection(dbConfig);
   const [result] = await conn.execute(
-    "INSERT INTO pedidos (user_id, numero_pedido, pagamento, data, valor_total, status, detalhes) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [user_id, numero_pedido, pagamento, data, valor_total, status, detalhes]
+    `INSERT INTO pedidos 
+      (user_id, numero_pedido, pagamento, data, valor_total, subtotal, freight, discount, status, detalhes, endereco) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      user_id,
+      numero_pedido,
+      pagamento,
+      data,
+      valor_total,
+      subtotal,
+      freight,
+      discount,
+      status,
+      detalhes,
+      JSON.stringify(endereco),
+    ]
   );
   res.status(201).json({ id: result.insertId });
 });
