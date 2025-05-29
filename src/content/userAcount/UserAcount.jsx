@@ -1,4 +1,3 @@
-// filepath: src/content/userAcount/UserAcount.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hook/useAuth";
@@ -10,6 +9,7 @@ import {
   Grid,
   Card,
   CardActionArea,
+  useTheme,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
@@ -31,6 +31,7 @@ function UserAcount() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
+  const theme = useTheme();
 
   React.useEffect(() => {
     if (!user) navigate("/login");
@@ -39,20 +40,38 @@ function UserAcount() {
   if (!user) return null;
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", background: "#232326" }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        background: theme.palette.nge.dark,
+        fontFamily: "'Orbitron', 'Rajdhani', sans-serif",
+      }}
+    >
       {/* Menu lateral */}
       <Box
         sx={{
           width: 280,
-          background: "linear-gradient(135deg, #232326 80%, #18181a 100%)",
+          background: `linear-gradient(135deg, ${theme.palette.nge.dark} 80%, #18181a 100%)`,
           color: "#fff",
           p: 3,
           minHeight: "100vh",
+          borderRight: `2px solid ${theme.palette.nge.purple}`,
+          boxShadow: `4px 0 16px 0 ${theme.palette.nge.purple}33`,
         }}
       >
         <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" fontWeight={700} sx={{ color: "#fff" }}>
-            <AccountCircleIcon sx={{ mr: 1, color: "#d60000" }} />
+          <Typography
+            variant="h6"
+            fontWeight={700}
+            sx={{
+              color: theme.palette.nge.neonGreen,
+              fontFamily: "'Orbitron', sans-serif",
+              textShadow: `0 0 10px ${theme.palette.nge.neonGreen}`,
+              letterSpacing: "0.08em",
+            }}
+          >
+            <AccountCircleIcon sx={{ mr: 1, color: theme.palette.nge.red }} />
             Minha Conta
           </Typography>
         </Box>
@@ -65,102 +84,132 @@ function UserAcount() {
               mb: 2,
               p: 1.5,
               borderRadius: 2,
-              background: tab === item.tab ? "#2d2d32" : "transparent",
+              background:
+                tab === item.tab
+                  ? `linear-gradient(90deg, ${theme.palette.nge.purple}33 0%, transparent 100%)`
+                  : "transparent",
+              border: tab === item.tab
+                ? `2px solid ${theme.palette.nge.red}`
+                : `1px solid ${theme.palette.nge.purple}55`,
               cursor: "pointer",
-              transition: "background 0.2s",
-              "&:hover": { background: "#2d2d32" },
+              transition: "background 0.2s, border 0.2s",
+              fontFamily: "'Orbitron', sans-serif",
+              fontWeight: tab === item.tab ? 700 : 500,
+              color: tab === item.tab
+                ? theme.palette.nge.neonGreen
+                : "#fff",
+              "&:hover": {
+                background: `linear-gradient(90deg, ${theme.palette.nge.purple}22 0%, transparent 100%)`,
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+              },
+              boxShadow: tab === item.tab
+                ? `0 0 10px ${theme.palette.nge.red}66`
+                : "none",
             }}
             onClick={() => setTab(item.tab)}
           >
-            <Box sx={{ color: "#d60000", mr: 2 }}>{item.icon}</Box>
+            <Box sx={{ color: theme.palette.nge.red, mr: 2 }}>{item.icon}</Box>
             <Typography fontWeight={500}>{item.label}</Typography>
           </Box>
         ))}
       </Box>
 
       {/* Conteúdo principal */}
-      <Box sx={{ flex: 1, p: 4 }}>
+      <Box sx={{ flex: 1, p: { xs: 1, md: 4 } }}>
         {/* Saudação e descrição */}
         <Paper
-          sx={{ p: 3, mb: 3, background: "#232326", color: "#fff" }}
+          sx={{
+            p: 3,
+            mb: 3,
+            background: theme.palette.background.paper,
+            color: "#fff",
+            fontFamily: "'Orbitron', 'Rajdhani', sans-serif",
+            border: `1.5px solid ${theme.palette.nge.purple}`,
+            boxShadow: `0 0 16px 0 ${theme.palette.nge.purple}44`,
+          }}
           elevation={3}
         >
-          <Typography variant="h4" fontWeight={700}>
+          <Typography
+            variant="h4"
+            fontWeight={700}
+            sx={{
+              color: theme.palette.nge.neonGreen,
+              textShadow: `0 0 10px ${theme.palette.nge.neonGreen}`,
+              fontFamily: "'Orbitron', sans-serif",
+            }}
+          >
             Olá, {user.nome || user.email?.split("@")[0] || "usuário"}
           </Typography>
-          <Typography sx={{ mt: 1, color: "#ccc" }}>
+          <Typography sx={{ mt: 1, color: "#ccc", fontFamily: "'Rajdhani', sans-serif" }}>
             Aqui você encontra todas as informações relacionadas à sua conta,
             como acompanhar seus últimos pedidos, adicionar novos endereços ...
           </Typography>
-          <Divider sx={{ mt: 2, borderColor: "#d60000" }} />
+          <Divider sx={{ mt: 2, borderColor: theme.palette.nge.red }} />
         </Paper>
 
         {/* Abas principais em cards */}
         <Grid container spacing={3} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                background: tab === 0 ? "#d60000" : "#2d2d32",
-                color: "#fff",
-                borderRadius: 2,
-              }}
-              onClick={() => setTab(0)}
-            >
-              <CardActionArea sx={{ p: 3, textAlign: "center" }}>
-                <AccountCircleIcon sx={{ fontSize: 36, mb: 1 }} />
-                <Typography fontWeight={700}>MEUS DADOS</Typography>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                background: tab === 1 ? "#d60000" : "#2d2d32",
-                color: "#fff",
-                borderRadius: 2,
-              }}
-              onClick={() => setTab(1)}
-            >
-              <CardActionArea sx={{ p: 3, textAlign: "center" }}>
-                <ListAltIcon sx={{ fontSize: 36, mb: 1 }} />
-                <Typography fontWeight={700}>MEUS PEDIDOS</Typography>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                background: tab === 2 ? "#d60000" : "#2d2d32",
-                color: "#fff",
-                borderRadius: 2,
-              }}
-              onClick={() => setTab(2)}
-            >
-              <CardActionArea sx={{ p: 3, textAlign: "center" }}>
-                <LocationOnIcon sx={{ fontSize: 36, mb: 1 }} />
-                <Typography fontWeight={700}>ENDEREÇOS</Typography>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                background: tab === 3 ? "#d60000" : "#2d2d32",
-                color: "#fff",
-                borderRadius: 2,
-              }}
-              onClick={() => setTab(3)}
-            >
-              <CardActionArea sx={{ p: 3, textAlign: "center" }}>
-                <SupportAgentIcon sx={{ fontSize: 36, mb: 1 }} />
-                <Typography fontWeight={700}>CHAMADOS</Typography>
-              </CardActionArea>
-            </Card>
-          </Grid>
+          {menu.map((item) => (
+            <Grid item xs={12} sm={6} md={3} key={item.tab}>
+              <Card
+                sx={{
+                  background:
+                    tab === item.tab
+                      ? theme.palette.nge.red
+                      : theme.palette.background.paper,
+                  color: "#fff",
+                  borderRadius: 2,
+                  border: tab === item.tab
+                    ? `2px solid ${theme.palette.nge.neonGreen}`
+                    : `1px solid ${theme.palette.nge.purple}`,
+                  boxShadow: tab === item.tab
+                    ? `0 0 16px 0 ${theme.palette.nge.red}99`
+                    : "none",
+                  transition: "all 0.2s",
+                  "&:hover": {
+                    borderColor: theme.palette.nge.neonGreen,
+                    color: theme.palette.nge.neonGreen,
+                  },
+                }}
+                onClick={() => setTab(item.tab)}
+              >
+                <CardActionArea sx={{ p: 3, textAlign: "center" }}>
+                  {React.cloneElement(item.icon, {
+                    sx: {
+                      fontSize: 36,
+                      mb: 1,
+                      color: tab === item.tab
+                        ? theme.palette.nge.neonGreen
+                        : theme.palette.nge.red,
+                      transition: "color 0.2s",
+                    },
+                  })}
+                  <Typography
+                    fontWeight={700}
+                    sx={{
+                      fontFamily: "'Orbitron', sans-serif",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {item.label.toUpperCase()}
+                  </Typography>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
 
         {/* Conteúdo das abas */}
-        <Paper sx={{ p: 3, background: "#232326", color: "#fff" }}>
+        <Paper
+          sx={{
+            p: 3,
+            background: theme.palette.background.paper,
+            color: "#fff",
+            border: `1.5px solid ${theme.palette.nge.purple}`,
+            fontFamily: "'Rajdhani', sans-serif",
+          }}
+        >
           {tab === 0 && <DadosConta user={user} />}
           {tab === 1 && <Pedidos userId={user.id} />}
           {tab === 2 && <Enderecos userId={user.id} />}
