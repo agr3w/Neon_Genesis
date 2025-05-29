@@ -133,34 +133,34 @@ const ReviewPage = () => {
     String(now.getMinutes()).padStart(2, '0') + ':' +
     String(now.getSeconds()).padStart(2, '0');
 
- const handleConfirmarPedido = async () => {
-  setNumeroPedido(numero_pedido);
-  try {
-    const res = await axios.post("http://localhost:3001/pedidos", {
-      user_id: user.id,
-      numero_pedido,
-      pagamento: paymentData.paymentMethod,
-      data: localDateTime,
-      valor_total: total,
-      subtotal: subtotal,
-      freight: freight,    
-      discount: discount,    
-      status: "Em processamento",
-      detalhes: JSON.stringify(cartItems),
-      endereco: address,
-    });
-    setNumeroPedido(res.data.numero_pedido);
+  const handleConfirmarPedido = async () => {
+    setNumeroPedido(numero_pedido);
+    try {
+      const res = await axios.post("http://localhost:3001/pedidos", {
+        user_id: user.id,
+        numero_pedido,
+        pagamento: paymentData.paymentMethod,
+        data: localDateTime,
+        valor_total: total,
+        subtotal: subtotal,
+        freight: freight,
+        discount: discount,
+        status: "Em processamento",
+        detalhes: JSON.stringify(cartItems),
+        endereco: address,
+      });
+      setNumeroPedido(res.data.numero_pedido);
 
-    if (paymentData.paymentMethod === "pix") setShowPix(true);
-    if (paymentData.paymentMethod === "boleto") setShowBoleto(true);
+      if (paymentData.paymentMethod === "pix") setShowPix(true);
+      if (paymentData.paymentMethod === "boleto") setShowBoleto(true);
 
-    localStorage.removeItem("checkoutData");
-    localStorage.removeItem("paymentData");
-    clearCart();
-  } catch (err) {
-    alert("ERRO NO SISTEMA - CONTATE O SUPORTE NERV");
-  }
-};
+      localStorage.removeItem("checkoutData");
+      localStorage.removeItem("paymentData");
+      clearCart();
+    } catch (err) {
+      alert("ERRO NO SISTEMA - CONTATE O SUPORTE NERV");
+    }
+  };
 
 
   return (
@@ -408,7 +408,10 @@ const ReviewPage = () => {
       {/* Modal PIX */}
       <Dialog
         open={showPix}
-        onClose={() => setShowPix(false)}
+        // Impede fechar clicando fora ou apertando ESC
+        onClose={() => { }}
+        disableEscapeKeyDown
+        disableBackdropClick
         PaperProps={{
           sx: {
             background: theme.palette.nge.dark,
@@ -422,7 +425,7 @@ const ReviewPage = () => {
           color: theme.palette.nge.neonGreen,
           borderBottom: `1px solid ${theme.palette.nge.purple}`
         }}>
-          /// PAGAMENTO VIA PIX
+    /// PAGAMENTO VIA PIX
         </DialogTitle>
         <DialogContent sx={{ textAlign: "center", pt: 3 }}>
           <Typography variant="body1" sx={{
@@ -431,7 +434,6 @@ const ReviewPage = () => {
           }}>
             ESCANEIE O CÓDIGO PARA CONCLUIR O PAGAMENTO:
           </Typography>
-
           <Box sx={{
             p: 2,
             border: `2px solid ${theme.palette.nge.neonGreen}`,
@@ -450,7 +452,6 @@ const ReviewPage = () => {
               alt="QR Code PIX"
             />
           </Box>
-
           <Typography variant="caption" sx={{
             mt: 2,
             display: "block",
@@ -472,13 +473,41 @@ const ReviewPage = () => {
           }}>
             NÚMERO DA ORDEM: {numero_pedido}
           </Typography>
+          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              sx={{
+                background: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.dark,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { background: theme.palette.nge.red, color: 'white' }
+              }}
+              onClick={() => window.location.href = '/'}
+            >
+              VOLTAR PARA INÍCIO
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { borderColor: theme.palette.nge.red, color: theme.palette.nge.red }
+              }}
+              onClick={() => window.location.href = '/user'}
+            >
+              VER DETALHES DO PEDIDO
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
 
       {/* Modal Boleto */}
       <Dialog
         open={showBoleto}
-        onClose={() => setShowBoleto(false)}
+        onClose={() => { }}
+        disableEscapeKeyDown
+        disableBackdropClick
         PaperProps={{
           sx: {
             background: theme.palette.nge.dark,
@@ -492,7 +521,7 @@ const ReviewPage = () => {
           color: theme.palette.nge.neonGreen,
           borderBottom: `1px solid ${theme.palette.nge.purple}`
         }}>
-          /// BOLETO BANCÁRIO
+    /// BOLETO BANCÁRIO
         </DialogTitle>
         <DialogContent sx={{ textAlign: "center", pt: 3 }}>
           <Typography variant="body1" sx={{
@@ -539,6 +568,32 @@ const ReviewPage = () => {
           }}>
             NÚMERO DA ORDEM: {numero_pedido}
           </Typography>
+          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              sx={{
+                background: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.dark,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { background: theme.palette.nge.red, color: 'white' }
+              }}
+              onClick={() => window.location.href = '/'}
+            >
+              VOLTAR PARA INÍCIO
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { borderColor: theme.palette.nge.red, color: theme.palette.nge.red }
+              }}
+              onClick={() => window.location.href = '/user'}
+            >
+              VER DETALHES DO PEDIDO
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
     </NervReviewContainer>

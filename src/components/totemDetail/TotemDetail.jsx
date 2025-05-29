@@ -158,7 +158,7 @@ const TotemDetail = ({ type }) => {
 
             <Box sx={{ display: 'flex', gap: 2, mt: 4 }}>
               <NervDetailButton onClick={handleAction}>
-                {type === "locacao" ? "SOLICITAR LOCAÇÃO" : "ADICIONAR AO CARGO"}
+                {type === "locacao" ? "SOLICITAR LOCAÇÃO" : "ADICIONAR AO CARRINHO"}
               </NervDetailButton>
 
               <Button variant="outlined" sx={{
