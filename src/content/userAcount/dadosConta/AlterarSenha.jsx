@@ -1,10 +1,71 @@
-
-// filepath: src/content/userAcount/dadosConta/AlterarSenha.jsx
 import React, { useState } from "react";
-import { Box, TextField, Button, Typography, Alert } from "@mui/material";
+import { 
+  Box, 
+  TextField, 
+  Button, 
+  Typography, 
+  Alert,
+  styled 
+} from "@mui/material";
 import axios from "axios";
+import { useTheme } from "@mui/material/styles";
+
+const NervTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: theme.palette.nge.purple,
+    },
+    '&:hover fieldset': {
+      borderColor: theme.palette.nge.neonGreen,
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.nge.neonGreen,
+    },
+    color: theme.palette.nge.neonGreen,
+    fontFamily: "'Rajdhani', sans-serif",
+  },
+  '& .MuiInputLabel-root': {
+    color: theme.palette.nge.neonGreen,
+    fontFamily: "'Orbitron', sans-serif",
+    '&.Mui-focused': {
+      color: theme.palette.nge.neonGreen
+    }
+  },
+  '& .MuiInputBase-input': {
+    '&:-webkit-autofill': {
+      WebkitBoxShadow: `0 0 0 100px ${theme.palette.nge.dark} inset`,
+      WebkitTextFillColor: theme.palette.nge.neonGreen,
+    }
+  }
+}));
+
+const NervButton = styled(Button)(({ theme }) => ({
+  fontFamily: "'Orbitron', sans-serif",
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase',
+  fontWeight: 700,
+  borderRadius: '0',
+  padding: '10px 24px',
+  transition: 'all 0.3s',
+  '&:hover': {
+    transform: 'translateY(-2px)'
+  }
+}));
+
+const NervAlert = styled(Alert)(({ theme, severity }) => ({
+  fontFamily: "'Orbitron', sans-serif",
+  letterSpacing: '0.05em',
+  background: severity === 'error' 
+    ? 'rgba(255, 0, 51, 0.2)' 
+    : 'rgba(0, 255, 157, 0.2)',
+  border: `1px solid ${severity === 'error' 
+    ? theme.palette.nge.red 
+    : theme.palette.nge.neonGreen}`,
+  color: '#fff'
+}));
 
 export default function AlterarSenha({ userId, onClose }) {
+  const theme = useTheme();
   const [senhaAtual, setSenhaAtual] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmar, setConfirmar] = useState("");
@@ -16,7 +77,7 @@ export default function AlterarSenha({ userId, onClose }) {
     setMsg("");
     setErro("");
     if (novaSenha !== confirmar) {
-      setErro("As senhas não coincidem.");
+      setErro("AS SENHAS NÃO COINCIDEM.");
       return;
     }
     try {
@@ -24,56 +85,91 @@ export default function AlterarSenha({ userId, onClose }) {
         senhaAtual,
         novaSenha,
       });
-      setMsg("Senha alterada com sucesso!");
+      setMsg("SENHA ALTERADA COM SUCESSO!");
       setSenhaAtual("");
       setNovaSenha("");
       setConfirmar("");
       if (onClose) setTimeout(onClose, 1500);
     } catch (err) {
-      setErro(err.response?.data?.error || "Erro ao alterar senha.");
+      setErro(err.response?.data?.error || "ERRO AO ALTERAR SENHA.");
     }
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-      <Typography variant="subtitle1" mb={1}>Alterar Senha</Typography>
-      <TextField
-        label="Senha Atual"
+    <Box component="form" onSubmit={handleSubmit}>
+      <Typography variant="h6" sx={{ 
+        mb: 3,
+        fontFamily: "'Orbitron', sans-serif",
+        color: theme.palette.nge.neonGreen,
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em'
+      }}>
+        ALTERAÇÃO DE SENHA
+      </Typography>
+      
+      <NervTextField
+        label="SENHA ATUAL"
         type="password"
         fullWidth
-        margin="dense"
+        margin="normal"
         value={senhaAtual}
         onChange={e => setSenhaAtual(e.target.value)}
         required
       />
-      <TextField
-        label="Nova Senha"
+      <NervTextField
+        label="NOVA SENHA"
         type="password"
         fullWidth
-        margin="dense"
+        margin="normal"
         value={novaSenha}
         onChange={e => setNovaSenha(e.target.value)}
         required
       />
-      <TextField
-        label="Confirmar Nova Senha"
+      <NervTextField
+        label="CONFIRMAR NOVA SENHA"
         type="password"
         fullWidth
-        margin="dense"
+        margin="normal"
         value={confirmar}
         onChange={e => setConfirmar(e.target.value)}
         required
       />
-      {erro && <Alert severity="error" sx={{ mt: 1 }}>{erro}</Alert>}
-      {msg && <Alert severity="success" sx={{ mt: 1 }}>{msg}</Alert>}
-      <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
-        Salvar Nova Senha
-      </Button>
-      {onClose && (
-        <Button onClick={onClose} sx={{ mt: 2, ml: 2 }}>
-          Cancelar
-        </Button>
-      )}
+      
+      {erro && <NervAlert severity="error" sx={{ mt: 2 }}>{erro}</NervAlert>}
+      {msg && <NervAlert severity="success" sx={{ mt: 2 }}>{msg}</NervAlert>}
+      
+      <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <NervButton
+          type="submit"
+          variant="contained"
+          sx={{
+            background: 'linear-gradient(45deg, #00ff9d, #00a1ff)',
+            '&:hover': {
+              background: 'linear-gradient(45deg, #00a1ff, #00ff9d)',
+              boxShadow: '0 0 15px rgba(0, 255, 157, 0.5)'
+            }
+          }}
+        >
+          SALVAR SENHA
+        </NervButton>
+        {onClose && (
+          <NervButton
+            onClick={onClose}
+            variant="outlined"
+            sx={{
+              borderColor: theme.palette.nge.red,
+              color: theme.palette.nge.red,
+              '&:hover': {
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+                boxShadow: '0 0 15px rgba(255, 0, 51, 0.5)'
+              }
+            }}
+          >
+            CANCELAR
+          </NervButton>
+        )}
+      </Box>
     </Box>
   );
 }

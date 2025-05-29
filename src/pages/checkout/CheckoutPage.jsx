@@ -21,6 +21,7 @@ import {
 import EnderecoForm from "../../content/userAcount/enderecos/EnderecoForm";
 import axios from "axios";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router";
 
 const NervCheckoutContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -63,6 +64,7 @@ const NervButton = styled(Button)(({ theme }) => ({
 
 const CheckoutPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { cartItems } = useCart();
   const { user } = useAuth();
   const [addresses, setAddresses] = useState([]);
@@ -74,7 +76,8 @@ const CheckoutPage = () => {
     if (user?.id) {
       axios.get(`http://localhost:3001/enderecos/${user.id}`).then((res) => {
         setAddresses(res.data);
-        setAddress(res.data[0] || null);
+        const principal = res.data.find(addr => addr.padrao);
+        setAddress(principal || res.data[0] || null);
       });
     }
   }, [user?.id]);
@@ -90,6 +93,20 @@ const CheckoutPage = () => {
         });
       });
   }
+
+  const handleConfirmarTransporte = () => {
+    // Salva dados no localStorage
+    localStorage.setItem(
+      "checkoutData",
+      JSON.stringify({
+        address,
+        selectedFreight,
+        subtotal,
+        total,
+      })
+    );
+    navigate("/payment");
+  };
 
   const [freightOptions] = useState([
     { label: "TRANSPORTE NERV (1-2 DIAS)", value: 50.0 },
@@ -307,6 +324,24 @@ const CheckoutPage = () => {
               >
                 FECHAR
               </NervButton>
+              <NervButton
+                variant="contained"
+                sx={{
+                  background: theme.palette.nge.red,
+                  color: 'white',
+                  ml: 2,
+                  '&:hover': {
+                    background: theme.palette.nge.neonGreen,
+                    color: theme.palette.nge.dark
+                  }
+                }}
+                onClick={() => {
+                  setOpenAddressModal(false);
+                  setOpenEnderecoForm(true);
+                }}
+              >
+                ADICIONAR NOVO LOCAL
+              </NervButton>
             </DialogActions>
           </Dialog>
 
@@ -401,8 +436,8 @@ const CheckoutPage = () => {
             <NervButton
               variant="contained"
               fullWidth
-              href="/payment"
               disabled={!address}
+              onClick={handleConfirmarTransporte}
               sx={{
                 background: `linear-gradient(45deg, ${theme.palette.nge.red} 0%, ${theme.palette.nge.purple} 100%)`,
                 color: 'white',

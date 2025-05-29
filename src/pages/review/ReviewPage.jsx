@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Box, 
-  Typography, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Divider, 
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Divider,
   Button,
   Dialog,
   DialogTitle,
   DialogContent,
-  styled 
+  styled
 } from "@mui/material";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../hook/useAuth";
@@ -62,12 +62,10 @@ const NervConfirmButton = styled(Button)(({ theme }) => ({
 }));
 
 const ReviewPage = () => {
-   const theme = useTheme();
+  const theme = useTheme();
   const { cartItems, clearCart } = useCart();
   const { user } = useAuth();
-  const paymentData = JSON.parse(localStorage.getItem("paymentData") || "{}");
   const [addresses, setAddresses] = useState([]);
-  const [address, setAddress] = useState(null);
   const [showPix, setShowPix] = useState(false);
   const [showBoleto, setShowBoleto] = useState(false);
   const [numeroPedido, setNumeroPedido] = useState("");
@@ -76,28 +74,26 @@ const ReviewPage = () => {
     if (user?.id) {
       axios.get(`http://localhost:3001/enderecos/${user.id}`).then((res) => {
         setAddresses(res.data);
-        setAddress(res.data[0] || null);
       });
     }
   }, [user?.id]);
 
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const freight = paymentData.freight || 28.47;
-  const discount = paymentData.discount || 0;
-  const total = subtotal + freight - discount;
+  const paymentData = JSON.parse(localStorage.getItem("paymentData") || "{}");
+  const subtotal = paymentData.subtotal ?? 0;
+  const freight = paymentData.freight ?? 0;
+  const discount = paymentData.discount ?? 0;
+  const total = paymentData.total ?? (subtotal + freight - discount);
+  const address = paymentData.address ?? null;
 
   function gerarNumeroPedido() {
-    
+
     const now = new Date();
     return `NERV-${now.getFullYear()}${(now.getMonth() + 1)
       .toString()
       .padStart(2, "0")}${now
-      .getDate()
-      .toString()
-      .padStart(2, "0")}-${Math.floor(Math.random() * 9000 + 1000)}`;
+        .getDate()
+        .toString()
+        .padStart(2, "0")}-${Math.floor(Math.random() * 9000 + 1000)}`;
   }
 
   function gerarLinhaDigitavel(numeroPedido) {
@@ -129,6 +125,13 @@ const ReviewPage = () => {
   }
 
   const numero_pedido = gerarNumeroPedido();
+  const now = new Date();
+  const localDateTime = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0') + ' ' +
+    String(now.getHours()).padStart(2, '0') + ':' +
+    String(now.getMinutes()).padStart(2, '0') + ':' +
+    String(now.getSeconds()).padStart(2, '0');
 
   const handleConfirmarPedido = async () => {
     setNumeroPedido(numero_pedido);
@@ -137,9 +140,12 @@ const ReviewPage = () => {
         user_id: user.id,
         numero_pedido,
         pagamento: paymentData.paymentMethod,
-        data: new Date().toISOString().slice(0, 19).replace("T", " "),
+        data: localDateTime,
         valor_total: total,
-        status: "recebido",
+        subtotal: subtotal,
+        freight: freight,
+        discount: discount,
+        status: "Em processamento",
         detalhes: JSON.stringify(cartItems),
         endereco: address,
       });
@@ -148,12 +154,14 @@ const ReviewPage = () => {
       if (paymentData.paymentMethod === "pix") setShowPix(true);
       if (paymentData.paymentMethod === "boleto") setShowBoleto(true);
 
+      localStorage.removeItem("checkoutData");
+      localStorage.removeItem("paymentData");
       clearCart();
     } catch (err) {
       alert("ERRO NO SISTEMA - CONTATE O SUPORTE NERV");
     }
   };
- 
+
 
   return (
     <NervReviewContainer>
@@ -176,7 +184,7 @@ const ReviewPage = () => {
       }}>
         /// CONFIRMAÇÃO DE ORDEM
       </Typography>
-      
+
       <Grid container spacing={3}>
         {/* Endereço */}
         <Grid item xs={12} md={4}>
@@ -189,9 +197,9 @@ const ReviewPage = () => {
               }}>
                 LOCAL DE ENTREGA
               </Typography>
-              <Divider sx={{ 
+              <Divider sx={{
                 borderColor: theme.palette.nge.purple,
-                mb: 2 
+                mb: 2
               }} />
               {address ? (
                 <>
@@ -238,13 +246,13 @@ const ReviewPage = () => {
               }}>
                 UNIDADES SELECIONADAS
               </Typography>
-              <Divider sx={{ 
+              <Divider sx={{
                 borderColor: theme.palette.nge.purple,
-                mb: 2 
+                mb: 2
               }} />
               {cartItems.map((item) => (
-                <Box key={item.id} sx={{ 
-                  display: "flex", 
+                <Box key={item.id} sx={{
+                  display: "flex",
                   mb: 3,
                   borderBottom: `1px solid ${theme.palette.nge.purple}`,
                   pb: 2
@@ -252,9 +260,9 @@ const ReviewPage = () => {
                   <Box
                     component="img"
                     src={item.image}
-                    sx={{ 
-                      width: 100, 
-                      height: 100, 
+                    sx={{
+                      width: 100,
+                      height: 100,
                       mr: 3,
                       objectFit: 'contain',
                       filter: 'drop-shadow(0 0 5px rgba(0, 255, 157, 0.3))'
@@ -306,9 +314,9 @@ const ReviewPage = () => {
             }}>
               RESUMO DA ORDEM
             </Typography>
-            <Divider sx={{ 
+            <Divider sx={{
               borderColor: theme.palette.nge.purple,
-              mb: 2 
+              mb: 2
             }} />
             <Typography sx={{
               fontFamily: "'Rajdhani', sans-serif",
@@ -323,13 +331,15 @@ const ReviewPage = () => {
             }}>
               FRETE: R$ {freight.toFixed(2)}
             </Typography>
-            <Typography sx={{
-              fontFamily: "'Rajdhani', sans-serif",
-              color: theme.palette.nge.neonGreen,
-              mt: 1
-            }}>
-              DESCONTO: R$ {discount.toFixed(2)}
-            </Typography>
+            {discount > 0 && (
+              <Typography sx={{
+                fontFamily: "'Rajdhani', sans-serif",
+                color: theme.palette.nge.neonGreen,
+                mt: 1
+              }}>
+                DESCONTO: -R$ {discount.toFixed(2)}
+              </Typography>
+            )}
             <Typography variant="h6" sx={{
               fontFamily: "'Orbitron', sans-serif",
               color: theme.palette.nge.red,
@@ -337,9 +347,9 @@ const ReviewPage = () => {
             }}>
               TOTAL: R$ {total.toFixed(2)}
             </Typography>
-            <Divider sx={{ 
+            <Divider sx={{
               borderColor: theme.palette.nge.purple,
-              my: 2 
+              my: 2
             }} />
             <Typography variant="h6" sx={{
               fontFamily: "'Orbitron', sans-serif",
@@ -364,8 +374,8 @@ const ReviewPage = () => {
       </Box>
 
       {/* Botões */}
-      <Box sx={{ 
-        mt: 4, 
+      <Box sx={{
+        mt: 4,
         textAlign: "center",
         display: 'flex',
         justifyContent: 'center',
@@ -377,8 +387,8 @@ const ReviewPage = () => {
         >
           CONFIRMAR ORDEM
         </NervConfirmButton>
-        <Button 
-          variant="outlined" 
+        <Button
+          variant="outlined"
           sx={{
             borderColor: theme.palette.nge.neonGreen,
             color: theme.palette.nge.neonGreen,
@@ -396,9 +406,12 @@ const ReviewPage = () => {
       </Box>
 
       {/* Modal PIX */}
-      <Dialog 
-        open={showPix} 
-        onClose={() => setShowPix(false)}
+      <Dialog
+        open={showPix}
+        // Impede fechar clicando fora ou apertando ESC
+        onClose={() => { }}
+        disableEscapeKeyDown
+        disableBackdropClick
         PaperProps={{
           sx: {
             background: theme.palette.nge.dark,
@@ -412,16 +425,15 @@ const ReviewPage = () => {
           color: theme.palette.nge.neonGreen,
           borderBottom: `1px solid ${theme.palette.nge.purple}`
         }}>
-          /// PAGAMENTO VIA PIX
+    /// PAGAMENTO VIA PIX
         </DialogTitle>
         <DialogContent sx={{ textAlign: "center", pt: 3 }}>
-          <Typography variant="body1" sx={{ 
+          <Typography variant="body1" sx={{
             fontFamily: "'Rajdhani', sans-serif",
             mb: 3
           }}>
             ESCANEIE O CÓDIGO PARA CONCLUIR O PAGAMENTO:
           </Typography>
-
           <Box sx={{
             p: 2,
             border: `2px solid ${theme.palette.nge.neonGreen}`,
@@ -440,9 +452,8 @@ const ReviewPage = () => {
               alt="QR Code PIX"
             />
           </Box>
-
-          <Typography variant="caption" sx={{ 
-            mt: 2, 
+          <Typography variant="caption" sx={{
+            mt: 2,
             display: "block",
             fontFamily: "'Rajdhani', sans-serif",
             wordBreak: "break-all",
@@ -456,19 +467,47 @@ const ReviewPage = () => {
               user?.primeiro_nome || "NERV"
             )}
           </Typography>
-          <Typography variant="body2" sx={{ 
+          <Typography variant="body2" sx={{
             mt: 3,
             fontFamily: "'Orbitron', sans-serif"
           }}>
             NÚMERO DA ORDEM: {numero_pedido}
           </Typography>
+          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              sx={{
+                background: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.dark,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { background: theme.palette.nge.red, color: 'white' }
+              }}
+              onClick={() => window.location.href = '/'}
+            >
+              VOLTAR PARA INÍCIO
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { borderColor: theme.palette.nge.red, color: theme.palette.nge.red }
+              }}
+              onClick={() => window.location.href = '/user'}
+            >
+              VER DETALHES DO PEDIDO
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
 
       {/* Modal Boleto */}
-      <Dialog 
-        open={showBoleto} 
-        onClose={() => setShowBoleto(false)}
+      <Dialog
+        open={showBoleto}
+        onClose={() => { }}
+        disableEscapeKeyDown
+        disableBackdropClick
         PaperProps={{
           sx: {
             background: theme.palette.nge.dark,
@@ -482,10 +521,10 @@ const ReviewPage = () => {
           color: theme.palette.nge.neonGreen,
           borderBottom: `1px solid ${theme.palette.nge.purple}`
         }}>
-          /// BOLETO BANCÁRIO
+    /// BOLETO BANCÁRIO
         </DialogTitle>
         <DialogContent sx={{ textAlign: "center", pt: 3 }}>
-          <Typography variant="body1" sx={{ 
+          <Typography variant="body1" sx={{
             fontFamily: "'Rajdhani', sans-serif",
             mb: 3
           }}>
@@ -523,12 +562,38 @@ const ReviewPage = () => {
           >
             VISUALIZAR BOLETO
           </Button>
-          <Typography variant="body2" sx={{ 
+          <Typography variant="body2" sx={{
             mt: 3,
             fontFamily: "'Orbitron', sans-serif"
           }}>
             NÚMERO DA ORDEM: {numero_pedido}
           </Typography>
+          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              sx={{
+                background: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.dark,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { background: theme.palette.nge.red, color: 'white' }
+              }}
+              onClick={() => window.location.href = '/'}
+            >
+              VOLTAR PARA INÍCIO
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: theme.palette.nge.neonGreen,
+                color: theme.palette.nge.neonGreen,
+                fontFamily: "'Orbitron', sans-serif",
+                '&:hover': { borderColor: theme.palette.nge.red, color: theme.palette.nge.red }
+              }}
+              onClick={() => window.location.href = '/user'}
+            >
+              VER DETALHES DO PEDIDO
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
     </NervReviewContainer>
