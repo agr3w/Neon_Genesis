@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   TextField,
   Button,
@@ -8,11 +9,14 @@ import {
   Grid,
   Box,
   MenuItem,
-  styled
+  styled,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import { useForm } from '../../hook/useForm';
 import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router';
 
 const NervCadastroContainer = styled(Container)(({ theme }) => ({
   background: `linear-gradient(180deg, #0a0a12 0%, #1a1a2e 100%)`,
@@ -76,14 +80,62 @@ export default function Cadastro() {
   const theme = useTheme();
   const { formData, handleChange } = useForm(initialState);
 
+  const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('error');
+  const navigate = useNavigate();
+
+  // Validação de cada campo
+  const validateField = (name, value) => {
+    let error = '';
+    if (name === 'primeiro_nome' && !value.trim()) error = 'Informe o primeiro nome';
+    if (name === 'ultimo_nome' && !value.trim()) error = 'Informe o último nome';
+    if (name === 'email' && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) error = 'E-mail inválido';
+    if (name === 'senha' && value.length < 6) error = 'Mínimo 6 caracteres';
+    if (name === 'confirmarSenha' && value !== formData.senha) error = 'Senhas não coincidem';
+    if (name === 'tipoDocumento' && !value) error = 'Selecione o tipo de documento';
+    if (name === 'documento') {
+      if (formData.tipoDocumento === 'cpf' && !/^\d{11}$/.test(value)) error = 'CPF deve ter 11 dígitos';
+      if (formData.tipoDocumento === 'cnpj' && !/^\d{14}$/.test(value)) error = 'CNPJ deve ter 14 dígitos';
+    }
+    if (name === 'termos' && !value) error = 'Você deve aceitar os termos';
+    return error;
+  };
+
+  // Validação geral
+  const validateAll = () => {
+    const newErrors = {};
+    for (const field of cadastroFields) {
+      const value = formData[field.name];
+      const error = validateField(field.name, value);
+      if (error) newErrors[field.name] = error;
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Ao digitar, valida o campo
+  const handleFieldChange = (e) => {
+    handleChange(e);
+    const { name, value, checked, type } = e.target;
+    const fieldValue = type === 'checkbox' ? checked : value;
+    setErrors((prev) => ({
+      ...prev,
+      [name]: validateField(name, fieldValue)
+    }));
+  };
+
+  // Ao enviar, valida tudo
   const handleSubmit = async e => {
     e.preventDefault();
-    if (formData.senha !== formData.confirmarSenha) {
-      alert('AS SENHAS NÃO COINCIDEM!');
-      return;
-    }
-    if (!formData.termos) {
-      alert('VOCÊ DEVE ACEITAR OS TERMOS.');
+    setSubmitError('');
+    if (!validateAll()) {
+      setSubmitError('Por favor, corrija os campos destacados.');
+      setAlertMsg('Por favor, corrija os campos destacados.');
+      setAlertSeverity('error');
+      setAlertOpen(true);
       return;
     }
     try {
@@ -97,10 +149,16 @@ export default function Cadastro() {
         termos: formData.termos,
       };
       const res = await axios.post('http://localhost:3001/users', payload);
-      console.log('USUÁRIO REGISTRADO:', res.data);
+      setAlertMsg('Cadastro realizado com sucesso!');
+      setAlertSeverity('success');
+      setAlertOpen(true);
+      navigate('/login');
     } catch (err) {
       console.error('ERRO NO CADASTRO:', err);
-      alert('FALHA NO REGISTRO.');
+      setSubmitError('Falha no registro. Tente novamente.');
+      setAlertMsg('Falha no registro. Tente novamente.');
+      setAlertSeverity('error');
+      setAlertOpen(true);
     }
   };
 
@@ -126,38 +184,44 @@ export default function Cadastro() {
         }}>
           /// REGISTRO NERV
         </Typography>
-        
-        <form onSubmit={handleSubmit}>
+        {submitError && (
+          <Box sx={{ mb: 2, color: theme.palette.nge.red, fontFamily: "'Orbitron', sans-serif" }}>
+            {submitError}
+          </Box>
+        )}
+        <form onSubmit={handleSubmit} error={!!submitError}> 
           <Grid container spacing={3}>
             {cadastroFields.map(field => (
               <Grid item xs={12} key={field.name}>
                 {field.type === 'select' ? (
                   <TextField
-                    select 
-                    fullWidth 
+                    select
+                    fullWidth
                     label={field.label}
-                    name={field.name} 
+                    name={field.name}
                     value={formData[field.name]}
-                    onChange={handleChange} 
+                    onChange={handleFieldChange}
                     required
+                    error={!!errors[field.name]}
+                    helperText={errors[field.name]}
                     sx={{
                       '& label': {
-                        color: theme.palette.nge.neonGreen,
+                        color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
                         fontFamily: "'Orbitron', sans-serif"
                       },
                       '& .MuiOutlinedInput-root': {
                         '& fieldset': {
-                          borderColor: theme.palette.nge.purple
+                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.purple
                         },
                         '&:hover fieldset': {
-                          borderColor: theme.palette.nge.neonGreen
+                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen
                         }
                       }
                     }}
                   >
                     {field.options.map(opt => (
-                      <MenuItem 
-                        key={opt} 
+                      <MenuItem
+                        key={opt}
                         value={opt}
                         sx={{
                           fontFamily: "'Rajdhani', sans-serif",
@@ -171,14 +235,14 @@ export default function Cadastro() {
                 ) : field.type === 'checkbox' ? (
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        name={field.name} 
-                        checked={formData[field.name]} 
-                        onChange={handleChange}
+                      <Checkbox
+                        name={field.name}
+                        checked={formData[field.name]}
+                        onChange={handleFieldChange}
                         sx={{
-                          color: theme.palette.nge.neonGreen,
+                          color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
                           '&.Mui-checked': {
-                            color: theme.palette.nge.red
+                            color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.red
                           }
                         }}
                       />
@@ -186,7 +250,7 @@ export default function Cadastro() {
                     label={
                       <Typography sx={{
                         fontFamily: "'Orbitron', sans-serif",
-                        color: theme.palette.nge.neonGreen,
+                        color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
                         fontSize: '0.8rem'
                       }}>
                         {field.label}
@@ -195,24 +259,26 @@ export default function Cadastro() {
                   />
                 ) : (
                   <TextField
-                    fullWidth 
-                    type={field.type} 
+                    fullWidth
+                    type={field.type}
                     label={field.label}
-                    name={field.name} 
+                    name={field.name}
                     value={formData[field.name]}
-                    onChange={handleChange} 
+                    onChange={handleFieldChange}
                     required
+                    error={!!errors[field.name]}
+                    helperText={errors[field.name]}
                     sx={{
                       '& label': {
-                        color: theme.palette.nge.neonGreen,
+                        color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
                         fontFamily: "'Orbitron', sans-serif"
                       },
                       '& .MuiOutlinedInput-root': {
                         '& fieldset': {
-                          borderColor: theme.palette.nge.purple
+                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.purple
                         },
                         '&:hover fieldset': {
-                          borderColor: theme.palette.nge.neonGreen
+                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen
                         }
                       }
                     }}
@@ -220,10 +286,9 @@ export default function Cadastro() {
                 )}
               </Grid>
             ))}
-            
             <Grid item xs={12}>
-              <NervCadastroButton 
-                type="submit" 
+              <NervCadastroButton
+                type="submit"
                 fullWidth
               >
                 CONFIRMAR REGISTRO
@@ -232,6 +297,30 @@ export default function Cadastro() {
           </Grid>
         </form>
       </Box>
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={5000}
+        onClose={() => setAlertOpen(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setAlertOpen(false)}
+          severity={alertSeverity}
+          sx={{
+            width: '100%',
+            fontFamily: "'Orbitron', sans-serif",
+            background: alertSeverity === 'error'
+              ? theme.palette.nge.red
+              : theme.palette.nge.neonGreen,
+            color: '#fff',
+            letterSpacing: '0.05em',
+            boxShadow: `0 0 10px ${theme.palette.nge.purple}`,
+          }}
+          variant="filled"
+        >
+          {alertMsg}
+        </Alert>
+      </Snackbar>
     </NervCadastroContainer>
   );
 }

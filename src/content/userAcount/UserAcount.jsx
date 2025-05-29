@@ -15,6 +15,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import DadosConta from "./dadosConta/DadosConta";
 import Enderecos from "./enderecos/Enderecos";
 import Pedidos from "./pedidos/Pedidos";
@@ -73,6 +74,32 @@ function UserAcount() {
           >
             <AccountCircleIcon sx={{ mr: 1, color: theme.palette.nge.red }} />
             Minha Conta
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mb: 2,
+            cursor: "pointer",
+            width: "fit-content",
+            "&:hover .MuiSvgIcon-root": {
+              color: theme.palette.nge.neonGreen,
+            },
+          }}
+          onClick={() => navigate("/")}
+        >
+          <ArrowBackIosNewIcon sx={{ color: theme.palette.nge.red, mr: 1, fontSize: 22 }} />
+          <Typography
+            sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              color: theme.palette.nge.red,
+              fontWeight: 700,
+              fontSize: 16,
+              letterSpacing: "0.05em",
+            }}
+          >
+            Voltar
           </Typography>
         </Box>
         {menu.map((item) => (

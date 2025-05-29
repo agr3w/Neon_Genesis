@@ -6,7 +6,11 @@ import {
   CardContent,
   Chip,
   Button,
-  styled
+  styled,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Divider
 } from '@mui/material';
 import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
@@ -74,6 +78,9 @@ function Pedidos({ userId }) {
   const theme = useTheme();
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [pedidoSelecionado, setPedidoSelecionado] = useState(null);
+
 
   useEffect(() => {
     if (userId) {
@@ -256,6 +263,10 @@ function Pedidos({ userId }) {
                         color: theme.palette.nge.dark
                       }
                     }}
+                    onClick={() => {
+                      setPedidoSelecionado(pedido);
+                      setOpenModal(true);
+                    }}
                   >
                     DETALHES DO PEDIDO
                   </Button>
@@ -265,6 +276,70 @@ function Pedidos({ userId }) {
           ))}
         </Box>
       )}
+      {/* Modal de detalhes do pedido */}
+      <Dialog
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            background: theme.palette.nge.dark,
+            border: `2px solid ${theme.palette.nge.purple}`,
+            color: 'white',
+            fontFamily: "'Rajdhani', sans-serif"
+          }
+        }}
+      >
+        <DialogTitle sx={{
+          fontFamily: "'Orbitron', sans-serif",
+          color: theme.palette.nge.neonGreen,
+          borderBottom: `1px solid ${theme.palette.nge.purple}`,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em'
+        }}>
+          Detalhes do Pedido #{pedidoSelecionado?.numero_pedido}
+        </DialogTitle>
+        <DialogContent>
+          {pedidoSelecionado && (
+            <Box>
+              <Typography sx={{ mb: 1 }}>
+                <b>Data:</b> {new Date(pedidoSelecionado.data).toLocaleString()}
+              </Typography>
+              <Typography sx={{ mb: 1 }}>
+                <b>Status:</b> {getStatusLabel(pedidoSelecionado.status)}
+              </Typography>
+              <Typography sx={{ mb: 1 }}>
+                <b>Valor Total:</b> R$ {Number(pedidoSelecionado.valor_total).toFixed(2)}
+              </Typography>
+              <Typography sx={{ mb: 1 }}>
+                <b>Forma de Pagamento:</b> {getPaymentLabel(pedidoSelecionado.pagamento)}
+              </Typography>
+              {/* Se tiver detalhes dos itens, mostre aqui */}
+              {pedidoSelecionado.detalhes && (
+                <>
+                  <Divider sx={{ my: 2, borderColor: theme.palette.nge.purple }} />
+                  <Typography sx={{ mb: 1, fontFamily: "'Orbitron', sans-serif", color: theme.palette.nge.neonGreen }}>
+                    Itens do Pedido:
+                  </Typography>
+                  <Box sx={{ pl: 1 }}>
+                    {Array.isArray(JSON.parse(pedidoSelecionado.detalhes)) ? (
+                      JSON.parse(pedidoSelecionado.detalhes).map((item, idx) => (
+                        <Typography key={idx} sx={{ mb: 0.5 }}>
+                          {item.name} x{item.quantity} — R$ {Number(item.price).toFixed(2)}
+                        </Typography>
+                      ))
+                    ) : (
+                      <Typography>Não há detalhes dos itens.</Typography>
+                    )}
+                  </Box>
+                </>
+              )}
+            </Box>
+          )}
+        </DialogContent>
+      </Dialog>
+
     </Box>
   );
 }
