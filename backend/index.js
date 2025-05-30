@@ -311,3 +311,18 @@ app.put("/chamados/:id/fechar", async (req, res) => {
   );
   res.json({ ok: true });
 });
+
+//----------------locacoes----------------------
+
+app.post("/locacoes", async (req, res) => {
+  const { nome, email, mensagem, totemId, totemName } = req.body;
+  if (!nome || !email || !totemId || !totemName) {
+    return res.status(400).json({ error: "Dados obrigatórios não informados." });
+  }
+  const conn = await mysql.createConnection(dbConfig);
+  await conn.execute(
+    "INSERT INTO locacoes (nome, email, mensagem, totem_id, totem_nome) VALUES (?, ?, ?, ?, ?)",
+    [nome, email, mensagem, totemId, totemName]
+  );
+  res.status(201).json({ ok: true });
+});

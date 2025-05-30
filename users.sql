@@ -58,3 +58,13 @@ CREATE TABLE chamado_mensagens (
   data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (chamado_id) REFERENCES chamados(id)
 );
+
+CREATE TABLE locacoes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  mensagem TEXT,
+  totem_id INT NOT NULL,
+  totem_nome VARCHAR(100) NOT NULL,
+  data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP
+);

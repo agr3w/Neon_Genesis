@@ -28,12 +28,12 @@ const NervListHeader = styled(Typography)(({ theme }) => ({
 const TotensListPage = () => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedBrand, setSelectedBrand] = useState("Todas");
+  const [selectedType, setSelectedType] = useState("Todas");
 
   const filteredTotens = totensData.filter((totem) => {
     const matchesCategory = selectedCategory === "Todos" || totem.category === selectedCategory;
-    const matchesBrand = selectedBrand === "Todas" || totem.brand === selectedBrand;
-    return matchesCategory && matchesBrand;
+    const matchesType = selectedType === "Todos" || totem.type === selectedType;
+    return matchesCategory && matchesType;
   });
 
   return (
@@ -44,11 +44,11 @@ const TotensListPage = () => {
     }}>
       <FiltersSidebar
         categories={filtersData.categories}
-        brands={filtersData.brands}
+        type={filtersData.type}
         selectedCategory={selectedCategory}
-        selectedBrand={selectedBrand}
+        selectedType={selectedType}
         onCategoryChange={setSelectedCategory}
-        onBrandChange={setSelectedBrand}
+        onBrandChange={setSelectedType}
       />
 
       <Box sx={{

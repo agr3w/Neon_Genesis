@@ -28,7 +28,7 @@ const NervFilterButton = styled(ListItemButton)(({ theme, selected }) => ({
   }
 }));
 
-const FiltersSidebar = ({ categories, brands, selectedCategory, selectedBrand, onCategoryChange, onBrandChange }) => {
+const FiltersSidebar = ({ categories, type, selectedCategory, selectedType, onCategoryChange, onBrandChange }) => {
   const theme = useTheme();
   return (
     <Box sx={{
@@ -81,17 +81,17 @@ const FiltersSidebar = ({ categories, brands, selectedCategory, selectedBrand, o
         fontSize: '0.9rem',
         letterSpacing: '0.05em'
       }}>
-        MARCAS
+        TIPOS
       </Typography>
       <Divider sx={{ borderColor: theme.palette.nge.purple, mb: 2 }} />
       <List>
-        {brands.map((brand) => (
-          <ListItem key={brand} disablePadding>
+        {type.map((type) => (
+          <ListItem key={type} disablePadding>
             <NervFilterButton
-              selected={selectedBrand === brand}
-              onClick={() => onBrandChange(brand)}
+              selected={selectedType === type}
+              onClick={() => onBrandChange(type)}
             >
-              <ListItemText primary={brand} />
+              <ListItemText primary={type} />
             </NervFilterButton>
           </ListItem>
         ))}

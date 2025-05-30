@@ -8,7 +8,6 @@ const totensData = [
       "https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png",
     price: 2999.99,
     category: "locação",
-    brand: "Locarti",
     type: "locacao",
   },
   {
@@ -19,7 +18,6 @@ const totensData = [
       "https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png",
     price: 1999.99,
     category: "Totens para autopagamento",
-    brand: "Outra Marca",
     type: "venda",
   },
   {
@@ -29,7 +27,6 @@ const totensData = [
     image: "https://wtotem.com.br/wp-content/uploads/2024/07/Experimente-a-Edicao-Magica-2.png",
     price: 3999.99,
     category: "Totens linha Tablet",
-    brand: "Locarti",
     type: "venda",
   },
   {
@@ -40,7 +37,6 @@ const totensData = [
 
     price: 1499.99,
     category: "Totens para impressão de senhas",
-    brand: "Outra Marca",
     type: "locacao",
   },
   // Adicione mais totens conforme necessário
