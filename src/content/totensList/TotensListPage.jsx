@@ -28,7 +28,7 @@ const NervListHeader = styled(Typography)(({ theme }) => ({
 const TotensListPage = () => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedType, setSelectedType] = useState("Todas");
+  const [selectedType, setSelectedType] = useState("Todos");
 
   const filteredTotens = totensData.filter((totem) => {
     const matchesCategory = selectedCategory === "Todos" || totem.category === selectedCategory;

@@ -72,7 +72,7 @@ const FiltersSidebar = ({ categories, type, selectedCategory, selectedType, onCa
         Filtros
       </Typography>
 
-      {/* Filtro de Marcas */}
+      {/* Filtro de Tipos */}
       <Typography variant="subtitle1" sx={{
         fontFamily: "'Orbitron', sans-serif",
         color: 'white',

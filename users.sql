@@ -12,12 +12,15 @@ CREATE TABLE users (
 CREATE TABLE enderecos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
-  tipo VARCHAR(20), -- 'entrega' ou 'cobranca'
+  tipo VARCHAR(20),
   nome_destinatario VARCHAR(100),
-  endereco VARCHAR(255),
+  cep VARCHAR(8),
+  endereco VARCHAR(200),
+  numero VARCHAR(10),
+  complemento VARCHAR(100),
+  bairro VARCHAR(100),
   cidade VARCHAR(100),
   estado VARCHAR(2),
-  cep VARCHAR(15),
   telefone VARCHAR(20),
   padrao BOOLEAN DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(id)
