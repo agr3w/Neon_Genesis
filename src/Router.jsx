@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigationType } from "react-router-dom";
+import LoadingOverlay from "./components/loadingOverlay/LoadingOverlay";
 import { Route, Routes } from "react-router";
 import Login from "./pages/login/LoginRender";
 import Home from "./pages/home/Home";
@@ -30,12 +33,22 @@ import { GlobalStyles } from '@mui/material';
 
 const AppRouter = () => {
   useScrollToTop();
+  const navigationType = useNavigationType();
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    setLoading(true);
+    // Simule um pequeno delay para UX, ou aguarde dados/carregamento real
+    const timeout = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timeout);
+  }, [location, navigationType]);
   return (
     <>
+      {loading && <LoadingOverlay />}
       <GlobalStyles styles={{
         '@font-face': {
           fontFamily: 'Orbitron',
-          src: 'url(https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap)'
         },
         body: {
           background: 'linear-gradient(45deg, #0a0a12 0%, #1a1a2e 100%)',
@@ -44,9 +57,10 @@ const AppRouter = () => {
         a: {
           textDecoration: 'none'
         },
-        
-        
+
+
       }} />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
