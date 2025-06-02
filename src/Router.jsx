@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 import LoadingOverlay from "./components/loadingOverlay/LoadingOverlay";
 import { Route, Routes } from "react-router";
-import Login from "./pages/login/LoginRender";
-import Home from "./pages/home/Home";
-import Cadastro from "./components/Cadastro/Cadastro";
-import TotensListRender from "./pages/totensList/TotensListRender";
 import useScrollToTop from "./hook/useScrollToTop";
-import CartPage from "./pages/Cart/CartPage";
-import CheckoutPage from "./pages/checkout/CheckoutPage";
-import PaymentPage from "./pages/payment/PaymentPage";
-import ReviewPage from "./pages/review/ReviewPage";
-import RentalTotensList from "./content/QuotationScreen/RentalTotensList/RentalTotensList";
-import TotemDetailRender from "./pages/totemDetail/TotemDetailRender";
-import UserAcount from "./content/userAcount/UserAcount";
 import { GlobalStyles } from '@mui/material';
+
+// Troque estes imports:
+const Login = React.lazy(() => import("./pages/login/LoginRender"));
+const Home = React.lazy(() => import("./pages/home/Home"));
+const Cadastro = React.lazy(() => import("./components/Cadastro/Cadastro"));
+const TotensListRender = React.lazy(() => import("./pages/totensList/TotensListRender"));
+const CartPage = React.lazy(() => import("./pages/Cart/CartPage"));
+const CheckoutPage = React.lazy(() => import("./pages/checkout/CheckoutPage"));
+const PaymentPage = React.lazy(() => import("./pages/payment/PaymentPage"));
+const ReviewPage = React.lazy(() => import("./pages/review/ReviewPage"));
+const RentalTotensList = React.lazy(() => import("./content/QuotationScreen/RentalTotensList/RentalTotensList"));
+const TotemDetailRender = React.lazy(() => import("./pages/totemDetail/TotemDetailRender"));
+const UserAcount = React.lazy(() => import("./content/userAcount/UserAcount"));
 
 /**
  * @file AppRouter.jsx
@@ -33,19 +35,10 @@ import { GlobalStyles } from '@mui/material';
 
 const AppRouter = () => {
   useScrollToTop();
-  const navigationType = useNavigationType();
-  const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
-
-  useEffect(() => {
-    setLoading(true);
-    // Simule um pequeno delay para UX, ou aguarde dados/carregamento real
-    const timeout = setTimeout(() => setLoading(false), 600);
-    return () => clearTimeout(timeout);
-  }, [location, navigationType]);
   return (
     <>
-      {loading && <LoadingOverlay />}
       <GlobalStyles styles={{
         '@font-face': {
           fontFamily: 'Orbitron',
@@ -57,24 +50,24 @@ const AppRouter = () => {
         a: {
           textDecoration: 'none'
         },
-
-
       }} />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/totem/:id" element={<TotemDetailRender />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/totens" element={<TotensListRender />} />
-        <Route path="/carrinho" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/review" element={<ReviewPage />} />
-        <Route path="/orcamento" element={<RentalTotensList />} />
-        <Route path="/locacao/:id" element={<TotemDetailRender />} />
-        <Route path="/user" element={<UserAcount />} />
-      </Routes>
+      <Suspense fallback={<LoadingOverlay />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/totem/:id" element={<TotemDetailRender />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/totens" element={<TotensListRender />} />
+          <Route path="/carrinho" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/review" element={<ReviewPage />} />
+          <Route path="/orcamento" element={<RentalTotensList />} />
+          <Route path="/locacao/:id" element={<TotemDetailRender />} />
+          <Route path="/user" element={<UserAcount />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };
