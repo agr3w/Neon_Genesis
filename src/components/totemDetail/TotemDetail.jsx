@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Grid, Typography, Button, styled, Chip } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Grid, Typography, Button, styled, Chip, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from "@mui/material";
 import { useParams } from "react-router";
 import totensData from "../../data/totemData";
 import { useCart } from "../../context/CartContext";
@@ -41,6 +41,12 @@ const TotemDetail = ({ type }) => {
   const { id } = useParams();
   const totem = totensData.find((t) => t.id === Number(id));
   const { addToCart } = useCart();
+  const [openModal, setOpenModal] = useState(false);
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [enviando, setEnviando] = useState(false);
+  const [sucesso, setSucesso] = useState(false);
 
   if (!totem) {
     return (
@@ -60,10 +66,45 @@ const TotemDetail = ({ type }) => {
 
   const handleAction = () => {
     if (type === "locacao") {
-      console.log(`Solicitação de locação para o totem ${totem.name}`);
+      setOpenModal(true);
     } else {
       addToCart(totem);
     }
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setNome("");
+    setEmail("");
+    setMensagem("");
+    setEnviando(false);
+    setSucesso(false);
+  };
+
+  const handleEnviarLocacao = async () => {
+    if (!nome.trim() || !email.trim() || !mensagem.trim()) {
+      alert("Preencha todos os campos para enviar a solicitação.");
+      return;
+    }
+    if (sucesso) return;
+    setEnviando(true);
+    try {
+      await fetch("http://localhost:3001/locacoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome,
+          email,
+          mensagem,
+          totemId: totem.id,
+          totemName: totem.name
+        })
+      });
+      setSucesso(true);
+    } catch (err) {
+      alert("Erro ao enviar solicitação. Tente novamente.");
+    }
+    setEnviando(false);
   };
 
   return (
@@ -160,19 +201,100 @@ const TotemDetail = ({ type }) => {
               <NervDetailButton onClick={handleAction}>
                 {type === "locacao" ? "SOLICITAR LOCAÇÃO" : "ADICIONAR AO CARRINHO"}
               </NervDetailButton>
-
-              <Button variant="outlined" sx={{
-                borderColor: theme.palette.nge.neonGreen,
-                color: theme.palette.nge.neonGreen,
-                fontFamily: "'Orbitron', sans-serif",
-                letterSpacing: '0.1em',
-                '&:hover': {
-                  background: 'rgba(0, 255, 157, 0.1)'
-                }
-              }}>
-                ESPECIFICAÇÕES
-              </Button>
             </Box>
+
+            {/* Modal de Solicitação de Locação */}
+            <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+              <DialogTitle sx={{
+                fontFamily: "'Orbitron', sans-serif",
+                color: theme.palette.nge.neonGreen,
+                borderBottom: `1px solid ${theme.palette.nge.purple}`,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em'
+              }}>
+                Solicitar Locação do Equipamento
+              </DialogTitle>
+              <DialogContent>
+                {sucesso ? (
+                  <Typography sx={{ color: theme.palette.nge.neonGreen, fontFamily: "'Rajdhani', sans-serif", mt: 2 }}>
+                    Solicitação enviada com sucesso! Em breve entraremos em contato por e-mail.
+                  </Typography>
+                ) : (
+                  <>
+                    <Typography sx={{ color: "white", fontFamily: "'Rajdhani', sans-serif", mt: 2, fontSize: '1.1rem' }}>
+                      Preencha os campos abaixo para solicitar a locação do equipamento:
+                    </Typography>
+                    <TextField
+                      label="Nome"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                      value={nome}
+                      onChange={e => setNome(e.target.value)}
+                      InputProps={{ sx: { fontFamily: "'Rajdhani', sans-serif" } }}
+                    />
+                    <TextField
+                      label="E-mail para contato"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      type="email"
+                      InputProps={{ sx: { fontFamily: "'Rajdhani', sans-serif" } }}
+                    />
+                    <TextField
+                      label="Mensagem"
+                      fullWidth
+                      multiline
+                      minRows={3}
+                      sx={{ mt: 2 }}
+                      value={mensagem}
+                      onChange={e => setMensagem(e.target.value)}
+                      InputProps={{ sx: { fontFamily: "'Rajdhani', sans-serif" } }}
+                    />
+                  </>
+                )}
+              </DialogContent>
+              <DialogActions sx={{ px: 3, pb: 2 }}>
+                {sucesso ? (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      background: theme.palette.nge.neonGreen,
+                      color: theme.palette.nge.dark,
+                      fontFamily: "'Orbitron', sans-serif"
+                    }}
+                    onClick={handleCloseModal}
+                  >
+                    FECHAR
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      onClick={handleCloseModal}
+                      sx={{
+                        color: theme.palette.nge.red,
+                        fontFamily: "'Orbitron', sans-serif"
+                      }}
+                      disabled={enviando}
+                    >
+                      CANCELAR
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        background: theme.palette.nge.neonGreen,
+                        color: theme.palette.nge.dark,
+                        fontFamily: "'Orbitron', sans-serif"
+                      }}
+                      onClick={handleEnviarLocacao}
+                      disabled={enviando || !nome.trim() || !email.trim() || !mensagem.trim() || sucesso}
+                    >
+                      {enviando ? "ENVIANDO..." : "ENVIAR SOLICITAÇÃO"}
+                    </Button>
+                  </>
+                )}
+              </DialogActions>
+            </Dialog>
           </Box>
         </Grid>
       </Grid>

@@ -1,14 +1,6 @@
 import React from "react"; 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import "./footer.css";
-
-const navLinks = [
-  { label: 'Início', to: '/' },
-  { label: 'Sobre', to: '/sobre' },
-  { label: 'Serviços', to: '/servicos' },
-  { label: 'Contato', to: '/contato' }
-];
 
 const Footer = () => {
   return (
@@ -48,18 +40,30 @@ const Footer = () => {
             margin: '1.5rem 0'
           }}
         >
-          {navLinks.map(({ label, to }) => (
-            <Link 
-              to={to}
-              key={label}
+          {['Início', 'Sobre', 'Serviços', 'Contato'].map((link) => (
+            <a 
+              href={link} 
+              key={link}
               style={{
                 color: 'var(--nge-purple)',
                 textDecoration: 'none',
-                position: 'relative'
+                position: 'relative',
+                '&:hover': {
+                  color: 'var(--nge-neon-green)',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: '-2px',
+                    left: 0,
+                    width: '100%',
+                    height: '2px',
+                    background: 'var(--nge-red)'
+                  }
+                }
               }}
             >
-              {label.toUpperCase()}
-            </Link>
+              {link.toUpperCase()}
+            </a>
           ))}
         </div>
       </nav>
@@ -78,7 +82,12 @@ const Footer = () => {
             key={index}
             style={{
               color: 'var(--nge-purple)',
-              transition: 'all 0.3s'
+              transition: 'all 0.3s',
+              '&:hover': {
+                color: 'var(--nge-red)',
+                transform: 'translateY(-3px)',
+                filter: 'drop-shadow(0 0 5px var(--nge-neon-green))'
+              }
             }}
           >
             <Icon size={24} />
