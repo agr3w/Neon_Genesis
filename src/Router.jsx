@@ -66,6 +66,8 @@ const AppRouter = () => {
           <Route path="/orcamento" element={<RentalTotensList />} />
           <Route path="/locacao/:id" element={<TotemDetailRender />} />
           <Route path="/user" element={<UserAcount />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/servicos" element={<Servicos />} />
         </Routes>
       </Suspense>
     </>
