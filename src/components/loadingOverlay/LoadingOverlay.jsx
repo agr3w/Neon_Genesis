@@ -124,7 +124,7 @@ export default function LoadingOverlay() {
           marginBottom: "1.5rem",
         }}
       >
-        NERV TOTEM
+        NEON GENESIS
       </motion.div>
       
       {/* Barra de progresso minimalista */}
