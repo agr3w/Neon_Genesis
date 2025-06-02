@@ -42,7 +42,7 @@ const Footer = () => {
         >
           {['Início', 'Sobre', 'Serviços', 'Contato'].map((link) => (
             <a 
-              href="#" 
+              href={link} 
               key={link}
               style={{
                 color: 'var(--nge-purple)',
