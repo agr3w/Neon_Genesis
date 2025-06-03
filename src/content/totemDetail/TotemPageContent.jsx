@@ -16,7 +16,7 @@ const TotemDetailContent = () => {
   return (
     <>
       <TotemDetail totemData={totem} type={totem.type} />
-      <ProductOverview text={totem.description} image={totem.image} />
+      <ProductOverview title={totem.name} text={totem.description} image={totem.image} />
       <ProductSpecs totemId={id} />
     </>
   );

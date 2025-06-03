@@ -1,11 +1,12 @@
 import React from "react";
 import { Grid2, styled } from "@mui/material";
-import GenericCard from "../../cards/GenericCard/GenericCard";
+import GenericCard from "../../cards/genericCard/GenericCard";
 import { useTheme } from "@mui/material/styles";
 
 const NervGridContainer = styled(Grid2)(({ theme }) => ({
   padding: theme.spacing(4),
   position: 'relative',
+  justifyContent: 'center',
   '&::before': {
     content: '""',
     position: 'absolute',

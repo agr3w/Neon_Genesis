@@ -80,11 +80,7 @@ const TotensListPage = () => {
           Unidades Disponíveis
         </NervListHeader>
 
-        <Box sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(700px, 1fr))',
-          gap: 3
-        }}>
+        <Box>
           <TotensGrid totens={filteredTotens} />
         </Box>
       </Box>

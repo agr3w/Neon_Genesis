@@ -73,29 +73,33 @@ const FiltersSidebar = ({ categories, type, selectedCategory, selectedType, onCa
       </Typography>
 
       {/* Filtro de Tipos */}
-      <Typography variant="subtitle1" sx={{
-        fontFamily: "'Orbitron', sans-serif",
-        color: 'white',
-        mt: 3,
-        mb: 1,
-        fontSize: '0.9rem',
-        letterSpacing: '0.05em'
-      }}>
-        TIPOS
-      </Typography>
-      <Divider sx={{ borderColor: theme.palette.nge.purple, mb: 2 }} />
-      <List>
-        {type.map((type) => (
-          <ListItem key={type} disablePadding>
-            <NervFilterButton
-              selected={selectedType === type}
-              onClick={() => onBrandChange(type)}
-            >
-              <ListItemText primary={type} />
-            </NervFilterButton>
-          </ListItem>
-        ))}
-      </List>
+      {Array.isArray(type) && type.length > 0 && (
+        <>
+          <Typography variant="subtitle1" sx={{
+            fontFamily: "'Orbitron', sans-serif",
+            color: 'white',
+            mt: 3,
+            mb: 1,
+            fontSize: '0.9rem',
+            letterSpacing: '0.05em'
+          }}>
+            TIPOS
+          </Typography>
+          <Divider sx={{ borderColor: theme.palette.nge.purple, mb: 2 }} />
+          <List>
+            {type.map((type) => (
+              <ListItem key={type} disablePadding>
+                <NervFilterButton
+                  selected={selectedType === type}
+                  onClick={() => onBrandChange(type)}
+                >
+                  <ListItemText primary={type} />
+                </NervFilterButton>
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
 
       {/* Filtro de Categorias */}
       <Typography variant="subtitle1" sx={{

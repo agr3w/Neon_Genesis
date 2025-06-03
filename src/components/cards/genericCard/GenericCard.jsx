@@ -19,6 +19,7 @@ const NervCard = styled(Card)(({ theme, type }) => ({
   background: `linear-gradient(145deg, #1a1a2e, #0a0a12)`,
   border: `2px solid ${type === 'locacao' ? theme.palette.nge.purple : theme.palette.nge.red}`,
   borderRadius: '4px',
+  minWidth: 380,
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
@@ -86,16 +87,17 @@ const GenericCard = ({
             }}
           />
         )}
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Box sx={{ 
+        <CardContent sx={{ flexGrow: 1, minHeight: 120 }}>
+          <Box sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            mb: 2
+            mb: 2,
+            minHeight: 32
           }}>
             {title && (
-              <Typography 
-                variant="h6" 
+              <Typography
+                variant="h6"
                 sx={{
                   fontFamily: "'Orbitron', sans-serif",
                   color: theme.palette.nge.neonGreen,
@@ -105,20 +107,20 @@ const GenericCard = ({
                 {title}
               </Typography>
             )}
-            {type === "venda" && price && (
-              <Typography 
-                variant="h6"
-                sx={{
-                  fontFamily: "'Orbitron', sans-serif",
-                  color: theme.palette.nge.red
-                }}
-              >
-                R$ {price.toFixed(2)}
-              </Typography>
-            )}
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "'Orbitron', sans-serif",
+                color: theme.palette.nge.red,
+                minWidth: 80,
+                textAlign: "right"
+              }}
+            >
+              {type === "venda" && price ? `R$ ${price.toFixed(2)}` : "\u00A0"}
+            </Typography>
           </Box>
           {description && (
-            <Typography 
+            <Typography
               variant="body2"
               sx={{
                 color: 'rgba(255, 255, 255, 0.7)',
