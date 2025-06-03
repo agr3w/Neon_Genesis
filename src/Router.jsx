@@ -4,6 +4,7 @@ import LoadingOverlay from "./components/loadingOverlay/LoadingOverlay";
 import { Route, Routes } from "react-router";
 import useScrollToTop from "./hook/useScrollToTop";
 import { GlobalStyles } from '@mui/material';
+import NotFound from "./pages/notFound/NotFound";
 
 // Troque estes imports:
 const Login = React.lazy(() => import("./pages/login/LoginRender"));
@@ -17,6 +18,8 @@ const ReviewPage = React.lazy(() => import("./pages/review/ReviewPage"));
 const RentalTotensList = React.lazy(() => import("./content/QuotationScreen/RentalTotensList/RentalTotensList"));
 const TotemDetailRender = React.lazy(() => import("./pages/totemDetail/TotemDetailRender"));
 const UserAcount = React.lazy(() => import("./content/userAcount/UserAcount"));
+const Sobre = React.lazy(() => import("./pages/sobre/Sobre"));
+const Servicos = React.lazy(() => import("./pages/servicos/Servicos"));
 
 /**
  * @file AppRouter.jsx
@@ -68,6 +71,7 @@ const AppRouter = () => {
           <Route path="/user" element={<UserAcount />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/servicos" element={<Servicos />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </>
