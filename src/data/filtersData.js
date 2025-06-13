@@ -7,7 +7,7 @@ const filtersData = {
       "Totens para impressão de senhas",
       "Totens para mídia indoor",
     ],
-    type: ["Todos", "venda", "locacao"],
+    brands: ["Todas", "Locarti", "Outra Marca"],
   };
   
   export default filtersData;

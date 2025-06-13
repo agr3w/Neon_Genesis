@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import {
   TextField,
   Button,
@@ -163,164 +165,168 @@ export default function Cadastro() {
   };
 
   return (
-    <NervCadastroContainer maxWidth="sm">
-      <Box mt={4} mb={4}>
-        <Typography variant="h3" sx={{
-          fontFamily: "'Orbitron', sans-serif",
-          color: theme.palette.nge.neonGreen,
-          mb: 4,
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em',
-          position: 'relative',
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            bottom: '-10px',
-            left: 0,
-            width: '100px',
-            height: '3px',
-            background: theme.palette.nge.red
-          }
-        }}>
-          /// REGISTRO NERV
-        </Typography>
-        {submitError && (
-          <Box sx={{ mb: 2, color: theme.palette.nge.red, fontFamily: "'Orbitron', sans-serif" }}>
-            {submitError}
-          </Box>
-        )}
-        <form onSubmit={handleSubmit} error={!!submitError}> 
-          <Grid container spacing={3}>
-            {cadastroFields.map(field => (
-              <Grid item xs={12} key={field.name}>
-                {field.type === 'select' ? (
-                  <TextField
-                    select
-                    fullWidth
-                    label={field.label}
-                    name={field.name}
-                    value={formData[field.name]}
-                    onChange={handleFieldChange}
-                    required
-                    error={!!errors[field.name]}
-                    helperText={errors[field.name]}
-                    sx={{
-                      '& label': {
-                        color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
-                        fontFamily: "'Orbitron', sans-serif"
-                      },
-                      '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.purple
-                        },
-                        '&:hover fieldset': {
-                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen
-                        }
-                      }
-                    }}
-                  >
-                    {field.options.map(opt => (
-                      <MenuItem
-                        key={opt}
-                        value={opt}
-                        sx={{
-                          fontFamily: "'Rajdhani', sans-serif",
-                          background: theme.palette.nge.dark
-                        }}
-                      >
-                        {opt.toUpperCase()}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                ) : field.type === 'checkbox' ? (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name={field.name}
-                        checked={formData[field.name]}
-                        onChange={handleFieldChange}
-                        sx={{
-                          color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
-                          '&.Mui-checked': {
-                            color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.red
-                          }
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography sx={{
-                        fontFamily: "'Orbitron', sans-serif",
-                        color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
-                        fontSize: '0.8rem'
-                      }}>
-                        {field.label}
-                      </Typography>
-                    }
-                  />
-                ) : (
-                  <TextField
-                    fullWidth
-                    type={field.type}
-                    label={field.label}
-                    name={field.name}
-                    value={formData[field.name]}
-                    onChange={handleFieldChange}
-                    required
-                    error={!!errors[field.name]}
-                    helperText={errors[field.name]}
-                    sx={{
-                      '& label': {
-                        color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
-                        fontFamily: "'Orbitron', sans-serif"
-                      },
-                      '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.purple
-                        },
-                        '&:hover fieldset': {
-                          borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen
-                        }
-                      }
-                    }}
-                  />
-                )}
-              </Grid>
-            ))}
-            <Grid item xs={12}>
-              <NervCadastroButton
-                type="submit"
-                fullWidth
-              >
-                CONFIRMAR REGISTRO
-              </NervCadastroButton>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-      <Snackbar
-        open={alertOpen}
-        autoHideDuration={5000}
-        onClose={() => setAlertOpen(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={() => setAlertOpen(false)}
-          severity={alertSeverity}
-          sx={{
-            width: '100%',
+    <>
+      <Header />
+      <NervCadastroContainer maxWidth="sm">
+        <Box mt={4} mb={4}>
+          <Typography variant="h3" sx={{
             fontFamily: "'Orbitron', sans-serif",
-            background: alertSeverity === 'error'
-              ? theme.palette.nge.red
-              : theme.palette.nge.neonGreen,
-            color: '#fff',
-            letterSpacing: '0.05em',
-            boxShadow: `0 0 10px ${theme.palette.nge.purple}`,
-          }}
-          variant="filled"
+            color: theme.palette.nge.neonGreen,
+            mb: 4,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: '-10px',
+              left: 0,
+              width: '100px',
+              height: '3px',
+              background: theme.palette.nge.red
+            }
+          }}>
+            /// REGISTRO NERV
+          </Typography>
+          {submitError && (
+            <Box sx={{ mb: 2, color: theme.palette.nge.red, fontFamily: "'Orbitron', sans-serif" }}>
+              {submitError}
+            </Box>
+          )}
+          <form onSubmit={handleSubmit} error={!!submitError}> 
+            <Grid container spacing={3}>
+              {cadastroFields.map(field => (
+                <Grid item xs={12} key={field.name}>
+                  {field.type === 'select' ? (
+                    <TextField
+                      select
+                      fullWidth
+                      label={field.label}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleFieldChange}
+                      required
+                      error={!!errors[field.name]}
+                      helperText={errors[field.name]}
+                      sx={{
+                        '& label': {
+                          color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
+                          fontFamily: "'Orbitron', sans-serif"
+                        },
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.purple
+                          },
+                          '&:hover fieldset': {
+                            borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen
+                          }
+                        }
+                      }}
+                    >
+                      {field.options.map(opt => (
+                        <MenuItem
+                          key={opt}
+                          value={opt}
+                          sx={{
+                            fontFamily: "'Rajdhani', sans-serif",
+                            background: theme.palette.nge.dark
+                          }}
+                        >
+                          {opt.toUpperCase()}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  ) : field.type === 'checkbox' ? (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          name={field.name}
+                          checked={formData[field.name]}
+                          onChange={handleFieldChange}
+                          sx={{
+                            color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
+                            '&.Mui-checked': {
+                              color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.red
+                            }
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography sx={{
+                          fontFamily: "'Orbitron', sans-serif",
+                          color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
+                          fontSize: '0.8rem'
+                        }}>
+                          {field.label}
+                        </Typography>
+                      }
+                    />
+                  ) : (
+                    <TextField
+                      fullWidth
+                      type={field.type}
+                      label={field.label}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleFieldChange}
+                      required
+                      error={!!errors[field.name]}
+                      helperText={errors[field.name]}
+                      sx={{
+                        '& label': {
+                          color: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen,
+                          fontFamily: "'Orbitron', sans-serif"
+                        },
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.purple
+                          },
+                          '&:hover fieldset': {
+                            borderColor: errors[field.name] ? theme.palette.nge.red : theme.palette.nge.neonGreen
+                          }
+                        }
+                      }}
+                    />
+                  )}
+                </Grid>
+              ))}
+              <Grid item xs={12}>
+                <NervCadastroButton
+                  type="submit"
+                  fullWidth
+                >
+                  CONFIRMAR REGISTRO
+                </NervCadastroButton>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+        <Snackbar
+          open={alertOpen}
+          autoHideDuration={5000}
+          onClose={() => setAlertOpen(false)}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         >
-          {alertMsg}
-        </Alert>
-      </Snackbar>
-    </NervCadastroContainer>
+          <Alert
+            onClose={() => setAlertOpen(false)}
+            severity={alertSeverity}
+            sx={{
+              width: '100%',
+              fontFamily: "'Orbitron', sans-serif",
+              background: alertSeverity === 'error'
+                ? theme.palette.nge.red
+                : theme.palette.nge.neonGreen,
+              color: '#fff',
+              letterSpacing: '0.05em',
+              boxShadow: `0 0 10px ${theme.palette.nge.purple}`,
+            }}
+            variant="filled"
+          >
+            {alertMsg}
+          </Alert>
+        </Snackbar>
+      </NervCadastroContainer>
+      <Footer />
+    </>
   );
 }

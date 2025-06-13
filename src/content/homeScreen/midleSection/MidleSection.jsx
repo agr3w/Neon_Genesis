@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Typography, IconButton, Box, Paper, styled, Modal, Fade, Backdrop } from "@mui/material";
+import { Typography, IconButton, Box, Paper, styled } from "@mui/material";
+import Modal from "../../../components/modal/Modal";
 import differentialsData from "../../../data/differentialsData";
 import { useTheme } from '@mui/material/styles';
 
@@ -71,32 +72,11 @@ const MidleSection = () => {
               animation: `fadeIn 0.5s ease ${index * 0.1}s both`
             }}
           >
-            <IconButton
-              disableRipple
-              sx={{
-                color: theme.palette.nge.neonGreen,
-                fontSize: '2.5rem',
-                mb: 2,
-                width: 56,
-                height: 56,
-                borderRadius: '50%',
-                background: 'rgba(0,255,157,0.08)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                mx: 'auto',
-                transition: 'box-shadow 0.2s, background 0.2s',
-                boxShadow: `0 0 0 0 transparent`,
-                '& svg': {
-                  fontSize: '2.2rem'
-                },
-                '&:hover': {
-                  background: theme.palette.nge.neonGreen,
-                  color: theme.palette.nge.dark,
-                  boxShadow: `0 0 16px 2px ${theme.palette.nge.neonGreen}77`
-                }
-              }}
-            >
+            <IconButton sx={{
+              color: theme.palette.nge.neonGreen,
+              fontSize: '2.5rem',
+              mb: 2
+            }}>
               {diff.icon}
             </IconButton>
             <Typography variant="h6" sx={{
@@ -110,109 +90,39 @@ const MidleSection = () => {
         ))}
       </Box>
 
-      {/* Modal próprio para este setor */}
-      <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 300,
-            sx: { background: "rgba(10,10,18,0.85)" }
-          }
-        }}
-      >
-        <Fade in={openModal}>
-          <Box
-            sx={{
-              background: `linear-gradient(135deg, #1a1a2e 60%, #0a0a12 100%)`,
-              p: { xs: 2, sm: 4 },
-              border: `2px solid ${theme.palette.nge.purple}`,
-              borderRadius: 4,
-              maxWidth: 500,
-              width: "90vw",
-              mx: "auto",
-              my: "10vh",
-              boxShadow: `0 0 20px ${theme.palette.nge.neonGreen}`,
-              position: "relative",
-              outline: "none",
-              textAlign: "center",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                inset: 0,
-                borderRadius: 4,
-                boxShadow: `0 0 60px 10px ${theme.palette.nge.purple}`,
-                opacity: 0.15,
-                zIndex: 0,
-                pointerEvents: "none"
-              }
-            }}
-          >
-            <IconButton
-              onClick={() => setOpenModal(false)}
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        {selectedDiff && (
+          <Box sx={{
+            background: theme.palette.nge.dark,
+            p: 4,
+            border: `2px solid ${theme.palette.nge.purple}`,
+            maxWidth: '800px',
+            mx: 'auto'
+          }}>
+            <Box component="img"
+              src={selectedDiff.image}
               sx={{
-                color: theme.palette.nge.red,
-                background: theme.palette.nge.dark,
-                border: `1px solid ${theme.palette.nge.red}`,
-                boxShadow: `0 0 8px ${theme.palette.nge.red}`,
-                "&:hover": {
-                  background: theme.palette.nge.red,
-                  color: theme.palette.nge.dark,
-                  boxShadow: `0 0 24px ${theme.palette.nge.red}`
-                },
-                position: "absolute",
-                top: 12,
-                right: 12,
-                zIndex: 2
+                width: '100%',
+                mb: 3,
+                borderBottom: `3px solid ${theme.palette.nge.red}`
               }}
-            >
-              &#10005;
-            </IconButton>
-            {selectedDiff && (
-              <>
-                <Box
-                  component="img"
-                  src={selectedDiff.image}
-                  alt={selectedDiff.title}
-                  sx={{
-                    width: "100%",
-                    maxHeight: 250,
-                    objectFit: "contain",
-                    mb: 3,
-                    borderRadius: 2,
-                    borderBottom: `3px solid ${theme.palette.nge.red}`,
-                    boxShadow: `0 0 24px 0 ${theme.palette.nge.neonGreen}55`
-                  }}
-                />
-                <Typography
-                  variant="h4"
-                  sx={{
-                    color: theme.palette.nge.neonGreen,
-                    fontFamily: "'Orbitron', sans-serif",
-                    mb: 2,
-                    letterSpacing: "0.08em",
-                    textShadow: `0 0 8px ${theme.palette.nge.neonGreen}99`
-                  }}
-                >
-                  {selectedDiff.title}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "white",
-                    fontFamily: "'Rajdhani', sans-serif",
-                    lineHeight: 1.6,
-                    fontSize: "1.1rem",
-                    mb: 2
-                  }}
-                >
-                  {selectedDiff.details}
-                </Typography>
-              </>
-            )}
+            />
+            <Typography variant="h4" sx={{
+              color: theme.palette.nge.neonGreen,
+              fontFamily: "'Orbitron', sans-serif",
+              mb: 2
+            }}>
+              {selectedDiff.title}
+            </Typography>
+            <Typography sx={{
+              color: 'white',
+              fontFamily: "'Rajdhani', sans-serif",
+              lineHeight: 1.6
+            }}>
+              {selectedDiff.details}
+            </Typography>
           </Box>
-        </Fade>
+        )}
       </Modal>
     </Box>
   );

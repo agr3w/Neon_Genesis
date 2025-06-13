@@ -15,14 +15,14 @@ const differentialsData = [
     icon: <TouchAppIcon fontSize="large" />,
     title: "Interface Intuitiva",
     image:
-      "https://th.bing.com/th/id/OIP.KlAoE3oZmbFmJZrf_i1FYQHaEL?r=0&rs=1&pid=ImgDetMain",
+      "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=",
     details: "Design amigável que facilita a navegação e uso dos totens.",
   },
   {
     icon: <SecurityIcon fontSize="large" />,
     title: "Segurança Avançada",
     image:
-      "https://th.bing.com/th/id/OIP.WpmUmp1GJ1RJuofGiaZv0AHaEO?r=0&rs=1&pid=ImgDetMain",
+      "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=",
     details: "Criptografia de ponta para proteger dados e transações.",
   },
   {

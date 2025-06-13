@@ -1,5 +1,5 @@
 import React from "react";
-import {
+import { 
   AppBar,
   Toolbar,
   Typography,
@@ -52,7 +52,7 @@ const Header = () => {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <AppBar
+    <AppBar 
       position="fixed"
       sx={{
         background: (theme) => theme.palette.nge.dark,
@@ -61,12 +61,12 @@ const Header = () => {
         boxShadow: '0 0 15px var(--nge-neon-green)'
       }}
     >
-      <Toolbar sx={{
+      <Toolbar sx={{ 
         py: 2,
         justifyContent: 'space-between'
       }}>
         {/* Logo e título - Esquerda */}
-        <Box
+        <Box 
           component={Link}
           to="/"
           sx={{
@@ -115,8 +115,8 @@ const Header = () => {
         </Box>
 
         {/* Links centrais - Navegação */}
-        <Box sx={{ display: { md: 'flex' }, gap: 6, marginRight: 4 }}>
-          {['totens', 'orcamento'].map((page) => (
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
+          {['totens', 'orcamento', 'suporte'].map((page) => (
             <NervLink
               key={page}
               component={Link}
@@ -128,8 +128,8 @@ const Header = () => {
         </Box>
 
         {/* Ícones - Direita */}
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Badge
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Badge 
             badgeContent={totalItems}
             color="error"
             sx={{
@@ -156,7 +156,18 @@ const Header = () => {
             <AccountCircle />
           </NervIcon>
 
-
+          <NervIcon
+            size="large"
+            sx={{
+              color: (theme) => theme.palette.nge.red,
+              '&:hover': {
+                transform: 'rotate(360deg)',
+                transition: 'transform 0.5s'
+              }
+            }}
+          >
+            <Announcement />
+          </NervIcon>
         </Box>
       </Toolbar>
     </AppBar>

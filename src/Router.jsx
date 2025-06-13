@@ -1,25 +1,19 @@
-import React, { useEffect, useState, Suspense } from "react";
-import { useLocation, useNavigationType } from "react-router-dom";
-import LoadingOverlay from "./components/loadingOverlay/LoadingOverlay";
 import { Route, Routes } from "react-router";
+import Login from "./pages/login/LoginRender";
+import Home from "./pages/home/Home";
+import Cadastro from "./components/Cadastro/Cadastro";
+import TotensListRender from "./pages/totensList/TotensListRender";
 import useScrollToTop from "./hook/useScrollToTop";
+import CartPage from "./pages/Cart/CartPage";
+import CheckoutPage from "./pages/checkout/CheckoutPage";
+import PaymentPage from "./pages/payment/PaymentPage";
+import ReviewPage from "./pages/review/ReviewPage";
+import RentalTotensList from "./content/QuotationScreen/RentalTotensList/RentalTotensList";
+import TotemDetailRender from "./pages/totemDetail/TotemDetailRender";
+import UserAcount from "./content/userAcount/UserAcount";
 import { GlobalStyles } from '@mui/material';
-import NotFound from "./pages/notFound/NotFound";
-
-// Troque estes imports:
-const Login = React.lazy(() => import("./pages/login/LoginRender"));
-const Home = React.lazy(() => import("./pages/home/Home"));
-const Cadastro = React.lazy(() => import("./components/Cadastro/Cadastro"));
-const TotensListRender = React.lazy(() => import("./pages/totensList/TotensListRender"));
-const CartPage = React.lazy(() => import("./pages/Cart/CartPage"));
-const CheckoutPage = React.lazy(() => import("./pages/checkout/CheckoutPage"));
-const PaymentPage = React.lazy(() => import("./pages/payment/PaymentPage"));
-const ReviewPage = React.lazy(() => import("./pages/review/ReviewPage"));
-const RentalTotensList = React.lazy(() => import("./content/QuotationScreen/RentalTotensList/RentalTotensList"));
-const TotemDetailRender = React.lazy(() => import("./pages/totemDetail/TotemDetailRender"));
-const UserAcount = React.lazy(() => import("./content/userAcount/UserAcount"));
-const Sobre = React.lazy(() => import("./pages/sobre/Sobre"));
-const Servicos = React.lazy(() => import("./pages/servicos/Servicos"));
+import Sobre from "./pages/Sobre/Sobre";
+import Servicos from "./pages/Servicos/Servicos";
 
 /**
  * @file AppRouter.jsx
@@ -38,13 +32,12 @@ const Servicos = React.lazy(() => import("./pages/servicos/Servicos"));
 
 const AppRouter = () => {
   useScrollToTop();
-  const location = useLocation();
-
   return (
     <>
       <GlobalStyles styles={{
         '@font-face': {
           fontFamily: 'Orbitron',
+          src: 'url(https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap)'
         },
         body: {
           background: 'linear-gradient(45deg, #0a0a12 0%, #1a1a2e 100%)',
@@ -53,27 +46,25 @@ const AppRouter = () => {
         a: {
           textDecoration: 'none'
         },
+        
+        
       }} />
-
-      <Suspense fallback={<LoadingOverlay />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/totem/:id" element={<TotemDetailRender />} />
-          <Route path="/cadastro" element={<Cadastro />} />
-          <Route path="/totens" element={<TotensListRender />} />
-          <Route path="/carrinho" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/review" element={<ReviewPage />} />
-          <Route path="/orcamento" element={<RentalTotensList />} />
-          <Route path="/locacao/:id" element={<TotemDetailRender />} />
-          <Route path="/user" element={<UserAcount />} />
-          <Route path="/sobre" element={<Sobre />} />
-          <Route path="/servicos" element={<Servicos />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/totem/:id" element={<TotemDetailRender />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/totens" element={<TotensListRender />} />
+        <Route path="/carrinho" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/review" element={<ReviewPage />} />
+        <Route path="/orcamento" element={<RentalTotensList />} />
+        <Route path="/locacao/:id" element={<TotemDetailRender />} />
+        <Route path="/user" element={<UserAcount />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/servicos" element={<Servicos />} />
+      </Routes>
     </>
   );
 };
