@@ -1,6 +1,14 @@
 import React from "react"; 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./footer.css";
+
+const navLinks = [
+  { label: 'Início', to: '/' },
+  { label: 'Sobre', to: '/sobre' },
+  { label: 'Serviços', to: '/servicos' },
+  { label: 'Contato', to: '/contato' }
+];
 
 const Footer = () => {
   return (
@@ -40,60 +48,50 @@ const Footer = () => {
             margin: '1.5rem 0'
           }}
         >
-          {['Início', 'Sobre', 'Serviços', 'Contato'].map((link) => (
-            <a 
-              href={link} 
-              key={link}
+          {navLinks.map(({ label, to }) => (
+            <Link 
+              to={to}
+              key={label}
               style={{
                 color: 'var(--nge-purple)',
                 textDecoration: 'none',
-                position: 'relative',
-                '&:hover': {
-                  color: 'var(--nge-neon-green)',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: '-2px',
-                    left: 0,
-                    width: '100%',
-                    height: '2px',
-                    background: 'var(--nge-red)'
-                  }
-                }
+                position: 'relative'
               }}
             >
-              {link.toUpperCase()}
-            </a>
+              {label.toUpperCase()}
+            </Link>
           ))}
         </div>
       </nav>
 
-      <div 
-        className="footer-social"
-        style={{
-          display: 'flex',
-          gap: '1.5rem',
-          margin: '2rem 0'
-        }}
-      >
-        {[FaFacebook, FaTwitter, FaInstagram, FaLinkedin].map((Icon, index) => (
-          <a 
-            href="#" 
-            key={index}
-            style={{
-              color: 'var(--nge-purple)',
-              transition: 'all 0.3s',
-              '&:hover': {
-                color: 'var(--nge-red)',
-                transform: 'translateY(-3px)',
-                filter: 'drop-shadow(0 0 5px var(--nge-neon-green))'
-              }
-            }}
-          >
-            <Icon size={24} />
-          </a>
-        ))}
-      </div>
+<div 
+  className="footer-social"
+  style={{
+    display: 'flex',
+    gap: '1.5rem',
+    margin: '2rem 0'
+  }}
+>
+  {[
+    { icon: FaFacebook, url: "https://www.facebook.com/profile.php?id=61577207644597" },
+    { icon: FaTwitter, url: "https://x.com/NeonGenesis2025" },
+    { icon: FaInstagram, url: "https://www.instagram.com/neon.genesis2025/" },
+    { icon: FaLinkedin, url: "https://www.linkedin.com/in/yuri-miguel-naslaniec-345112254/" }
+  ].map(({ icon: Icon, url }, index) => (
+    <a 
+      href={url}
+      key={index}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        color: 'var(--nge-purple)',
+        transition: 'all 0.3s'
+      }}
+    >
+      <Icon size={24} />
+    </a>
+  ))}
+</div>
 
       <p 
         className="footer-text"

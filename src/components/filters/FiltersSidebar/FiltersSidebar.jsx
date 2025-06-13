@@ -28,7 +28,7 @@ const NervFilterButton = styled(ListItemButton)(({ theme, selected }) => ({
   }
 }));
 
-const FiltersSidebar = ({ categories, type, selectedCategory, selectedType, onCategoryChange, onBrandChange }) => {
+const FiltersSidebar = ({ categories, brands, selectedCategory, selectedBrand, onCategoryChange, onBrandChange }) => {
   const theme = useTheme();
   return (
     <Box sx={{
@@ -72,34 +72,30 @@ const FiltersSidebar = ({ categories, type, selectedCategory, selectedType, onCa
         Filtros
       </Typography>
 
-      {/* Filtro de Tipos */}
-      {Array.isArray(type) && type.length > 0 && (
-        <>
-          <Typography variant="subtitle1" sx={{
-            fontFamily: "'Orbitron', sans-serif",
-            color: 'white',
-            mt: 3,
-            mb: 1,
-            fontSize: '0.9rem',
-            letterSpacing: '0.05em'
-          }}>
-            TIPOS
-          </Typography>
-          <Divider sx={{ borderColor: theme.palette.nge.purple, mb: 2 }} />
-          <List>
-            {type.map((type) => (
-              <ListItem key={type} disablePadding>
-                <NervFilterButton
-                  selected={selectedType === type}
-                  onClick={() => onBrandChange(type)}
-                >
-                  <ListItemText primary={type} />
-                </NervFilterButton>
-              </ListItem>
-            ))}
-          </List>
-        </>
-      )}
+      {/* Filtro de Marcas */}
+      <Typography variant="subtitle1" sx={{
+        fontFamily: "'Orbitron', sans-serif",
+        color: 'white',
+        mt: 3,
+        mb: 1,
+        fontSize: '0.9rem',
+        letterSpacing: '0.05em'
+      }}>
+        MARCAS
+      </Typography>
+      <Divider sx={{ borderColor: theme.palette.nge.purple, mb: 2 }} />
+      <List>
+        {brands.map((brand) => (
+          <ListItem key={brand} disablePadding>
+            <NervFilterButton
+              selected={selectedBrand === brand}
+              onClick={() => onBrandChange(brand)}
+            >
+              <ListItemText primary={brand} />
+            </NervFilterButton>
+          </ListItem>
+        ))}
+      </List>
 
       {/* Filtro de Categorias */}
       <Typography variant="subtitle1" sx={{

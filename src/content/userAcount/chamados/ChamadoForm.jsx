@@ -1,26 +1,33 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  MenuItem,
+import { 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions, 
+  Button, 
+  TextField, 
+  MenuItem, 
   Alert,
-  styled
+  styled 
 } from "@mui/material";
 import axios from "axios";
 import { useTheme } from "@mui/material/styles";
 
 const NervDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiPaper-root': {
-    background: theme.palette.nge.dark,
+    background: `
+      linear-gradient(215deg, #0a0a12 40%, rgba(124, 38, 205, 0.64) 100%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        #00ff9d33 5px,
+        #00ff9d33 10px
+      )`,
     border: '2px solid',
     borderImage: 'linear-gradient(45deg, #7d26cd, #ff0033) 1',
-    borderRadius: '4px',
-    boxShadow: '0 0 20px rgba(0, 255, 157, 0.5)',
-    color: theme.palette.nge.neonGreen
+    color: theme.palette.nge.neonGreen,
+    boxShadow: '0 0 30px rgba(0, 255, 157, 0.5)'
   }
 }));
 
@@ -104,8 +111,8 @@ export default function ChamadoForm({ open, onClose, userId, onSuccess }) {
           }}
         >
           {tipos.map((t) => (
-            <MenuItem
-              key={t.value}
+            <MenuItem 
+              key={t.value} 
               value={t.value}
               sx={{ fontFamily: "'Orbitron', sans-serif" }}
             >
@@ -176,9 +183,9 @@ export default function ChamadoForm({ open, onClose, userId, onSuccess }) {
           }}
         />
         {msg && (
-          <Alert
-            severity={msg.includes("ERRO") ? "error" : "success"}
-            sx={{
+          <Alert 
+            severity={msg.includes("ERRO") ? "error" : "success"} 
+            sx={{ 
               mt: 2,
               fontFamily: "'Orbitron', sans-serif",
               letterSpacing: '0.05em'
@@ -189,7 +196,7 @@ export default function ChamadoForm({ open, onClose, userId, onSuccess }) {
         )}
       </DialogContent>
       <DialogActions sx={{ background: 'rgba(10, 10, 18, 0.7)' }}>
-        <Button
+        <Button 
           onClick={onClose}
           sx={{
             fontFamily: "'Orbitron', sans-serif",
@@ -201,9 +208,9 @@ export default function ChamadoForm({ open, onClose, userId, onSuccess }) {
         >
           CANCELAR
         </Button>
-        <Button
-          onClick={handleSubmit}
-          variant="contained"
+        <Button 
+          onClick={handleSubmit} 
+          variant="contained" 
           sx={{
             fontFamily: "'Orbitron', sans-serif",
             background: 'linear-gradient(45deg, #00ff9d, #00a1ff)',

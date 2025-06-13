@@ -1,9 +1,9 @@
 import React from "react";
-import { Grid2, Typography, Box, styled } from "@mui/material";
+import { Grid, Typography, Box, styled } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 const NervOverviewBox = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(6, 6),
+  padding: theme.spacing(6, 0),
   position: 'relative',
   '&::before': {
     content: '""',
@@ -26,8 +26,8 @@ const ProductOverview = ({ title, text, image }) => {
   const theme = useTheme();
   return (
     <NervOverviewBox>
-      <Grid2 container spacing={6} alignItems="center" sx={{ maxWidth: '1200px', mx: 'auto' }}>
-        <Grid2 item xs={12} md={6}>
+      <Grid container spacing={6} alignItems="center" sx={{ maxWidth: '1200px', mx: 'auto' }}>
+        <Grid item xs={12} md={6}>
           <Typography variant="h3" sx={{
             fontFamily: "'Orbitron', sans-serif",
             color: theme.palette.nge.neonGreen,
@@ -40,7 +40,7 @@ const ProductOverview = ({ title, text, image }) => {
           }}>
             {title}
           </Typography>
-
+          
           <Typography variant="body1" sx={{
             fontFamily: "'Rajdhani', sans-serif",
             color: 'white',
@@ -54,44 +54,36 @@ const ProductOverview = ({ title, text, image }) => {
           }}>
             {text}
           </Typography>
-        </Grid2>
-        <Grid2 item xs={12} md={6}>
-          <Box
-            sx={{
-              border: `3px solid ${theme.palette.nge.purple}`,
-              boxShadow: `0 0 30px rgba(125, 38, 205, 0.5)`,
-              position: 'relative',
-              overflow: 'hidden',
-              borderRadius: 2,
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Box sx={{
+            border: `3px solid ${theme.palette.nge.purple}`,
+            boxShadow: `0 0 30px rgba(125, 38, 205, 0.5)`,
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
               width: '100%',
-              maxWidth: 400, 
-              mx: 0,    
-              my: { xs: 4, md: 0 },
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                height: '30%',
-                background: 'linear-gradient(0deg, rgba(10, 10, 18, 0.9) 0%, transparent 100%)'
-              }
-            }}
-          >
+              height: '30%',
+              background: 'linear-gradient(0deg, rgba(10, 10, 18, 0.9) 0%, transparent 100%)'
+            }
+          }}>
             <Box
               component="img"
               src={image}
               sx={{
                 width: '100%',
-                height: 240,
-                objectFit: 'contain',
+                height: 'auto',
                 display: 'block',
                 filter: 'sepia(0.3) hue-rotate(180deg) contrast(1.2)'
               }}
             />
           </Box>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </NervOverviewBox>
   );
 };

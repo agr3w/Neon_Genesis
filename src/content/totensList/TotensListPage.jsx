@@ -28,12 +28,12 @@ const NervListHeader = styled(Typography)(({ theme }) => ({
 const TotensListPage = () => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedType, setSelectedType] = useState("Todos");
+  const [selectedBrand, setSelectedBrand] = useState("Todas");
 
   const filteredTotens = totensData.filter((totem) => {
     const matchesCategory = selectedCategory === "Todos" || totem.category === selectedCategory;
-    const matchesType = selectedType === "Todos" || totem.type === selectedType;
-    return matchesCategory && matchesType;
+    const matchesBrand = selectedBrand === "Todas" || totem.brand === selectedBrand;
+    return matchesCategory && matchesBrand;
   });
 
   return (
@@ -44,11 +44,11 @@ const TotensListPage = () => {
     }}>
       <FiltersSidebar
         categories={filtersData.categories}
-        type={filtersData.type}
+        brands={filtersData.brands}
         selectedCategory={selectedCategory}
-        selectedType={selectedType}
+        selectedBrand={selectedBrand}
         onCategoryChange={setSelectedCategory}
-        onBrandChange={setSelectedType}
+        onBrandChange={setSelectedBrand}
       />
 
       <Box sx={{
@@ -80,7 +80,11 @@ const TotensListPage = () => {
           Unidades Disponíveis
         </NervListHeader>
 
-        <Box>
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(700px, 1fr))',
+          gap: 3
+        }}>
           <TotensGrid totens={filteredTotens} />
         </Box>
       </Box>

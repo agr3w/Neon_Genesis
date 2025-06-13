@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
+import { 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions, 
+  Button, 
+  TextField, 
   MenuItem,
   Box,
-  styled,
-  DialogContentText
+  styled 
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
@@ -60,224 +59,166 @@ const NervButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-
-const estadosBrasil = [
-  "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-];
-
 const tipos = [
   { value: "entrega", label: "ENTREGA" },
   { value: "cobranca", label: "COBRANÇA" },
 ];
-
-
-
 
 export default function EnderecoForm({ open, onClose, onSave, initialData }) {
   const theme = useTheme();
   const [form, setForm] = useState({
     tipo: "entrega",
     nome_destinatario: "",
-    cep: "",
     endereco: "",
-    numero: "",
-    complemento: "",
-    bairro: "",
     cidade: "",
     estado: "",
+    cep: "",
     telefone: "",
     padrao: false,
   });
-  const [errors, setErrors] = useState({});
-  const [buscandoCep, setBuscandoCep] = useState(false);
 
   useEffect(() => {
     if (initialData) setForm(initialData);
     else setForm({
       tipo: "entrega",
       nome_destinatario: "",
-      cep: "",
       endereco: "",
-      numero: "",
-      complemento: "",
-      bairro: "",
       cidade: "",
       estado: "",
+      cep: "",
       telefone: "",
       padrao: false,
     });
-    setErrors({});
-  }, [initialData, open]);
-
-  // Busca automática de CEP
-  useEffect(() => {
-    if (form.cep.length === 8) {
-      setBuscandoCep(true);
-      fetch(`https://viacep.com.br/ws/${form.cep}/json/`)
-        .then(res => res.json())
-        .then(data => {
-          if (!data.erro) {
-            setForm(prev => ({
-              ...prev,
-              endereco: data.logradouro || "",
-              bairro: data.bairro || "",
-              cidade: data.localidade || "",
-              estado: data.uf || "",
-            }));
-            setErrors(prev => ({ ...prev, cep: undefined }));
-          } else {
-            setErrors(prev => ({ ...prev, cep: "CEP não encontrado" }));
-          }
-        })
-        .catch(() => setErrors(prev => ({ ...prev, cep: "Erro ao buscar CEP" })))
-        .finally(() => setBuscandoCep(false));
-    }
-  }, [form.cep]);
+  }, [initialData]);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    if (name === "cep" && (!/^\d*$/.test(value) || value.length > 8)) return;
-    if (name === "telefone" && (!/^\d*$/.test(value) || value.length > 11)) return;
-    setForm(prev => ({ ...prev, [name]: value }));
-  }
-
-  function validate() {
-    let newErrors = {};
-    if (!form.nome_destinatario) newErrors.nome_destinatario = "Nome obrigatório";
-    if (!form.cep || form.cep.length !== 8) newErrors.cep = "CEP deve ter 8 dígitos";
-    if (!form.endereco) newErrors.endereco = "Endereço obrigatório";
-    if (!form.numero) newErrors.numero = "Número obrigatório";
-    if (!form.bairro) newErrors.bairro = "Bairro obrigatório";
-    if (!form.cidade) newErrors.cidade = "Cidade obrigatória";
-    if (!form.estado) newErrors.estado = "Selecione o estado";
-    if (!form.telefone || form.telefone.length < 10) newErrors.telefone = "Telefone deve ter DDD e número";
-    return newErrors;
-  }
-
-  function isFormValid() {
-    const validation = validate();
-    return Object.keys(validation).length === 0;
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleSubmit() {
-    const validation = validate();
-    setErrors(validation);
-    if (Object.keys(validation).length === 0) {
-      onSave(form);
-    }
+    onSave(form);
   }
 
   return (
     <NervDialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>CADASTRO DE NOVO ENDEREÇO</DialogTitle>
-      <DialogContentText sx={{ paddingLeft: 3 }}>Todos os campos são obrigatórios</DialogContentText>
-      <DialogContent>
-        <Box sx={{ display: 'grid', gap: 2, marginTop: 2 }}>
+      <DialogTitle sx={{
+        fontFamily: "'Orbitron', sans-serif",
+        background: 'linear-gradient(90deg, #0a0a12, #7d26cd)',
+        color: theme.palette.nge.neonGreen,
+        textTransform: 'uppercase',
+        borderBottom: '1px solid #00ff9d'
+      }}>
+        {initialData ? "EDITAR ENDEREÇO" : "NOVO ENDEREÇO"}
+      </DialogTitle>
+      
+      <DialogContent sx={{ pt: 3, background: '#1a1a2e' }}>
+        <Box sx={{ display: 'grid', gap: 2, pt: 1 }}>
           <NervTextField
-            label="Nome do destinatário"
-            name="nome_destinatario"
-            value={form.nome_destinatario}
+            select
+            label="TIPO"
+            name="tipo"
+            value={form.tipo}
             onChange={handleChange}
-            error={!!errors.nome_destinatario}
-            helperText={errors.nome_destinatario}
             fullWidth
+            margin="normal"
+          >
+            {tipos.map((t) => (
+              <MenuItem 
+                key={t.value} 
+                value={t.value}
+                sx={{ fontFamily: "'Orbitron', sans-serif" }}
+              >
+                {t.label}
+              </MenuItem>
+            ))}
+          </NervTextField>
+          
+          <NervTextField 
+            label="NOME DESTINATÁRIO" 
+            name="nome_destinatario" 
+            value={form.nome_destinatario} 
+            onChange={handleChange} 
+            fullWidth 
+            margin="normal" 
           />
-          <NervTextField
-            label="CEP"
-            name="cep"
-            value={form.cep}
-            onChange={handleChange}
-            inputProps={{ maxLength: 8, inputMode: "numeric" }}
-            error={!!errors.cep}
-            helperText={errors.cep || "A busca é automática ao digitar 8 dígitos"}
-            fullWidth
-            disabled={buscandoCep}
+          
+          <NervTextField 
+            label="ENDEREÇO" 
+            name="endereco" 
+            value={form.endereco} 
+            onChange={handleChange} 
+            fullWidth 
+            margin="normal" 
           />
-          <NervTextField
-            label="Endereço"
-            name="endereco"
-            value={form.endereco}
-            onChange={handleChange}
-            error={!!errors.endereco}
-            helperText={errors.endereco}
-            fullWidth
-          />
+          
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
-            <NervTextField
-              label="Número"
-              name="numero"
-              value={form.numero}
-              onChange={handleChange}
-              error={!!errors.numero}
-              helperText={errors.numero}
-              fullWidth
+            <NervTextField 
+              label="CIDADE" 
+              name="cidade" 
+              value={form.cidade} 
+              onChange={handleChange} 
+              fullWidth 
+              margin="normal" 
             />
-            <NervTextField
-              label="Complemento"
-              name="complemento"
-              value={form.complemento}
-              onChange={handleChange}
-              fullWidth
+            
+            <NervTextField 
+              label="ESTADO" 
+              name="estado" 
+              value={form.estado} 
+              onChange={handleChange} 
+              fullWidth 
+              margin="normal" 
             />
           </Box>
-          <NervTextField
-            label="Bairro"
-            name="bairro"
-            value={form.bairro}
-            onChange={handleChange}
-            error={!!errors.bairro}
-            helperText={errors.bairro}
-            fullWidth
-          />
+          
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
-            <NervTextField
-              label="Cidade"
-              name="cidade"
-              value={form.cidade}
-              onChange={handleChange}
-              error={!!errors.cidade}
-              helperText={errors.cidade}
-              fullWidth
+            <NervTextField 
+              label="CEP" 
+              name="cep" 
+              value={form.cep} 
+              onChange={handleChange} 
+              fullWidth 
+              margin="normal" 
             />
-            <NervTextField
-              select
-              label="Estado"
-              name="estado"
-              value={form.estado}
-              onChange={handleChange}
-              error={!!errors.estado}
-              helperText={errors.estado}
-              fullWidth
-            >
-              {estadosBrasil.map((uf) => (
-                <MenuItem key={uf} value={uf}>{uf}</MenuItem>
-              ))}
-            </NervTextField>
+            
+            <NervTextField 
+              label="TELEFONE" 
+              name="telefone" 
+              value={form.telefone} 
+              onChange={handleChange} 
+              fullWidth 
+              margin="normal" 
+            />
           </Box>
-          <NervTextField
-            label="Telefone"
-            name="telefone"
-            value={form.telefone}
-            onChange={handleChange}
-            inputProps={{ maxLength: 11, inputMode: "numeric" }}
-            error={!!errors.telefone}
-            helperText={errors.telefone || "Somente números, com DDD"}
-            fullWidth
-          />
         </Box>
       </DialogContent>
-      <DialogActions>
-        <NervButton onClick={onClose}>Cancelar</NervButton>
+      
+      <DialogActions sx={{ background: '#1a1a2e', borderTop: '1px solid #7d26cd' }}>
+        <NervButton
+          onClick={onClose}
+          sx={{
+            color: theme.palette.nge.red,
+            border: `1px solid ${theme.palette.nge.red}`,
+            '&:hover': {
+              background: theme.palette.nge.red,
+              color: '#fff'
+            }
+          }}
+        >
+          CANCELAR
+        </NervButton>
         <NervButton
           onClick={handleSubmit}
           variant="contained"
-          disabled={!isFormValid()}
           sx={{
-            opacity: !isFormValid() ? 0.6 : 1,
-            cursor: !isFormValid() ? "not-allowed" : "pointer"
+            background: 'linear-gradient(45deg, #00ff9d, #00a1ff)',
+            '&:hover': {
+              background: 'linear-gradient(45deg, #00a1ff, #00ff9d)'
+            }
           }}
         >
-          Salvar
+          SALVAR
         </NervButton>
       </DialogActions>
     </NervDialog>

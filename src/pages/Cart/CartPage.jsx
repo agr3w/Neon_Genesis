@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -114,19 +114,18 @@ const CartPage = () => {
           }}>
             SISTEMA VAZIO
           </Typography>
-          <Link to={"/totens"}>
-            <Button
-              variant="contained"
-              sx={{
-                fontFamily: "'Orbitron', sans-serif",
-                background: `linear-gradient(45deg, ${theme.palette.nge.purple} 0%, ${theme.palette.nge.red} 100%)`,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase'
-              }}
-            >
-              SELECIONAR UNIDADES
-            </Button>
-          </Link>
+          <Button
+            variant="contained"
+            href="/totens"
+            sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              background: `linear-gradient(45deg, ${theme.palette.nge.purple} 0%, ${theme.palette.nge.red} 100%)`,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}
+          >
+            SELECIONAR UNIDADES
+          </Button>
         </Box>
       ) : (
         <Grid container spacing={3}>

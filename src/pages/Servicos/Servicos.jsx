@@ -95,7 +95,7 @@ export default function Servicos() {
         <Divider sx={{ my: 4 }}>
           <Chip
             label={
-              <Typography variant="h6" fontWeight={700} color="success.main">
+              <Typography variant="h6" fontWeight={700} color="#fff">
                 Por que escolher a Neon Genesis?
               </Typography>
             }
