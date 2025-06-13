@@ -109,9 +109,9 @@ const CheckoutPage = () => {
   };
 
   const [freightOptions] = useState([
-    { label: "TRANSPORTE NERV (1-2 DIAS)", value: 50.0 },
-    { label: "TRANSPORTE LENTO (5-10 DIAS)", value: 25.0 },
-    { label: "TRANSPORTE RÁPIDO (2-4 DIAS)", value: 38.0 },
+    { label: "SEDEX (1-2 DIAS)", value: 120.0 },
+    { label: "BUSLOG (5-10 DIAS)", value: 38.0 },
+    { label: "JADLOG (2-4 DIAS)", value: 55.0 },
   ]);
   const [selectedFreight, setSelectedFreight] = useState(freightOptions[0].value);
 

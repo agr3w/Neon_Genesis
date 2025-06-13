@@ -149,131 +149,135 @@ function Pedidos({ userId }) {
         </Box>
       ) : (
         <Box sx={{ display: 'grid', gap: 3 }}>
-          {pedidos.map((pedido) => (
-            <NervPedidoCard key={pedido.id} status={pedido.status}>
-              <CardContent>
-                <Box sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  mb: 1
-                }}>
-                  <Typography variant="h5" sx={{
-                    fontFamily: "'Orbitron', sans-serif",
-                    color: theme.palette.nge.neonGreen,
-                    letterSpacing: '0.05em'
+          {pedidos
+            .slice()
+            .sort((a, b) => new Date(b.data) - new Date(a.data))
+            .map((pedido) => (
+
+              <NervPedidoCard key={pedido.id} status={pedido.status}>
+                <CardContent>
+                  <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    mb: 1
                   }}>
-                    PEDIDO #{pedido.numero_pedido}
-                  </Typography>
-
-                  <NervStatusChip
-                    label={getStatusLabel(pedido.status)}
-                    status={pedido.status}
-                  />
-                </Box>
-
-                <Box sx={{
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-                  gap: 2,
-                  mt: 2
-                }}>
-                  <Box>
-                    <Typography sx={{
-                      color: theme.palette.nge.neonGreen,
+                    <Typography variant="h5" sx={{
                       fontFamily: "'Orbitron', sans-serif",
-                      fontSize: '0.9rem',
-                      mb: 0.5
+                      color: theme.palette.nge.neonGreen,
+                      letterSpacing: '0.05em'
                     }}>
-                      DATA:
+                      PEDIDO #{pedido.numero_pedido}
                     </Typography>
-                    <Typography sx={{
-                      color: '#fff',
-                      fontFamily: "'Rajdhani', sans-serif"
-                    }}>
-                      {new Date(pedido.data).toLocaleString()}
-                    </Typography>
+
+                    <NervStatusChip
+                      label={getStatusLabel(pedido.status)}
+                      status={pedido.status}
+                    />
                   </Box>
 
-                  <Box>
-                    <Typography sx={{
-                      color: theme.palette.nge.neonGreen,
-                      fontFamily: "'Orbitron', sans-serif",
-                      fontSize: '0.9rem',
-                      mb: 0.5
-                    }}>
-                      VALOR TOTAL:
-                    </Typography>
-                    <Typography sx={{
-                      color: '#fff',
-                      fontFamily: "'Rajdhani', sans-serif",
-                      fontWeight: 700
-                    }}>
-                      R$ {Number(pedido.valor_total).toFixed(2)}
-                    </Typography>
+                  <Box sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                    gap: 2,
+                    mt: 2
+                  }}>
+                    <Box>
+                      <Typography sx={{
+                        color: theme.palette.nge.neonGreen,
+                        fontFamily: "'Orbitron', sans-serif",
+                        fontSize: '0.9rem',
+                        mb: 0.5
+                      }}>
+                        DATA:
+                      </Typography>
+                      <Typography sx={{
+                        color: '#fff',
+                        fontFamily: "'Rajdhani', sans-serif"
+                      }}>
+                        {new Date(pedido.data).toLocaleString()}
+                      </Typography>
+                    </Box>
+
+                    <Box>
+                      <Typography sx={{
+                        color: theme.palette.nge.neonGreen,
+                        fontFamily: "'Orbitron', sans-serif",
+                        fontSize: '0.9rem',
+                        mb: 0.5
+                      }}>
+                        VALOR TOTAL:
+                      </Typography>
+                      <Typography sx={{
+                        color: '#fff',
+                        fontFamily: "'Rajdhani', sans-serif",
+                        fontWeight: 700
+                      }}>
+                        R$ {Number(pedido.valor_total).toFixed(2)}
+                      </Typography>
+                    </Box>
+
+                    <Box>
+                      <Typography sx={{
+                        color: theme.palette.nge.neonGreen,
+                        fontFamily: "'Orbitron', sans-serif",
+                        fontSize: '0.9rem',
+                        mb: 0.5
+                      }}>
+                        FORMA DE PAGAMENTO:
+                      </Typography>
+                      <Typography sx={{
+                        color: '#fff',
+                        fontFamily: "'Rajdhani', sans-serif"
+                      }}>
+                        {getPaymentLabel(pedido.pagamento)}
+                      </Typography>
+                    </Box>
+
+                    <Box>
+                      <Typography sx={{
+                        color: theme.palette.nge.neonGreen,
+                        fontFamily: "'Orbitron', sans-serif",
+                        fontSize: '0.9rem',
+                        mb: 0.5
+                      }}>
+                        STATUS:
+                      </Typography>
+                      <Typography sx={{
+                        color: '#fff',
+                        fontFamily: "'Rajdhani', sans-serif",
+                        textTransform: 'uppercase'
+                      }}>
+                        {getStatusLabel(pedido.status)}
+                      </Typography>
+                    </Box>
                   </Box>
 
-                  <Box>
-                    <Typography sx={{
-                      color: theme.palette.nge.neonGreen,
-                      fontFamily: "'Orbitron', sans-serif",
-                      fontSize: '0.9rem',
-                      mb: 0.5
-                    }}>
-                      FORMA DE PAGAMENTO:
-                    </Typography>
-                    <Typography sx={{
-                      color: '#fff',
-                      fontFamily: "'Rajdhani', sans-serif"
-                    }}>
-                      {getPaymentLabel(pedido.pagamento)}
-                    </Typography>
+                  <Box sx={{ mt: 3, textAlign: 'right' }}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontFamily: "'Orbitron', sans-serif",
+                        letterSpacing: '0.05em',
+                        color: theme.palette.nge.neonGreen,
+                        borderColor: theme.palette.nge.neonGreen,
+                        '&:hover': {
+                          backgroundColor: theme.palette.nge.neonGreen,
+                          color: theme.palette.nge.dark
+                        }
+                      }}
+                      onClick={() => {
+                        setPedidoSelecionado(pedido);
+                        setOpenModal(true);
+                      }}
+                    >
+                      DETALHES DO PEDIDO
+                    </Button>
                   </Box>
-
-                  <Box>
-                    <Typography sx={{
-                      color: theme.palette.nge.neonGreen,
-                      fontFamily: "'Orbitron', sans-serif",
-                      fontSize: '0.9rem',
-                      mb: 0.5
-                    }}>
-                      STATUS:
-                    </Typography>
-                    <Typography sx={{
-                      color: '#fff',
-                      fontFamily: "'Rajdhani', sans-serif",
-                      textTransform: 'uppercase'
-                    }}>
-                      {getStatusLabel(pedido.status)}
-                    </Typography>
-                  </Box>
-                </Box>
-
-                <Box sx={{ mt: 3, textAlign: 'right' }}>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                      fontFamily: "'Orbitron', sans-serif",
-                      letterSpacing: '0.05em',
-                      color: theme.palette.nge.neonGreen,
-                      borderColor: theme.palette.nge.neonGreen,
-                      '&:hover': {
-                        backgroundColor: theme.palette.nge.neonGreen,
-                        color: theme.palette.nge.dark
-                      }
-                    }}
-                    onClick={() => {
-                      setPedidoSelecionado(pedido);
-                      setOpenModal(true);
-                    }}
-                  >
-                    DETALHES DO PEDIDO
-                  </Button>
-                </Box>
-              </CardContent>
-            </NervPedidoCard>
-          ))}
+                </CardContent>
+              </NervPedidoCard>
+            ))}
         </Box>
       )}
       {/* Modal de detalhes do pedido */}

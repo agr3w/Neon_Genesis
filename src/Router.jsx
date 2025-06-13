@@ -66,11 +66,11 @@ const AppRouter = () => {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/review" element={<ReviewPage />} />
-          <Route path="/orcamento" element={<RentalTotensList />} />
+          <Route path="/orçamento" element={<RentalTotensList />} />
           <Route path="/locacao/:id" element={<TotemDetailRender />} />
           <Route path="/user" element={<UserAcount />} />
-          <Route path="/sobre" element={<Sobre />} />
-          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/Sobre" element={<Sobre />} />
+          <Route path="/Serviços" element={<Servicos />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

@@ -166,7 +166,8 @@ function UserAcount() {
               fontFamily: "'Orbitron', sans-serif",
             }}
           >
-            Olá, {user.nome || user.email?.split("@")[0] || "usuário"}
+            Olá, {user.primeiro_nome
+              || user.email?.split("@")[0] || "usuário"}
           </Typography>
           <Typography sx={{ mt: 1, color: "#ccc", fontFamily: "'Rajdhani', sans-serif" }}>
             Aqui você encontra todas as informações relacionadas à sua conta,

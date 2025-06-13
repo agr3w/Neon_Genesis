@@ -94,7 +94,7 @@ function LoginScreen() {
         
         <form onSubmit={handleLogin}>
           <TextField
-            label="IDENTIFICAÇÃO"
+            label="E-MAIL DE ACESSO"
             type="email"
             fullWidth
             margin="normal"

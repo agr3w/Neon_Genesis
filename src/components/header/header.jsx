@@ -116,7 +116,7 @@ const Header = () => {
 
         {/* Links centrais - Navegação */}
         <Box sx={{ display: { md: 'flex' }, gap: 6, marginRight: 4 }}>
-          {['totens', 'orcamento'].map((page) => (
+          {['totens', 'orçamento'].map((page) => (
             <NervLink
               key={page}
               component={Link}

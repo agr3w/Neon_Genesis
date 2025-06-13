@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <CartProvider>
         <ThemeProvider theme={nervTheme}>
-          <CssBaseline /> {/* Normaliza o CSS e aplica o fundo escuro */}
+          <CssBaseline /> 
           <AppRouter />
         </ThemeProvider >
       </CartProvider>
