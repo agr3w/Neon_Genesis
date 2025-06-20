@@ -10,7 +10,7 @@ app.use(cors(), bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "agr3w123",
+  password: "root",
   database: "users",
 };
 
