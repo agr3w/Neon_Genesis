@@ -68,12 +68,6 @@ npm run dev
 Contribuições são bem-vindas!  
 Sinta-se à vontade para abrir **issues** ou enviar um **pull request**.
 
-## 📜 Licença
-Este projeto está licenciado sob a **MIT License**.
-
-## 🔗 Repositório Completo
-👉 [github.com/agr3w/Neon_Genesis](https://github.com/agr3w/Neon_Genesis)
-
 ## 🚀 Competências Envolvidas
 - React.js  
 - Material UI  
