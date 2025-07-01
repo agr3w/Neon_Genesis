@@ -46,7 +46,7 @@ git clone https://github.com/agr3w/Neon_Genesis.git
 cd Neon_Genesis
 ```
 
-### 📦 Instale as dependências (tando do frontend quanto do backend):
+### 📦 Instale as dependências (tanto do frontend quanto do backend):
 ```bash
 npm install
 ```
