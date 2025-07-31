@@ -40,7 +40,7 @@ const Footer = () => {
             margin: '1.5rem 0'
           }}
         >
-          {['Início', 'Sobre', 'Serviços', 'Contato'].map((link) => (
+          {['Sobre', 'Serviços', 'Contato'].map((link) => (
             <a 
               href={link} 
               key={link}
