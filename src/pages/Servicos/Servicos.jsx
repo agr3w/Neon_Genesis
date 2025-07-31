@@ -4,8 +4,8 @@ import DevicesIcon from '@mui/icons-material/Devices';
 import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
 
 // Importe as imagens relacionadas aos serviços
 import locImg from '../../assets/LOC.png';
