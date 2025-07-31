@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Suspense } from "react";
-import { useLocation, useNavigationType } from "react-router-dom";
+import React, {Suspense } from "react";
+import { useLocation } from "react-router-dom";
 import LoadingOverlay from "./components/loadingOverlay/LoadingOverlay";
 import { Route, Routes } from "react-router";
 import useScrollToTop from "./hook/useScrollToTop";

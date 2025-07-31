@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 import { Container, Typography, Box, Grid, Card, CardContent, Avatar, Paper } from '@mui/material';
 
 // Altere o caminho abaixo para o local correto do seu logo e das fotos dos fundadores
