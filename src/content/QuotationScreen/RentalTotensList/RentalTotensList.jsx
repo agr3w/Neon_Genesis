@@ -3,8 +3,8 @@ import { Box, Grid2, Typography, styled } from "@mui/material";
 import totensData from "../../../data/totemData";
 import filtersData from "../../../data/filtersData";
 import RentalCard from "../../../components/cards/rentalCard/RentalCard";
-import Header from "../../../components/header/Header";
-import Footer from "../../../components/footer/Footer";
+import Header from "../../../components/header/header";
+import Footer from "../../../components/footer/footer";
 import { useTheme } from "@mui/material/styles";
 import FiltersSidebar from "../../../components/filters/FiltersSidebar/FiltersSidebar";
 
