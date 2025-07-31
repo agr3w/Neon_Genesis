@@ -19,7 +19,7 @@ const RentalTotensList = React.lazy(() => import("./content/QuotationScreen/Rent
 const TotemDetailRender = React.lazy(() => import("./pages/totemDetail/TotemDetailRender"));
 const UserAcount = React.lazy(() => import("./content/userAcount/UserAcount"));
 const Sobre = React.lazy(() => import("./pages/Sobre/Sobre"));
-const Servicos = React.lazy(() => import("./pages/servicos/Servicos"));
+const Servicos = React.lazy(() => import("./pages/Servicos/Servicos"));
 
 /**
  * @file AppRouter.jsx
