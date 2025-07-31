@@ -18,8 +18,8 @@ const ReviewPage = React.lazy(() => import("./pages/review/ReviewPage"));
 const RentalTotensList = React.lazy(() => import("./content/QuotationScreen/RentalTotensList/RentalTotensList"));
 const TotemDetailRender = React.lazy(() => import("./pages/totemDetail/TotemDetailRender"));
 const UserAcount = React.lazy(() => import("./content/userAcount/UserAcount"));
-const Sobre = React.lazy(() => import("./pages/sobre/Sobre"));
-const Servicos = React.lazy(() => import("./pages/servicos/Servicos"));
+const Sobre = React.lazy(() => import("./pages/Sobre/Sobre"));
+const Servicos = React.lazy(() => import("./pages/Servicos/Servicos"));
 
 /**
  * @file AppRouter.jsx
