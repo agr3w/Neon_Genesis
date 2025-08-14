@@ -36,6 +36,9 @@ O objetivo foi criar uma interface que não apenas funcione bem, mas que também
 
 ## 🚀 Como Executar o Projeto
 
+### 🎇 Na internet
+Link do site (apenas o front): [Neon Genesis](https://neongenesistotens.netlify.app/)
+
 ### ⚙️ Clone o repositório:
 ```bash
 git clone https://github.com/agr3w/Neon_Genesis.git
@@ -79,3 +82,4 @@ Sinta-se à vontade para abrir **issues** ou enviar um **pull request**.
 - Planejamento de Projetos  
 
 ----
+
