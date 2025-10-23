@@ -72,7 +72,7 @@ const ReviewPage = () => {
 
   useEffect(() => {
     if (user?.id) {
-      axios.get(`/.netlify/functions/enderecos/${user.id}`).then((res) => {
+      axios.get(`/.netlify/functions/enderecos?user_id=${user.id}`).then((res) => {
         setAddresses(res.data);
       });
     }
@@ -147,7 +147,7 @@ const ReviewPage = () => {
         discount: discount,
         status: "Em processamento",
         detalhes: JSON.stringify(cartItems),
-        endereco: address,
+        endereco: JSON.stringify(address), 
       });
       setNumeroPedido(res.data.numero_pedido);
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { 
-  Box, 
-  TextField, 
-  Button, 
-  Typography, 
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
   Alert,
-  styled 
+  styled
 } from "@mui/material";
 import axios from "axios";
 import { useTheme } from "@mui/material/styles";
@@ -55,11 +55,11 @@ const NervButton = styled(Button)(({ theme }) => ({
 const NervAlert = styled(Alert)(({ theme, severity }) => ({
   fontFamily: "'Orbitron', sans-serif",
   letterSpacing: '0.05em',
-  background: severity === 'error' 
-    ? 'rgba(255, 0, 51, 0.2)' 
+  background: severity === 'error'
+    ? 'rgba(255, 0, 51, 0.2)'
     : 'rgba(0, 255, 157, 0.2)',
-  border: `1px solid ${severity === 'error' 
-    ? theme.palette.nge.red 
+  border: `1px solid ${severity === 'error'
+    ? theme.palette.nge.red
     : theme.palette.nge.neonGreen}`,
   color: '#fff'
 }));
@@ -81,7 +81,7 @@ export default function AlterarSenha({ userId, onClose }) {
       return;
     }
     try {
-      await axios.put(`http://localhost:3001/users/${userId}/senha`, {
+      await axios.put(`/.netlify/functions/users/${userId}/senha`, {
         senhaAtual,
         novaSenha,
       });
@@ -97,7 +97,7 @@ export default function AlterarSenha({ userId, onClose }) {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Typography variant="h6" sx={{ 
+      <Typography variant="h6" sx={{
         mb: 3,
         fontFamily: "'Orbitron', sans-serif",
         color: theme.palette.nge.neonGreen,
@@ -106,7 +106,7 @@ export default function AlterarSenha({ userId, onClose }) {
       }}>
         ALTERAÇÃO DE SENHA
       </Typography>
-      
+
       <NervTextField
         label="SENHA ATUAL"
         type="password"
@@ -134,10 +134,10 @@ export default function AlterarSenha({ userId, onClose }) {
         onChange={e => setConfirmar(e.target.value)}
         required
       />
-      
+
       {erro && <NervAlert severity="error" sx={{ mt: 2 }}>{erro}</NervAlert>}
       {msg && <NervAlert severity="success" sx={{ mt: 2 }}>{msg}</NervAlert>}
-      
+
       <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
         <NervButton
           type="submit"

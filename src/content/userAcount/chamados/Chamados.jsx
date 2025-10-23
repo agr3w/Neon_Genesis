@@ -51,8 +51,8 @@ const NervChip = styled(Chip)(({ theme, status }) => ({
   fontFamily: "'Orbitron', sans-serif",
   fontWeight: 700,
   letterSpacing: '0.05em',
-  background: status === 'aberto' 
-    ? `linear-gradient(45deg, ${theme.palette.nge.red}, ${theme.palette.nge.purple})` 
+  background: status === 'aberto'
+    ? `linear-gradient(45deg, ${theme.palette.nge.red}, ${theme.palette.nge.purple})`
     : `linear-gradient(45deg, #555, #888)`,
   color: '#fff',
   textTransform: 'uppercase'
@@ -66,7 +66,7 @@ export default function Chamados({ userId }) {
 
   const fetchChamados = () => {
     axios
-      .get(`http://localhost:3001/chamados/${userId}`)
+      .get(`/.netlify/functions/chamados?user_id=${userId}`)
       .then((res) => setChamados(res.data));
   };
 
@@ -75,9 +75,9 @@ export default function Chamados({ userId }) {
   }, [userId]);
 
   return (
-    <Box p={2} sx={{background: '#0a0a12', borderRadius: '4px' }}>
-      <Box sx={{ 
-        display: 'flex', 
+    <Box p={2} sx={{ background: '#0a0a12', borderRadius: '4px' }}>
+      <Box sx={{
+        display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         mb: 3,
@@ -111,17 +111,17 @@ export default function Chamados({ userId }) {
           Novo Chamado
         </Button>
       </Box>
-      
+
       <ChamadoForm
         open={openForm}
         onClose={() => setOpenForm(false)}
         userId={userId}
         onSuccess={fetchChamados}
       />
-      
+
       <Box>
         {chamados.length === 0 ? (
-          <Box sx={{ 
+          <Box sx={{
             textAlign: 'center',
             mt: 10,
             p: 4,
@@ -152,8 +152,8 @@ export default function Chamados({ userId }) {
           </Box>
         ) : (
           chamados.map((c) => (
-            <NervCard 
-              key={c.id} 
+            <NervCard
+              key={c.id}
               status={c.status}
               sx={{ mb: 2 }}
             >
@@ -170,9 +170,9 @@ export default function Chamados({ userId }) {
                     color: theme.palette.nge.neonGreen,
                     mb: 0.5
                   }}>
-                    {c.assunto.toUpperCase()}
+                    {c.titulo.toUpperCase()}
                   </Typography>
-                  <Typography variant="body2" sx={{ 
+                  <Typography variant="body2" sx={{
                     color: '#aaa',
                     fontFamily: "'Rajdhani', sans-serif"
                   }}>
@@ -185,7 +185,7 @@ export default function Chamados({ userId }) {
                     sx={{ mt: 1 }}
                   />
                 </Box>
-                <IconButton 
+                <IconButton
                   onClick={() => setSelected(c)}
                   sx={{
                     color: theme.palette.nge.neonGreen,
@@ -203,7 +203,7 @@ export default function Chamados({ userId }) {
           ))
         )}
       </Box>
-      
+
       {selected && (
         <ChamadoConversa
           chamado={selected}

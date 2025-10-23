@@ -131,7 +131,7 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
           WebkitBackgroundClip: 'text',
           color: 'transparent'
         }}>
-          CHAMADO #{chamado.id} - {chamado.assunto.toUpperCase()}
+          CHAMADO #{chamado.id} - {chamado.titulo.toUpperCase()}
         </Typography>
         <Box>
           <Button
