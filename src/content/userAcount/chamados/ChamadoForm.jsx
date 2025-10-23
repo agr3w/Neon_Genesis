@@ -43,7 +43,7 @@ export default function ChamadoForm({ open, onClose, userId, onSuccess }) {
 
   async function handleSubmit() {
     try {
-      await axios.post("http://localhost:3001/chamados", {
+      await axios.post("/.netlify/functions/chamados", {
         user_id: userId,
         tipo: form.tipo,
         titulo: form.titulo,

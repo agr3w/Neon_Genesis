@@ -81,31 +81,31 @@ const TotemDetail = ({ type }) => {
     setSucesso(false);
   };
 
-  const handleEnviarLocacao = async () => {
-    if (!nome.trim() || !email.trim() || !mensagem.trim()) {
-      alert("Preencha todos os campos para enviar a solicitação.");
-      return;
-    }
-    if (sucesso) return;
-    setEnviando(true);
-    try {
-      await fetch("http://localhost:3001/locacoes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome,
-          email,
-          mensagem,
-          totemId: totem.id,
-          totemName: totem.name
-        })
-      });
-      setSucesso(true);
-    } catch (err) {
-      alert("Erro ao enviar solicitação. Tente novamente.");
-    }
-    setEnviando(false);
-  };
+ const handleEnviarLocacao = async () => {
+  if (!nome.trim() || !email.trim() || !mensagem.trim()) {
+    alert("Preencha todos os campos para enviar a solicitação.");
+    return;
+  }
+  if (sucesso) return;
+  setEnviando(true);
+  try {
+    await fetch("/.netlify/functions/locacoes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome,
+        email,
+        mensagem,
+        totem_id: totem.id,
+        totem_nome: totem.name,
+      }),
+    });
+    setSucesso(true);
+  } catch (err) {
+    alert("Erro ao enviar solicitação. Tente novamente.");
+  }
+  setEnviando(false);
+};
 
   return (
     <Box sx={{

@@ -13,13 +13,12 @@ export default function Login() {
 
   // Função para lidar com o login
   const handleLogin = async (email, senha) => {
-     try {
-    const res = await axios.post('http://localhost:3001/login', { email, senha });
-    setUser(res.data);
-    return true;
-  } catch (err) {
-    return false;
-  }
+    try {
+      const res = await axios.post("/.netlify/functions/login", { email, senha }); setUser(res.data);
+      return true;
+    } catch (err) {
+      return false;
+    }
   };
 
   return (

@@ -14,16 +14,16 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useTheme } from '@mui/material/styles';
 
-const NervAddressBox = styled(Box)(({ theme, padrao }) => ({
+const NervAddressBox = styled(Box)(({ theme, $padrao }) => ({
   marginBottom: theme.spacing(3),
   padding: theme.spacing(3),
-  border: padrao ? `2px solid ${theme.palette.nge.red}` : `1px solid ${theme.palette.nge.purple}`,
+  border: $padrao ? `2px solid ${theme.palette.nge.red}` : `1px solid ${theme.palette.nge.purple}`,
   borderRadius: '4px',
-  background: padrao ? '#2d2d32' : '#1a1a2e',
+  background: $padrao ? '#2d2d32' : '#1a1a2e',
   position: 'relative',
   transition: 'all 0.3s',
   '&:hover': {
-    boxShadow: `0 0 15px ${padrao ? theme.palette.nge.red : theme.palette.nge.purple}`,
+    boxShadow: `0 0 15px ${$padrao ? theme.palette.nge.red : theme.palette.nge.purple}`,
     transform: 'translateY(-3px)'
   }
 }));
@@ -61,13 +61,13 @@ export default function Enderecos({ userId }) {
   const [editEndereco, setEditEndereco] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => {
+    axios.get(`/.netlify/functions/enderecos?user_id=${userId}`).then(res => {
       if (res.data.length === 1 && !res.data[0].padrao) {
-        axios.put(`http://localhost:3001/enderecos/${res.data[0].id}/padrao`, {
+        axios.put(`/.netlify/functions/enderecos/${res.data[0].id}/padrao`, {
           user_id: userId,
           tipo: res.data[0].tipo
         }).then(() => {
-          axios.get(`http://localhost:3001/enderecos/${userId}`).then(res2 => setEnderecos(res2.data));
+          axios.get(`/.netlify/functions/enderecos?user_id=${userId}`).then(res2 => setEnderecos(res2.data));
         });
       } else {
         setEnderecos(res.data);
@@ -77,33 +77,33 @@ export default function Enderecos({ userId }) {
 
   function handleSave(data) {
     if (editEndereco) {
-      axios.put(`http://localhost:3001/enderecos/${editEndereco.id}`, { ...data, user_id: userId }).then(() => {
+      axios.put(`/.netlify/functions/enderecos/${editEndereco.id}`, { ...data, user_id: userId }).then(() => {
         setOpen(false);
         setEditEndereco(null);
-        axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+        axios.get(`/.netlify/functions/enderecos?user_id=${userId}`).then(res => setEnderecos(res.data));
       });
     } else {
-      axios.post("http://localhost:3001/enderecos", { ...data, user_id: userId }).then(() => {
+      axios.post("/.netlify/functions/enderecos", { ...data, user_id: userId }).then(() => {
         setOpen(false);
-        axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+        axios.get(`/.netlify/functions/enderecos?user_id=${userId}`).then(res => setEnderecos(res.data));
       });
     }
   }
 
   function handleDelete(id) {
     if (window.confirm("CONFIRMAR EXCLUSÃO DESTE ENDEREÇO?")) {
-      axios.delete(`http://localhost:3001/enderecos/${id}`).then(() => {
-        axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+      axios.delete(`/.netlify/functions/enderecos/${id}`).then(() => {
+        axios.get(`/.netlify/functions/enderecos?user_id=${userId}`).then(res => setEnderecos(res.data));
       });
     }
   }
 
   function handleSetPadrao(e) {
-    axios.put(`http://localhost:3001/enderecos/${e.id}/padrao`, {
+    axios.put(`/.netlify/functions/enderecos/${e.id}/padrao`, {
       user_id: userId,
       tipo: e.tipo
     }).then(() => {
-      axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+      axios.get(`/.netlify/functions/enderecos?user_id=${userId}`).then(res => setEnderecos(res.data));
     });
   }
 
@@ -144,7 +144,7 @@ export default function Enderecos({ userId }) {
       ) : (
         <>
           {enderecos.map(e => (
-            <NervAddressBox key={e.id} padrao={e.padrao}>
+            <NervAddressBox key={e.id} $padrao={e.padrao}>
               <Box sx={{
                 position: 'absolute',
                 top: 8,

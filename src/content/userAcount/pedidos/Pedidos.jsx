@@ -85,7 +85,7 @@ function Pedidos({ userId }) {
   useEffect(() => {
     if (userId) {
       setLoading(true);
-      axios.get(`http://localhost:3001/pedidos/${userId}`)
+      axios.get(`/.netlify/functions/pedidos?user_id=${userId}`)
         .then(res => setPedidos(res.data))
         .finally(() => setLoading(false));
     }
@@ -105,7 +105,11 @@ function Pedidos({ userId }) {
     return payment.toUpperCase();
   }
 
-  return (
+  const enderecoObj = pedidoSelecionado && typeof pedidoSelecionado.endereco === 'string'
+    ? JSON.parse(pedidoSelecionado.endereco)
+    : null;
+
+    return (
     <Box p={3} sx={{ background: '#0a0a12', borderRadius: '4px' }}>
       <Typography variant="h4" sx={{
         mb: 4,
@@ -445,15 +449,15 @@ function Pedidos({ userId }) {
                 fontFamily: "'Rajdhani', sans-serif",
                 fontSize: "1rem"
               }}>
-                {pedidoSelecionado.enderecoDetalhado && typeof pedidoSelecionado.enderecoDetalhado === "object" ? (
+                {enderecoObj ? (
                   <>
-                    <b>{pedidoSelecionado.enderecoDetalhado.nome_destinatario}</b><br />
-                    {pedidoSelecionado.enderecoDetalhado.endereco}, {pedidoSelecionado.enderecoDetalhado.numero}
-                    {pedidoSelecionado.enderecoDetalhado.complemento ? `, ${pedidoSelecionado.enderecoDetalhado.complemento}` : ""}
+                    <b>{enderecoObj.nome_destinatario}</b><br />
+                    {enderecoObj.endereco}, {enderecoObj.numero}
+                    {enderecoObj.complemento ? `, ${enderecoObj.complemento}` : ""}
                     <br />
-                    {pedidoSelecionado.enderecoDetalhado.bairro} - {pedidoSelecionado.enderecoDetalhado.cidade}/{pedidoSelecionado.enderecoDetalhado.estado}<br />
-                    CEP: {pedidoSelecionado.enderecoDetalhado.cep}<br />
-                    Tel: {pedidoSelecionado.enderecoDetalhado.telefone}
+                    {enderecoObj.bairro} - {enderecoObj.cidade}/{enderecoObj.estado}<br />
+                    CEP: {enderecoObj.cep}<br />
+                    Tel: {enderecoObj.telefone}
                   </>
                 ) : (
                   "Endereço não informado"

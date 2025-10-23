@@ -148,7 +148,7 @@ export default function Cadastro() {
         senha: formData.senha,
         termos: formData.termos,
       };
-      const res = await axios.post('http://localhost:3001/users', payload);
+      const res = await axios.post('/.netlify/functions/users', payload); 
       setAlertMsg('Cadastro realizado com sucesso!');
       setAlertSeverity('success');
       setAlertOpen(true);
@@ -189,7 +189,7 @@ export default function Cadastro() {
             {submitError}
           </Box>
         )}
-        <form onSubmit={handleSubmit} error={!!submitError}> 
+        <form onSubmit={handleSubmit} error={!!submitError}>
           <Grid container spacing={3}>
             {cadastroFields.map(field => (
               <Grid item xs={12} key={field.name}>

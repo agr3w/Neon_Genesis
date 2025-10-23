@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "netlify:dev": "netlify dev",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -14,8 +15,10 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
+    "@netlify/neon": "^0.1.0",
     "aos": "^2.3.4",
     "axios": "^1.9.0",
+    "bcryptjs": "^3.0.2",
     "framer-motion": "^12.5.0",
     "neon-genesis-vite": "file:",
     "react": "^19.1.0",

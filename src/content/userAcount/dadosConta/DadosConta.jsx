@@ -80,7 +80,7 @@ function DadosConta({ user }) {
   function handleSubmit() {
     setLoading(true);
     axios
-      .put(`http://localhost:3001/users/${user.id}`, form)
+      .put(`/.netlify/functions/users/${user.id}`, form)
       .then(() => setEdit(false))
       .finally(() => setLoading(false));
   }
@@ -111,7 +111,7 @@ function DadosConta({ user }) {
         mixBlendMode: 'screen'
       }} />
 
-      <Typography variant="h4" sx={{ 
+      <Typography variant="h4" sx={{
         mb: 3,
         fontFamily: "'Orbitron', sans-serif",
         background: 'linear-gradient(45deg, #00ff9d, #00a1ff)',
@@ -124,13 +124,13 @@ function DadosConta({ user }) {
       }}>
         MEUS DADOS
       </Typography>
-      
-      <Divider sx={{ 
+
+      <Divider sx={{
         mb: 3,
         borderColor: theme.palette.nge.purple,
         borderBottomWidth: '2px'
       }} />
-      
+
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <NervTextField
@@ -166,10 +166,10 @@ function DadosConta({ user }) {
             margin="normal"
           >
             {tipos.map((t) => (
-              <MenuItem 
-                key={t.value} 
+              <MenuItem
+                key={t.value}
                 value={t.value}
-                sx={{ 
+                sx={{
                   fontFamily: "'Orbitron', sans-serif",
                   background: '#1a1a2e',
                   '&:hover': {
@@ -205,7 +205,7 @@ function DadosConta({ user }) {
           />
         </Grid>
       </Grid>
-      
+
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
         {!edit ? (
           <>
@@ -261,8 +261,8 @@ function DadosConta({ user }) {
       </Box>
 
       {/* Modal de Alterar Senha */}
-      <Dialog 
-        open={showSenha} 
+      <Dialog
+        open={showSenha}
         onClose={() => setShowSenha(false)}
         PaperProps={{
           sx: {

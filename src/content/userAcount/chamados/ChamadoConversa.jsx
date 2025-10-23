@@ -51,8 +51,8 @@ const NervDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const MessageBubble = styled(Box)(({ theme, type }) => ({
-  background: type === 'usuario' 
-    ? 'linear-gradient(135deg, #ff0033, #7d26cd)' 
+  background: type === 'usuario'
+    ? 'linear-gradient(135deg, #ff0033, #7d26cd)'
     : 'linear-gradient(135deg, #232326, #0a0a12)',
   color: '#fff',
   padding: theme.spacing(1.5),
@@ -84,27 +84,27 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
   useEffect(() => {
     if (open) {
       axios
-        .get(`http://localhost:3001/chamados/${chamado.id}/mensagens`)
+        .get(`/.netlify/functions/chamados/${chamado.id}/mensagens`)
         .then((res) => setMensagens(res.data));
     }
   }, [open, chamado.id]);
 
   const enviarMensagem = async () => {
     if (!novaMensagem.trim()) return;
-    await axios.post(`http://localhost:3001/chamados/${chamado.id}/mensagens`, {
+    await axios.post(`/.netlify/functions/chamados/${chamado.id}/mensagens`, {
       autor: "usuario",
       mensagem: novaMensagem,
     });
     setNovaMensagem("");
     const res = await axios.get(
-      `http://localhost:3001/chamados/${chamado.id}/mensagens`
+      `/.netlify/functions/chamados/${chamado.id}/mensagens`
     );
     setMensagens(res.data);
   };
 
   const handleFecharChamado = async () => {
     if (!motivo) return;
-    await axios.put(`http://localhost:3001/chamados/${chamado.id}/fechar`, {
+    await axios.put(`/.netlify/functions/chamados/${chamado.id}/fechar`, {
       motivo,
     });
     setCloseDialog(false);
@@ -125,13 +125,13 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
           position: 'relative'
         }}
       >
-        <Typography variant="h6" sx={{ 
+        <Typography variant="h6" sx={{
           fontFamily: "'Orbitron', sans-serif",
           background: 'linear-gradient(45deg, #00ff9d, #00a1ff)',
           WebkitBackgroundClip: 'text',
           color: 'transparent'
         }}>
-          CHAMADO #{chamado.id} - {chamado.assunto.toUpperCase()}
+          CHAMADO #{chamado.id} - {chamado.titulo.toUpperCase()}
         </Typography>
         <Box>
           <Button
@@ -169,7 +169,7 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
           </IconButton>
         </Box>
       </DialogTitle>
-      
+
       {/* Efeito de scanlines */}
       <Box sx={{
         position: 'absolute',
@@ -187,9 +187,9 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
       }} />
 
       <DialogContent sx={{ position: 'relative' }}>
-        <Box sx={{ 
-          maxHeight: 400, 
-          overflowY: "auto", 
+        <Box sx={{
+          maxHeight: 400,
+          overflowY: "auto",
           mb: 2,
           '&::-webkit-scrollbar': {
             width: '6px'
@@ -210,13 +210,13 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
               }}
             >
               <MessageBubble type={msg.autor}>
-                <Typography variant="body2" sx={{ 
+                <Typography variant="body2" sx={{
                   fontFamily: msg.autor === 'usuario' ? "'Rajdhani', sans-serif" : "'Orbitron', sans-serif",
                   fontSize: '0.9rem'
                 }}>
                   {msg.mensagem}
                 </Typography>
-                <Typography variant="caption" sx={{ 
+                <Typography variant="caption" sx={{
                   display: 'block',
                   mt: 0.5,
                   opacity: 0.7,
@@ -229,9 +229,9 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
             </Box>
           ))}
         </Box>
-        
-        <Box sx={{ 
-          display: "flex", 
+
+        <Box sx={{
+          display: "flex",
           gap: 1,
           position: 'relative',
           zIndex: 1
@@ -302,9 +302,9 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
         }}>
           MOTIVO DO FECHAMENTO
         </DialogTitle>
-        <DialogContent sx={{ pt: 3, margin: 2}}>
+        <DialogContent sx={{ pt: 3, margin: 2 }}>
           <FormControl fullWidth>
-            <InputLabel 
+            <InputLabel
               id="motivo-label"
               sx={{
                 color: theme.palette.nge.neonGreen,
@@ -342,7 +342,7 @@ export default function ChamadoConversa({ chamado, open, onClose, onUpdate }) {
           </FormControl>
         </DialogContent>
         <DialogActions sx={{ background: 'rgba(10, 10, 18, 0.7)' }}>
-          <Button 
+          <Button
             onClick={() => setCloseDialog(false)}
             sx={{
               fontFamily: "'Orbitron', sans-serif",
