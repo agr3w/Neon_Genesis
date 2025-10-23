@@ -90,6 +90,10 @@ export const NervTotemCard = styled('div')(({ theme }) => ({
   transition: 'all 0.4s',
   border: `1px solid ${theme.palette.nge.purple}`,
   boxShadow: `0 5px 15px rgba(125, 38, 205, 0.3)`,
+  [theme.breakpoints.down('sm')]: {
+    margin: '8px',
+    padding: theme.spacing(1.5),
+  },
   '&:hover': {
     transform: 'translateY(-10px)',
     boxShadow: `0 15px 30px rgba(0, 255, 157, 0.5)`,
@@ -115,6 +119,11 @@ export const NervCarouselButton = styled('button')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  [theme.breakpoints.down('sm')]: {
+    width: '32px',
+    height: '32px',
+    fontSize: '1rem',
+  },
   '&:hover': {
     background: theme.palette.nge.red,
     color: theme.palette.nge.dark,

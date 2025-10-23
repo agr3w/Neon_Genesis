@@ -59,14 +59,15 @@ const TotensSection = () => {
         /// NOSSOS TOTENS
       </Typography>
 
-      <Box sx={{ px: 2 }}>
+      <Box sx={{ px: { xs: 0.5, sm: 2 } }}>
         <Swiper
           modules={[Navigation, EffectCoverflow]}
           effect="coverflow"
-          centeredSlides
           loop
+          centeredSlides={false}
+          slidesPerView={1}
+          navigation={false}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          slidesPerView={3}
           coverflowEffect={{
             rotate: 10,
             stretch: 0,
@@ -75,34 +76,42 @@ const TotensSection = () => {
             slideShadows: false
           }}
           breakpoints={{
-            640: { slidesPerView: 1 },
-            1024: { slidesPerView: 3 }
+            0: { slidesPerView: 1, centeredSlides: false },
+            640: { slidesPerView: 2, centeredSlides: false },
+            1024: { slidesPerView: 3, centeredSlides: true }
           }}
         >
           {totensData.map((item) => (
             <SwiperSlide key={item.id}>
-              <NervTotemCard onClick={() => navigate(`/totem/${item.id}`)}>
+              <NervTotemCard
+                onClick={() => navigate(`/totem/${item.id}`)}
+                sx={{
+                  margin: { xs: '8px', sm: '20px' },
+                  padding: { xs: 1, sm: 3 }
+                }}
+              >
                 <Box component="img"
                   src={item.image}
                   sx={{
                     width: '100%',
-                    height: '200px',
+                    height: { xs: '140px', sm: '200px' },
                     objectFit: 'contain',
                     mb: 2,
                     filter: 'drop-shadow(0 0 5px rgba(0, 255, 157, 0.5))'
                   }}
                 />
-                <Typography variant="h5" sx={{
+                <Typography variant="h6" sx={{
                   fontFamily: "'Orbitron', sans-serif",
                   color: 'white',
                   mb: 1,
-                  transition: 'color 0.3s'
+                  fontSize: { xs: '1rem', sm: '1.3rem' }
                 }}>
                   {item.name}
                 </Typography>
-                <Typography variant="body1" sx={{
+                <Typography variant="body2" sx={{
                   color: theme.palette.nge.neonGreen,
-                  fontFamily: "'Rajdhani', sans-serif"
+                  fontFamily: "'Rajdhani', sans-serif",
+                  fontSize: { xs: '0.9rem', sm: '1rem' }
                 }}>
                   {item.description}
                 </Typography>
@@ -111,15 +120,16 @@ const TotensSection = () => {
           ))}
         </Swiper>
 
+        {/* Botões só aparecem em telas maiores */}
         <NervCarouselButton
-          sx={{ left: '30px' }}
+          sx={{ left: '10px', display: { xs: 'none', sm: 'flex' } }}
           onClick={() => swiperRef.current?.slidePrev()}
         >
           <ArrowBackIos />
         </NervCarouselButton>
 
         <NervCarouselButton
-          sx={{ right: '30px' }}
+          sx={{ right: '10px', display: { xs: 'none', sm: 'flex' } }}
           onClick={() => swiperRef.current?.slideNext()}
         >
           <ArrowForwardIos />

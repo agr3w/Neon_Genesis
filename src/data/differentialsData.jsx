@@ -4,6 +4,7 @@ import SecurityIcon from "@mui/icons-material/Security";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import interfaceIntuitiva from "../assets/interface-intuitiva.jpg";
 import horas from "../assets/24h.png";
+import flex from "../assets/flex.webp";
 
 const differentialsData = [
   {
@@ -31,7 +32,7 @@ const differentialsData = [
     icon: <SettingsAccessibilityIcon fontSize="large" />,
     title: "Flexibilidade",
     image:
-      "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=",
+      flex,
     details:
       "Adaptação às necessidades do seu negócio, com soluções escaláveis.",
   },
