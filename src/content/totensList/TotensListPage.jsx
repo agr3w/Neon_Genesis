@@ -39,6 +39,7 @@ const TotensListPage = () => {
   return (
     <Box sx={{
       display: "flex",
+      flexDirection: { xs: "column", md: "row" }, // Mobile: coluna, Desktop: linha
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0a0a12 0%, #1a1a2e 100%)'
     }}>
@@ -49,11 +50,15 @@ const TotensListPage = () => {
         selectedType={selectedType}
         onCategoryChange={setSelectedCategory}
         onBrandChange={setSelectedType}
+        sx={{
+          width: { xs: '100%', md: 250 },
+          mb: { xs: 2, md: 0 },
+        }}
       />
 
       <Box sx={{
         flex: 1,
-        p: 4,
+        p: { xs: 1, md: 4 },
         position: 'relative',
         '&::before': {
           content: '""',
@@ -66,17 +71,26 @@ const TotensListPage = () => {
           pointerEvents: 'none'
         }
       }}>
-        <NervListHeader variant="h3" margin={10} sx={{
-          fontFamily: "'Orbitron', sans-serif",
-          color: theme.palette.nge.neonGreen,
-          mb: 2,
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em',
-          '&::before': {
-            content: '"// "',
-            color: theme.palette.nge.red
-          }
-        }}>
+        <NervListHeader
+          variant="h3"
+          margin={10}
+          sx={{
+            fontFamily: "'Orbitron', sans-serif",
+            color: theme.palette.nge.neonGreen,
+            mt: 15,
+            mb: 2,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            maxWidth: '100%', // Limita largura
+            fontSize: { xs: '1.7rem', sm: '2rem', md: '2.5rem' }, // Fonte responsiva
+            wordBreak: 'break-word', // Quebra palavras longas
+            overflowWrap: 'break-word',
+            '&::before': {
+              content: '"// "',
+              color: theme.palette.nge.red
+            }
+          }}
+        >
           Unidades Disponíveis
         </NervListHeader>
 

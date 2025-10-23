@@ -19,8 +19,11 @@ const NervCard = styled(Card)(({ theme, type }) => ({
   background: `linear-gradient(145deg, #1a1a2e, #0a0a12)`,
   border: `2px solid ${type === 'locacao' ? theme.palette.nge.purple : theme.palette.nge.red}`,
   borderRadius: '4px',
-  minWidth: 380,
-  height: '100%',
+  width: 340,
+  maxWidth: '100%',
+  minWidth: 0,
+  boxSizing: 'border-box',
+  height: 420,
   display: 'flex',
   flexDirection: 'column',
   transition: 'all 0.3s',
@@ -28,6 +31,12 @@ const NervCard = styled(Card)(({ theme, type }) => ({
   '&:hover': {
     borderColor: theme.palette.nge.neonGreen,
     boxShadow: `0 10px 25px rgba(0, 255, 157, 0.5)`
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    height: 340,
+    maxWidth: '100%',
+    minWidth: 0
   }
 }));
 
@@ -80,21 +89,26 @@ const GenericCard = ({
             image={image}
             alt={title}
             sx={{
-              height: 200,
+              height: 160, // fixo para manter consistência com a altura total
               objectFit: 'contain',
               p: 2,
               filter: 'drop-shadow(0 0 10px rgba(0, 255, 157, 0.3))'
             }}
           />
         )}
-        <CardContent sx={{ flexGrow: 1, minHeight: 120 }}>
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            mb: 2,
-            minHeight: 32
-          }}>
+        <CardContent sx={{
+          flexGrow: 1,
+          minHeight: 120,
+          overflow: 'hidden',
+          boxSizing: 'border-box',
+          pb: { xs: 1, sm: 2 } // Reduz o padding-bottom no mobile
+        }}>          <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 2,
+          minHeight: 32
+        }}>
             {title && (
               <Typography
                 variant="h6"
@@ -125,18 +139,39 @@ const GenericCard = ({
               sx={{
                 color: 'rgba(255, 255, 255, 0.7)',
                 fontFamily: "'Rajdhani', sans-serif",
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                // truncar para manter cards com mesma altura visual
+                display: '-webkit-box',
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
               }}
             >
               {description}
             </Typography>
           )}
         </CardContent>
-        <CardActions sx={{ p: 2 }}>
+        <CardActions
+          sx={{
+            p: { xs: 0, sm: 2 },
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+            width: '100%',
+            alignItems: 'stretch',
+            mt: { xs: 0, sm: 1 }
+          }}
+        >
           {buttonText && (
             <NervCardButton
               size="small"
               fullWidth
+              sx={{
+                fontSize: { xs: '0.95rem', sm: '1rem' },
+                py: { xs: 1.2, sm: 1.5 },
+                borderRadius: 0,
+                mt: { xs: 1, sm: 0 }
+              }}
               onClick={() => navigate(link)}
             >
               {buttonText}

@@ -32,6 +32,7 @@ const FiltersSidebar = ({ categories, type, selectedCategory, selectedType, onCa
   const theme = useTheme();
   return (
     <Box sx={{
+      display: { xs: 'none', md: 'block' },
       width: 280,
       p: 3,
       marginTop: 16,

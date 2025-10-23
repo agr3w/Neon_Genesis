@@ -44,8 +44,29 @@
     color: var(--texto-principal);
   }
   
-  .totens-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+.totens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .totens-list-page {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
   }
+  .filters-sidebar {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+  }
+  .totens-list-main {
+    padding: 0;
+  }
+  .totens-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+/* ...existing code... */

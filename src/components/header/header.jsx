@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,12 +7,17 @@ import {
   IconButton,
   Box,
   Button,
-  styled
+  styled,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText
 } from "@mui/material";
 import {
   ShoppingCart,
   AccountCircle,
-  Announcement
+  Menu as MenuIcon
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -50,6 +55,13 @@ const Header = () => {
   const theme = useTheme();
   const { cartItems } = useCart();
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const navLinks = [
+    { label: "Totens", to: "/totens" },
+    { label: "Orçamento", to: "/orçamento" }
+  ];
 
   return (
     <AppBar
@@ -115,16 +127,27 @@ const Header = () => {
         </Box>
 
         {/* Links centrais - Navegação */}
-        <Box sx={{ display: { md: 'flex' }, gap: 6, marginRight: 4 }}>
-          {['totens', 'orçamento'].map((page) => (
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 6, marginRight: 4 }}>
+          {navLinks.map((page) => (
             <NervLink
-              key={page}
+              key={page.label}
               component={Link}
-              to={`/${page}`}
+              to={page.to}
             >
-              {page.replace('-', ' ')}
+              {page.label}
             </NervLink>
           ))}
+        </Box>
+
+        {/* Menu Hamburguer para mobile */}
+        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <IconButton
+            color="inherit"
+            onClick={() => setDrawerOpen(true)}
+            sx={{ ml: 1 }}
+          >
+            <MenuIcon />
+          </IconButton>
         </Box>
 
         {/* Ícones - Direita */}
@@ -155,10 +178,107 @@ const Header = () => {
           >
             <AccountCircle />
           </NervIcon>
-
-
         </Box>
       </Toolbar>
+
+      {/* Drawer Mobile */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{
+          sx: {
+            background: theme.palette.nge.dark,
+            color: theme.palette.nge.neonGreen,
+            width: 240,
+            boxShadow: `0 0 20px ${theme.palette.nge.neonGreen}`,
+            borderLeft: `2px solid ${theme.palette.nge.purple}`,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }
+        }}
+      >
+        <Box sx={{ flex: 1 }}>
+          <List>
+            {navLinks.map((page) => (
+              <ListItem key={page.label} disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to={page.to}
+                  onClick={() => setDrawerOpen(false)}
+                  sx={{
+                    fontFamily: "'Orbitron', sans-serif",
+                    color: theme.palette.nge.neonGreen,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    '&:hover': {
+                      background: theme.palette.nge.purple,
+                      color: theme.palette.nge.hoverBlue,
+                      boxShadow: `0 0 10px ${theme.palette.nge.neonGreen}`
+                    }
+                  }}
+                >
+                  <ListItemText primary={page.label} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          py: 2,
+          borderTop: `1px solid ${theme.palette.nge.purple}`,
+          background: 'rgba(125,38,205,0.08)'
+        }}>
+          <Badge
+            badgeContent={totalItems}
+            color="error"
+            sx={{
+              '& .MuiBadge-badge': {
+                backgroundColor: theme.palette.nge.red,
+                fontFamily: "'Orbitron', sans-serif"
+              }
+            }}
+          >
+            <NervIcon
+              component={Link}
+              to="/carrinho"
+              size="large"
+              onClick={() => setDrawerOpen(false)}
+              sx={{
+                color: theme.palette.nge.neonGreen,
+                '&:hover': {
+                  color: theme.palette.nge.hoverBlue,
+                  background: 'transparent',
+                  boxShadow: `0 0 10px ${theme.palette.nge.neonGreen}`
+                }
+              }}
+            >
+              <ShoppingCart />
+            </NervIcon>
+          </Badge>
+          <NervIcon
+            component={Link}
+            to="/user"
+            size="large"
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              color: theme.palette.nge.neonGreen,
+              '&:hover': {
+                color: theme.palette.nge.hoverBlue,
+                background: 'transparent',
+                boxShadow: `0 0 10px ${theme.palette.nge.neonGreen}`
+              }
+            }}
+          >
+            <AccountCircle />
+          </NervIcon>
+        </Box>
+      </Drawer>
     </AppBar>
   );
 };
