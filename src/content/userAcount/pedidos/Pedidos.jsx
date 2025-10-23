@@ -85,7 +85,7 @@ function Pedidos({ userId }) {
   useEffect(() => {
     if (userId) {
       setLoading(true);
-      axios.get(`http://localhost:3001/pedidos/${userId}`)
+      axios.get(`/.netlify/functions/pedidos/${userId}`)
         .then(res => setPedidos(res.data))
         .finally(() => setLoading(false));
     }

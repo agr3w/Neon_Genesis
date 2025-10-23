@@ -74,7 +74,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (user?.id) {
-      axios.get(`http://localhost:3001/enderecos/${user.id}`).then((res) => {
+      axios.get(`/.netlify/functions/enderecos/${user.id}`).then((res) => {
         setAddresses(res.data);
         const principal = res.data.find(addr => addr.padrao);
         setAddress(principal || res.data[0] || null);
@@ -84,9 +84,9 @@ const CheckoutPage = () => {
 
   function handleSaveEndereco(data) {
     axios
-      .post("http://localhost:3001/enderecos", { ...data, user_id: user.id })
+      .post("/.netlify/functions/enderecos", { ...data, user_id: user.id })
       .then(() => {
-        axios.get(`http://localhost:3001/enderecos/${user.id}`).then((res) => {
+        axios.get(`/.netlify/functions/enderecos/${user.id}`).then((res) => {
           setAddresses(res.data);
           setAddress(res.data[0]);
           setOpenEnderecoForm(false);

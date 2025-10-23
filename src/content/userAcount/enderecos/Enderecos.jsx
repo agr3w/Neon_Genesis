@@ -61,13 +61,13 @@ export default function Enderecos({ userId }) {
   const [editEndereco, setEditEndereco] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => {
+    axios.get(`/.netlify/functions/enderecos/${userId}`).then(res => {
       if (res.data.length === 1 && !res.data[0].padrao) {
-        axios.put(`http://localhost:3001/enderecos/${res.data[0].id}/padrao`, {
+        axios.put(`/.netlify/functions/enderecos/${res.data[0].id}/padrao`, {
           user_id: userId,
           tipo: res.data[0].tipo
         }).then(() => {
-          axios.get(`http://localhost:3001/enderecos/${userId}`).then(res2 => setEnderecos(res2.data));
+          axios.get(`/.netlify/functions/enderecos/${userId}`).then(res2 => setEnderecos(res2.data));
         });
       } else {
         setEnderecos(res.data);
@@ -77,33 +77,33 @@ export default function Enderecos({ userId }) {
 
   function handleSave(data) {
     if (editEndereco) {
-      axios.put(`http://localhost:3001/enderecos/${editEndereco.id}`, { ...data, user_id: userId }).then(() => {
+      axios.put(`/.netlify/functions/enderecos/${editEndereco.id}`, { ...data, user_id: userId }).then(() => {
         setOpen(false);
         setEditEndereco(null);
-        axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+        axios.get(`/.netlify/functions/enderecos/${userId}`).then(res => setEnderecos(res.data));
       });
     } else {
-      axios.post("http://localhost:3001/enderecos", { ...data, user_id: userId }).then(() => {
+      axios.post("/.netlify/functions/enderecos", { ...data, user_id: userId }).then(() => {
         setOpen(false);
-        axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+        axios.get(`/.netlify/functions/enderecos/${userId}`).then(res => setEnderecos(res.data));
       });
     }
   }
 
   function handleDelete(id) {
     if (window.confirm("CONFIRMAR EXCLUSÃO DESTE ENDEREÇO?")) {
-      axios.delete(`http://localhost:3001/enderecos/${id}`).then(() => {
-        axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+      axios.delete(`/.netlify/functions/enderecos/${id}`).then(() => {
+        axios.get(`/.netlify/functions/enderecos/${userId}`).then(res => setEnderecos(res.data));
       });
     }
   }
 
   function handleSetPadrao(e) {
-    axios.put(`http://localhost:3001/enderecos/${e.id}/padrao`, {
+    axios.put(`/.netlify/functions/enderecos/${e.id}/padrao`, {
       user_id: userId,
       tipo: e.tipo
     }).then(() => {
-      axios.get(`http://localhost:3001/enderecos/${userId}`).then(res => setEnderecos(res.data));
+      axios.get(`/.netlify/functions/enderecos/${userId}`).then(res => setEnderecos(res.data));
     });
   }
 

@@ -72,7 +72,7 @@ const ReviewPage = () => {
 
   useEffect(() => {
     if (user?.id) {
-      axios.get(`http://localhost:3001/enderecos/${user.id}`).then((res) => {
+      axios.get(`/.netlify/functions/enderecos/${user.id}`).then((res) => {
         setAddresses(res.data);
       });
     }
@@ -136,7 +136,7 @@ const ReviewPage = () => {
   const handleConfirmarPedido = async () => {
     setNumeroPedido(numero_pedido);
     try {
-      const res = await axios.post("http://localhost:3001/pedidos", {
+      const res = await axios.post("/.netlify/functions/pedidos", {
         user_id: user.id,
         numero_pedido,
         pagamento: paymentData.paymentMethod,

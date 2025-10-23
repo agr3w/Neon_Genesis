@@ -70,7 +70,7 @@ function LoginScreen() {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://localhost:3001/login", { email, senha: password });
+      const res = await axios.post("/.netlify/functions/login", { email, senha: password });
       login(res.data);
       navigate("/user");
     } catch (err) {
